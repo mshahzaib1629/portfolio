@@ -37,19 +37,19 @@ const Social = ({ mobile }) => {
     } else {
         return (
             <motion.div className={classes.wrapper}>
-                <motion.div animate={controls} custom={0}>
+                <motion.div animate={controls} custom={0} className={classes.socialIcon}>
                     <IconBtn icon={GitHub} m={1} href="https://github.com/Mehdi-BHA" />
                 </motion.div>
-                <motion.div animate={controls} custom={1}>
+                <motion.div animate={controls} custom={1} className={classes.socialIcon}>
                     <IconBtn icon={Instagram} m={1} href="https://www.instagram.com/mehdibha/" />
                 </motion.div>
-                <motion.div animate={controls} custom={2}>
+                <motion.div animate={controls} custom={2} className={classes.socialIcon}>
                     <IconBtn icon={LinkedIn} m={1} href="https://www.linkedin.com/in/mehdi-ben-hadj-ali-6a7435131/" />
                 </motion.div>
-                <motion.div animate={controls} custom={3}>
+                <motion.div animate={controls} custom={3} className={classes.socialIcon}>
                     <IconBtn icon={Email} m={1} href="mailto:mehdibenhadjali@gmail.com" />
                 </motion.div>
-                <motion.div animate={controls} custom={4}>
+                <motion.div animate={controls} custom={4} className={classes.socialIcon}>
                     <DarkModeSwitcher />
                 </motion.div>
             </motion.div>
@@ -58,6 +58,9 @@ const Social = ({ mobile }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+    socialIcon: {
+        marginBottom: '5px'
+    },
     wrapper: {
         display: "flex",
         flexDirection: "column",
