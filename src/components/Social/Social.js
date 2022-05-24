@@ -49,9 +49,9 @@ const Social = ({ mobile }) => {
                 <motion.div animate={controls} custom={3} className={classes.socialIcon}>
                     <IconBtn icon={Email} m={1} href="mailto:mehdibenhadjali@gmail.com" />
                 </motion.div>
-                <motion.div animate={controls} custom={4} className={classes.socialIcon}>
+                {/* <motion.div animate={controls} custom={4} className={classes.socialIcon}>
                     <DarkModeSwitcher />
-                </motion.div>
+                </motion.div> */}
             </motion.div>
         );
     }

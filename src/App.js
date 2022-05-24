@@ -13,11 +13,11 @@ function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        // if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
             setIsDarkMode(true);
-        } else {
-            setIsDarkMode(false);
-        }
+        // } else {
+        //     setIsDarkMode(false);
+        // }
     }, []);
     return (
         <Router>
