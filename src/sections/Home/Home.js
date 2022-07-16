@@ -46,18 +46,26 @@ const Home = () => {
                     </motion.div>
                     , {t("home_i")}
                 </Typography>
-                <motion.div animate={controls} custom={1}>
-                    <VideoLogo />
-                </motion.div>
+                <Typography
+                    component={motion.div}
+                    animate={controls}
+                    custom={0}
+                    color="text"
+                    variant="h5"
+                    className={classes.nameHeading}
+                >
+                    Muhammad Shahzaib Minhas
+                </Typography>
+                
                 <Typography
                     component={motion.p}
                     animate={controls}
                     custom={2}
                     variant="h2"
-                    color="secondary"
+                    color="primary"
                     className={classes.subTitle}
                 >
-                    {t("home_what_i_do")}
+                    {t("my_interest")}
                 </Typography>
                 <Typography
                     component={motion.p}
@@ -100,14 +108,24 @@ const Home = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    subTitle: {
-        marginBottom: "16px",
-        fontSize: "75px",
+    nameHeading: {
+        marginBottom: "0px",
+        fontSize: "65px",
         [theme.breakpoints.down("sm")]: {
             fontSize: "45px",
         },
         [theme.breakpoints.down("xs")]: {
             fontSize: "35px",
+        },
+    },
+    subTitle: {
+        marginBottom: "16px",
+        fontSize: "45px",
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "25px",
+        },
+        [theme.breakpoints.down("xs")]: {
+            fontSize: "25px",
         },
     },
 }));

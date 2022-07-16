@@ -5,7 +5,7 @@ import AvatarImg from "../../assets/images/avatar.jpg";
 const Avatar = () => {
   const classes = useStyles();
   return (
-      <img src={AvatarImg} alt="Mehdi BHA" className={classes.avatarImg} />
+      <img src="images/avatar.jpeg" alt="Shahzaib" className={classes.avatarImg} />
   );
 };
 
@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     width:"270px",
     height:"270px",
     objectFit:'cover',
-    objectPosition: "0 -20px",
     boxShadow:theme.shadows[10]
   },
 }));
