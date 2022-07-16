@@ -48,12 +48,12 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
                             {t('menu_resume')}
                         </Button>
                     </ListItem>
-                    <ListItem className={classes.btnContainer}>
+                    {/* <ListItem className={classes.btnContainer}>
                         <LangSelector onClose={onClose} />
-                    </ListItem>
-                    <ListItem className={classes.btnContainer}>
+                    </ListItem> */}
+                    {/* <ListItem className={classes.btnContainer}>
                         <DarkModeSwitcher onClose={onClose} />
-                    </ListItem>
+                    </ListItem> */}
                     <Divider />
                 </List>
             </div>
