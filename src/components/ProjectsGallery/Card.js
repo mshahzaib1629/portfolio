@@ -31,7 +31,7 @@ const titleVariants = {
     },
 };
 
-const Card = ({ id, title, backgroundImage, frontImage, overview, technologies, onClick, ...rest }) => {
+const Card = ({ id, title, backgroundImage, colorGradients, frontImage, overview, technologies, onClick, ...rest }) => {
     const classes = useStyles();
     const controls = useAnimation();
     const handleMouseEnterControls = () => {
@@ -139,6 +139,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "flex-start",
         overflow: "hidden",
+        backgroundColor: "red",
+        backgroundImage: `linear-gradient(to bottom right, black, red)`
     },
     frontImage: {
         marginTop: "20px",
@@ -160,7 +162,7 @@ const useStyles = makeStyles((theme) => ({
     },
     technologies: {
         fontSize: "15px",
-        color:"rgb(10,10,10)"
+        color:theme.palette.primary.contrastText
     },
     hover: {
         position: "absolute",
