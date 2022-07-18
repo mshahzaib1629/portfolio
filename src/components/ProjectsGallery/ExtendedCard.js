@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   makeStyles,
   Card as MuiCard,
@@ -13,16 +13,21 @@ import { motion } from "framer-motion";
 const ExtendedCard = ({
   id,
   title,
-  backgroundImage,
   colorGradients,
-  frontImage,
+  frontImages,
   overview,
   technologies,
   handleClose,
   ...rest
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({colorGradients});
+  const [displayInBackground, setDisplayInBackground] = useState(false);
 
+  useEffect(()=>{
+      if (!colorGradients.color1 && !colorGradients.color2) {
+          setDisplayInBackground(true);
+      }
+  }, []);
   return (
     <div className={classes.wrapper}>
       <MuiCard
@@ -37,15 +42,15 @@ const ExtendedCard = ({
               component={motion.div}
               layoutId={`img-container-${id}`}
               className={classes.media}
-              image={backgroundImage}
+              image={displayInBackground ? frontImages[0]: null}
               title={title}
             >
-              <motion.img
+              {!displayInBackground && <motion.img
                 layoutId={`front-img-${id}`}
                 className={classes.frontImage}
-                src={frontImage}
+                src={frontImages[0]}
                 alt={title}
-              />
+              />}
             </CardMedia>
             <CardContent>
               <Typography
@@ -137,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     overflow: "hidden",
     backgroundColor: "red",
-    backgroundImage: `linear-gradient(to bottom right, black, red)`
+    backgroundImage: (props) => `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`
   },
   frontImage: {
     marginTop: "20px",

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cite: {
     textDecoration: 'none',
-    color: theme.palette.primary.main
+    color: 'inherit'
   }
 }));
 
