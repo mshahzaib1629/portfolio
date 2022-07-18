@@ -17,3 +17,9 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_FF548 }}'
           channelId: live
           projectId: portfolio-ff548
+      - name: Yarn Install
+        run: |
+          yarn install
+      - name: Production Build
+        run: |
+          yarn build
