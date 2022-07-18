@@ -17,6 +17,8 @@ jobs:
       - name: Yarn Upgrade
         run: |
           yarn upgrade
+        run: |
+          yarn add yarn
       - name: Production Build
         run: |
           yarn build
