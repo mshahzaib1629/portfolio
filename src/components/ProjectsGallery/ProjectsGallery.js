@@ -58,8 +58,9 @@ const ProjectsGallery = () => {
               <Card
                 id={item.id}
                 title={item.title}
-                overview={t(`projects_${item.id}_overview`)}
+                overview={item.overview}
                 backgroundImage={item.backgroundImage}
+                colorGradients={item.colorGradients}
                 frontImage={item.frontImage}
                 technologies={item.technologies}
                 onClick={() => setSelectedId(item.id)}
@@ -75,8 +76,9 @@ const ProjectsGallery = () => {
               key={selectedId}
               id={selectedId}
               title={getSelected(selectedId).title}
-              overview={t(`projects_${selectedId}_extended_overview`)}
+              overview={getSelected(selectedId).extendedOverview}
               backgroundImage={getSelected(selectedId).backgroundImage}
+              colorGradients={getSelected(selectedId).colorGradients}
               frontImage={getSelected(selectedId).frontImage}
               technologies={getSelected(selectedId).technologies}
               handleClose={() => setSelectedId(null)}
