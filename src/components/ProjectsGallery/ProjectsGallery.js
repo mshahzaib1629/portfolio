@@ -59,9 +59,8 @@ const ProjectsGallery = () => {
                 id={item.id}
                 title={item.title}
                 overview={item.overview}
-                backgroundImage={item.backgroundImage}
                 colorGradients={item.colorGradients}
-                frontImage={item.frontImage}
+                frontImage={item.frontImages[0]}
                 technologies={item.technologies}
                 onClick={() => setSelectedId(item.id)}
                 initial={{ opacity: 0, y: -50 }}
@@ -77,9 +76,8 @@ const ProjectsGallery = () => {
               id={selectedId}
               title={getSelected(selectedId).title}
               overview={getSelected(selectedId).extendedOverview}
-              backgroundImage={getSelected(selectedId).backgroundImage}
               colorGradients={getSelected(selectedId).colorGradients}
-              frontImage={getSelected(selectedId).frontImage}
+              frontImages={getSelected(selectedId).frontImages}
               technologies={getSelected(selectedId).technologies}
               handleClose={() => setSelectedId(null)}
             />
