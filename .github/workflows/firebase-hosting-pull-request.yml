@@ -11,9 +11,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Yarn Install
         run: |
-          yarn install
-          yarn upgrade
-          yarn add yarn
+          rm -rf node_modules
+          yarn cache clean
+          yarn
+          yarn start
       - name: Production Build
         run: |
           yarn build
