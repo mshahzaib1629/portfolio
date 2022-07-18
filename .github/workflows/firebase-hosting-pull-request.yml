@@ -12,11 +12,7 @@ jobs:
       - name: Yarn Install
         run: |
           yarn install
-      - name: Yarn Upgrade
-        run: |
           yarn upgrade
-      - name: Yarn add Yarn
-        run: |
           yarn add yarn
       - name: Production Build
         run: |
