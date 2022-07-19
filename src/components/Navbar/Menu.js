@@ -112,7 +112,8 @@ const Menu = ({homeIsActive}) => {
             <motion.div custom={4} animate={controls}>
                 <Button
                     component={MuiLink}
-                    href="/resume.pdf"
+                    href="https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/Resume.pdf?alt=media&token=2cef9350-894d-4e75-ac00-122611a49715"
+                    target="_blank"
                     variant="outlined"
                     color="primary"
                     underline="none"

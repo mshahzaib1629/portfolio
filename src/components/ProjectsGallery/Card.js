@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     makeStyles,
     Card as MuiCard,
@@ -31,8 +31,8 @@ const titleVariants = {
     },
 };
 
-const Card = ({ id, title, backgroundImage, frontImage, overview, technologies, onClick, ...rest }) => {
-    const classes = useStyles();
+const Card = ({ id, title, colorGradients, frontImage, overview, technologies, onClick, ...rest }) => {
+    const classes = useStyles({colorGradients});
     const controls = useAnimation();
     const handleMouseEnterControls = () => {
         controls.start("hover");
@@ -41,6 +41,13 @@ const Card = ({ id, title, backgroundImage, frontImage, overview, technologies, 
         controls.start("initial");
     };
     controls.start("initial");
+    const [displayInBackground, setDisplayInBackground] = useState(false);
+
+    useEffect(()=>{
+        if (!colorGradients.color1 && !colorGradients.color2) {
+            setDisplayInBackground(true);
+        }
+    }, []);
     return (
         <MuiCard
             className={classes.root}
@@ -57,15 +64,15 @@ const Card = ({ id, title, backgroundImage, frontImage, overview, technologies, 
                     component={motion.div}
                     layoutId={`img-container-${id}`}
                     className={classes.media}
-                    image={backgroundImage}
+                    image={displayInBackground ? frontImage : null}
                     title={title}
                 >
-                    <motion.img
+                    {!displayInBackground && <motion.img
                         layoutId={`front-img-${id}`}
                         className={classes.frontImage}
                         src={frontImage}
                         alt={title}
-                    />
+                    />}
                 </CardMedia>
                 <CardContent style={{display:"flex", flexDirection:'column', height:"100%", justifyContent:"space-between"}}>
                     <Typography variant="h5" className={classes.title} component={motion.h5} layoutId={`title-${id}`}>
@@ -139,10 +146,12 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "flex-start",
         overflow: "hidden",
+        backgroundColor: "red",
+        backgroundImage: (props) => `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`
     },
     frontImage: {
         marginTop: "20px",
-        objectFit: "cover",
+        objectFit: "fill",
         objectPosition: "center top",
         width: "90%",
         boxShadow: theme.shadows[8],
@@ -160,14 +169,14 @@ const useStyles = makeStyles((theme) => ({
     },
     technologies: {
         fontSize: "15px",
-        color:"rgb(10,10,10)"
+        color:theme.palette.primary.contrastText
     },
     hover: {
         position: "absolute",
         top: 0,
         height: "100%",
         width: "100%",
-        backgroundColor: "rgba(0,0,0,0.97)",
+        backgroundColor: "rgba(0,0,0,0.87)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
