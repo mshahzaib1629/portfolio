@@ -20,14 +20,21 @@ const ExtendedCard = ({
   handleClose,
   ...rest
 }) => {
-  const classes = useStyles({colorGradients});
+  const classes = useStyles({ colorGradients });
   const [displayInBackground, setDisplayInBackground] = useState(false);
 
-  useEffect(()=>{
-      if (!colorGradients.color1 && !colorGradients.color2) {
-          setDisplayInBackground(true);
-      }
+  useEffect(() => {
+    if (
+      (!colorGradients.color1 && !colorGradients.color2) ||
+      frontImages.length == 0
+    ) {
+      setDisplayInBackground(true);
+    }
   }, []);
+
+  const displayPrimaryImage = () =>
+    frontImages.length > 0 ? frontImages[0] : "images/empty-project-image1.jpg";
+
   return (
     <div className={classes.wrapper}>
       <MuiCard
@@ -42,15 +49,17 @@ const ExtendedCard = ({
               component={motion.div}
               layoutId={`img-container-${id}`}
               className={classes.media}
-              image={displayInBackground ? frontImages[0]: null}
+              image={displayInBackground ? displayPrimaryImage() : null}
               title={title}
             >
-              {!displayInBackground && <motion.img
-                layoutId={`front-img-${id}`}
-                className={classes.frontImage}
-                src={frontImages[0]}
-                alt={title}
-              />}
+              {!displayInBackground && (
+                <motion.img
+                  layoutId={`front-img-${id}`}
+                  className={classes.frontImage}
+                  src={frontImages[0]}
+                  alt={title}
+                />
+              )}
             </CardMedia>
             <CardContent>
               <Typography
@@ -142,7 +151,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     overflow: "hidden",
     backgroundColor: "red",
-    backgroundImage: (props) => `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`
+    backgroundImage: (props) =>
+      `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`,
   },
   frontImage: {
     marginTop: "20px",
@@ -165,7 +175,7 @@ const useStyles = makeStyles((theme) => ({
   technologies: {
     fontSize: "15px",
     color: theme.palette.secondary.contrastText,
-    fontWeight: "500"
+    fontWeight: "500",
   },
   closeBtn: {
     position: "absolute",

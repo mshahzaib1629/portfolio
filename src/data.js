@@ -96,8 +96,8 @@ const projectList = [
       project: "",
     },
     frontImages: [
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Ftranspotracky1.jpg?alt=media&token=0658f092-7591-4b62-afe1-01cffcaf98f5",
-      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Ftranspotracky2.jpg?alt=media&token=7684c42b-afdc-44a4-ab2e-15ebaf57cd5b",
+      // "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Ftranspotracky1.jpg?alt=media&token=0658f092-7591-4b62-afe1-01cffcaf98f5",
+      // "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Ftranspotracky2.jpg?alt=media&token=7684c42b-afdc-44a4-ab2e-15ebaf57cd5b",
     ],
     colorGradients: {
       color1: "white",
