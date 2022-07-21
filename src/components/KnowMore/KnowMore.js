@@ -1,58 +1,94 @@
-import React, { Component } from 'react';
-import classes from './KnowMore.module.css';
+import React, { Component, useState } from "react";
+import classes from "./KnowMore.module.css";
+import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-const KnowMore = () => {
-  return (
-    <>
-      <div class={classes.wrapper}>
-        <ul id={classes.tab}>
-          <li>
-            <a>CERTIFICATIONS</a>
-          </li>
-          <li>
-            <a>EDUCATION</a>
-          </li>
-        </ul>
-      </div>
-      <div class={classes.body}>
-        <h1>Body</h1>
-        <p>
-          {" "}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla
-          elit suscipit odio molestie mattis. Pellentesque eleifend neque ut
-          lectus ullamcorper tempus. Curabitur imperdiet erat at nisi gravida
-          elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus non magna
-          eu rutrum. Fusce molestie euismod orci, eget imperdiet arcu convallis
-          sit amet. Phasellus at elementum urna. Curabitur aliquet tellus
-          bibendum, vulputate magna vitae, rhoncus purus. Proin ornare faucibus
-          nibh, nec condimentum justo consequat eget. Proin vestibulum neque a
-          metus mattis, ac tempor felis accumsan. Nunc blandit turpis in mauris
-          congue, cursus sagittis justo finibus. Integer et leo sit amet tellus
-          volutpat accumsan at vel metus. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Nam fringilla elit suscipit odio molestie
-          mattis. Pellentesque eleifend neque ut lectus ullamcorper tempus.
-          Curabitur imperdiet erat at nisi gravida elementum. Etiam laoreet
-          ornare ex ac luctus. Etiam finibus non magna eu rutrum. Fusce molestie
-          euismod orci, eget imperdiet arcu convallis sit amet. Phasellus at
-          elementum urna. Curabitur aliquet tellus bibendum, vulputate magna
-          vitae, rhoncus purus. Proin ornare faucibus nibh, nec condimentum
-          justo consequat eget. Proin vestibulum neque a metus mattis, ac tempor
-          felis accumsan. Nunc blandit turpis in mauris congue, cursus sagittis
-          justo finibus. Integer et leo sit amet tellus volutpat accumsan at vel
-          metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-          fringilla elit suscipit odio molestie mattis. Pellentesque eleifend
-          neque ut lectus ullamcorper tempus. Curabitur imperdiet erat at nisi
-          gravida elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus
-          non magna eu rutrum. Fusce molestie euismod orci, eget imperdiet arcu
-          convallis sit amet. Phasellus at elementum urna. Curabitur aliquet
-          tellus bibendum, vulputate magna vitae, rhoncus purus. Proin ornare
-          faucibus nibh, nec condimentum justo consequat eget. Proin vestibulum
-          neque a metus mattis, ac tempor felis accumsan.
-        </p>
-      </div>
-    </>
-  );
+import Certifications from "./Certifications";
+import Education from "./Education";
+
+const tabs = {
+  Certification: {
+    index: 1,
+    component: <Certifications />,
+  },
+  Education: {
+    index: 0,
+    component: <Education />,
+  },
 };
 
+const KnowMore = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [selectedTab, setSelectedTab] = useState(tabs.Education);
+  const localStyles = useStyles();
+
+  const onTabChange = (tab) => {
+    setSelectedTab(tab);
+  };
+
+  const webView = () => {
+    return (
+      <>
+        <div class={classes.wrapper}>
+          <ul id={classes.tab}>
+            {Object.keys(tabs).map((tab) => {
+              return (
+                <li>
+                  <div
+                    className={
+                      selectedTab.index === tabs[tab].index
+                        ? localStyles.selectedTab
+                        : null
+                    }
+                    onClick={() => onTabChange(tabs[tab])}
+                  >
+                    {tab.toUpperCase()}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div class={classes.body}>{selectedTab.component}</div>
+      </>
+    );
+  };
+
+  const mobileView = () => {
+    return (
+      <>
+        {Object.keys(tabs)
+          .reverse()
+          .map((tab) => {
+            return (
+              <Accordion style={{ marginBottom: "8px" }}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon style={{color: theme.palette.text.secondary}}/>}
+                  aria-controls={`${tab}-content`}
+                  id={`${tab}-header`}
+                >
+                  <Typography>{tab.toUpperCase()}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>{tabs[tab].component}</AccordionDetails>
+              </Accordion>
+            );
+          })}
+      </>
+    );
+  };
+  return <>{isMobile ? mobileView() : webView()}</>;
+};
+
+const useStyles = makeStyles((theme) => ({
+  selectedTab: {
+    "border-bottom-style": "solid",
+    "border-color": "red",
+  },
+}));
 
 export default KnowMore;
