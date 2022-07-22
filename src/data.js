@@ -21,7 +21,8 @@ const projectList = [
     links: {
       docs: "",
       code: "",
-      project: "https://play.google.com/store/apps/details?id=com.mshahzaib.my_mates",
+      project:
+        "https://play.google.com/store/apps/details?id=com.mshahzaib.my_mates",
     },
     frontImages: [
       "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Fmymates1.jpg?alt=media&token=5ba9d97d-b64a-4eba-9cd0-c3d2b563ed8b",
@@ -43,7 +44,8 @@ const projectList = [
     links: {
       docs: "",
       code: "",
-      project: "https://play.google.com/store/apps/details?id=com.lstlearn.drvlogsa&hl=en&gl=US",
+      project:
+        "https://play.google.com/store/apps/details?id=com.lstlearn.drvlogsa&hl=en&gl=US",
     },
     frontImages: [
       "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/project-images%2Fdriverslog1.jpg?alt=media&token=87937262-7c29-4b2b-ac3c-b459f681afb0",
@@ -137,4 +139,51 @@ const experienceList = [
   },
 ];
 
-export { skillsList, projectList, experienceList };
+const educations = [
+  {
+    id: 1,
+    degreeTitle: "Matriculation",
+    school: "Lahore Model High School",
+    location: "Lahore, Pakistan",
+    duration: {
+      start: "2012",
+      end: "2014",
+    },
+    links: {},
+  },
+  {
+    id: 2,
+    degreeTitle: "FSc. Pre-Engineering (Intermediate)",
+    school: "Govt. Islamia College, Civil lines",
+    location: "Lahore, Pakistan",
+    duration: {
+      start: "2014",
+      end: "2016",
+    },
+    links: {},
+  },
+  {
+    id: 3,
+    degreeTitle: "BS Computer Science",
+    school: "COMSATS University Islamabad",
+    location: "Lahore, Pakistan",
+    duration: {
+      start: "2016",
+      end: "2020",
+    },
+    links: {},
+  },
+  {
+    id: 4,
+    degreeTitle: "MS Computer Science",
+    school: "COMSATS University Islamabad",
+    location: "Lahore, Pakistan",
+    duration: {
+      start: "2021",
+      end: "cont.",
+    },
+    links: {},
+  },
+];
+
+export { skillsList, projectList, experienceList, educations };

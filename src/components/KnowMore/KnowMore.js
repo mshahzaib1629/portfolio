@@ -74,7 +74,7 @@ const KnowMore = () => {
                 >
                   <Typography>{tab.toUpperCase()}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>{tabs[tab].component}</AccordionDetails>
+                <AccordionDetails style={{display: "block"}}>{tabs[tab].component}</AccordionDetails>
               </Accordion>
             );
           })}
