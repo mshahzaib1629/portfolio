@@ -4,7 +4,7 @@ import typography from "./typography";
 const baseTheme = {
     breakpoints: {
         values: {
-            xs: 0,
+            xs: 600,
             sm: 700,
             md: 960,
             lg: 1320,
