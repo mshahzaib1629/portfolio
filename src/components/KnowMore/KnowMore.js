@@ -7,11 +7,11 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import Certifications from "./Certifications";
-import Education from "./Education";
+import Certifications from "./Certifications/index";
+import Education from "./Education/index";
 
 const tabs = {
-  Certification: {
+  Certifications: {
     index: 1,
     component: <Certifications />,
   },
