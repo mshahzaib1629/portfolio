@@ -8,7 +8,7 @@ import {
   Icon,
   Box,
 } from "@material-ui/core";
-import { ArrowDownward } from "@material-ui/icons";
+import { ArrowForward } from "@material-ui/icons";
 import { motion, useAnimation } from "framer-motion";
 
 const hoverVariants = {
@@ -34,14 +34,15 @@ const titleVariants = {
 const Card = ({
   id,
   title,
-  colorGradients,
-  frontImage,
-  overview,
-  technologies,
+  issuedBy,
+  nature,
+  date,
+  image,
+  url,
   onClick,
   ...rest
 }) => {
-  const classes = useStyles({ colorGradients });
+  const classes = useStyles();
   const controls = useAnimation();
   const handleMouseEnterControls = () => {
     controls.start("hover");
@@ -50,19 +51,13 @@ const Card = ({
     controls.start("initial");
   };
   controls.start("initial");
-  const [displayInBackground, setDisplayInBackground] = useState(false);
-
-  useEffect(() => {
-    if ((!colorGradients.color1 && !colorGradients.color2) || !frontImage) {
-      setDisplayInBackground(true);
-    }
-  }, []);
 
   const displayImage = () =>
-    frontImage ? frontImage : "images/empty-project-image1.jpg";
+    image ? image : "images/empty-certificate.jpg";
 
   return (
-    <MuiCard
+    <a href={url} target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
+        <MuiCard
       className={classes.root}
       elevation={10}
       component={motion.div}
@@ -77,18 +72,9 @@ const Card = ({
           component={motion.div}
           layoutId={`img-container-${id}`}
           className={classes.media}
-          image={displayInBackground ? displayImage() : null}
+          image={displayImage()}
           title={title}
-        >
-          {!displayInBackground && (
-            <motion.img
-              layoutId={`front-img-${id}`}
-              className={classes.frontImage}
-              src={displayImage()}
-              alt={title}
-            />
-          )}
-        </CardMedia>
+        />
         <CardContent
           style={{
             display: "flex",
@@ -106,22 +92,22 @@ const Card = ({
             {title}
           </Typography>
           <Typography
-            variant="body2"
-            className={classes.overview}
+            variant="h6"
+            className={classes.issuedBy}
             component={motion.h5}
-            layoutId={`overview-${id}`}
+            layoutId={`issuedBy-${id}`}
             style={{ flexGrow: 2 }}
           >
-            {overview}
+            {issuedBy}
           </Typography>
           <Typography
             variant="body2"
-            className={classes.technologies}
+            className={classes.footer}
             component={motion.h5}
-            layoutId={`technologies-${id}`}
+            layoutId={`footer-${id}`}
             color="primary"
           >
-            {technologies.join(" · ")}
+            <span className={classes.nature}>{nature}</span>  &nbsp; {date}
           </Typography>
         </CardContent>
       </div>
@@ -141,7 +127,7 @@ const Card = ({
           animate={controls}
         >
           <Box mr={1}>
-            <Typography variant="h4">View project </Typography>
+            <Typography variant="h4">View Certificate </Typography>
           </Box>
           <Icon
             component={motion.div}
@@ -154,11 +140,12 @@ const Card = ({
             variants={{ hover: { y: 7 }, intial: { y: -2 } }}
             animate="hover"
           >
-            <ArrowDownward />
+            <ArrowForward />
           </Icon>
         </Box>
       </motion.div>
     </MuiCard>
+    </a>
   );
 };
 
@@ -179,8 +166,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     overflow: "hidden",
     backgroundColor: "red",
-    backgroundImage: (props) =>
-      `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`,
   },
   frontImage: {
     marginTop: "20px",
@@ -190,19 +175,26 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[8],
   },
   title: {
-    fontSize: "20px",
+    fontSize: "18px",
     fontWeight: 700,
     marginBottom: theme.spacing(1),
     color: theme.palette.primary.contrastText,
   },
-  overview: {
-    fontSize: "14px",
+  issuedBy: {
+    fontSize: "16px",
     marginBottom: theme.spacing(1),
     color: theme.palette.primary.contrastText,
   },
-  technologies: {
-    fontSize: "15px",
+  footer: {
+    fontSize: "14px",
     color: theme.palette.primary.contrastText,
+    position: "absolute",
+    bottom: "14px"
+  },
+  nature: {
+    padding: "3px 8px",
+    background: "rgba(0,0,0,0.4)",
+    borderRadius: "10px"
   },
   hover: {
     position: "absolute",
