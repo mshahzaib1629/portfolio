@@ -6,7 +6,7 @@ import {
   Link,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { educations } from "../../data";
+import { educations } from "../../../data";
 import classes from "./Education.module.css";
 
 function Education() {
