@@ -53,4 +53,40 @@ const experienceList = [
     },
 ];
 
-export { skillsList, projectList, experienceList };
+const educations = [
+  {
+    id: 1,
+    degreeTitle: "degree 1",
+    school: "School Name",
+    location: "City, Country",
+    duration: {
+      start: "2012",
+      end: "2014",
+    },
+    links: {},
+  },
+  {
+    id: 2,
+    degreeTitle: "degree 2",
+    school: "College Name",
+    location: "City, Country",
+    duration: {
+      start: "2012",
+      end: "2014",
+    },
+    links: {},
+  },
+  {
+    id: 3,
+    degreeTitle: "degree 3",
+    school: "University Name",
+    location: "City, Country",
+    duration: {
+      start: "2012",
+      end: "2014",
+    },
+    links: {},
+  },
+];
+
+export { skillsList, projectList, experienceList, educations };

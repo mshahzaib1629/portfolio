@@ -1,36 +1,105 @@
-import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  makeStyles,
+  useMediaQuery,
+  useTheme,
+  Typography,
+  Link,
+} from "@material-ui/core";
+import { educations } from "../../data";
+import classes from "./Education.module.css";
 
 function Education() {
   const theme = useTheme();
+  const localStyle = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <>
-      <h1>Educaiton</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla
-        elit suscipit odio molestie mattis. Pellentesque eleifend neque ut
-        lectus ullamcorper tempus. Curabitur imperdiet erat at nisi gravida
-        elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus non magna eu
-        rutrum. Fusce molestie euismod orci, eget imperdiet arcu convallis sit
-        amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla
-        elit suscipit odio molestie mattis. Pellentesque eleifend neque ut
-        lectus ullamcorper tempus. Curabitur imperdiet erat at nisi gravida
-        elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus non magna eu
-        rutrum. Fusce molestie euismod orci, eget imperdiet arcu convallis sit
-        amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla
-        elit suscipit odio molestie mattis. Pellentesque eleifend neque ut
-        lectus ullamcorper tempus. Curabitur imperdiet erat at nisi gravida
-        elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus non magna eu
-        rutrum. Fusce molestie euismod orci, eget imperdiet arcu convallis sit
-        amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla
-        elit suscipit odio molestie mattis. Pellentesque eleifend neque ut
-        lectus ullamcorper tempus. Curabitur imperdiet erat at nisi gravida
-        elementum. Etiam laoreet ornare ex ac luctus. Etiam finibus non magna eu
-        rutrum. Fusce molestie euismod orci, eget imperdiet arcu convallis sit
-        amet.
-      </p>
-    </>
+    <div className={localStyle.body}>
+      {/* <Timeline
+        position="right"
+        className={localStyle.body}
+      >
+        {educations.map((education) => (
+          <TimelineItem>
+            <TimelineOppositeContent color={theme.palette.text.secondary}>
+              {education.duration.start} - {education.duration.end}
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Typography
+                variant="h5"
+                style={{ color: theme.palette.text.secondary }}
+              >
+                {education.degreeTitle} <br />
+                <Link
+                  href={
+                    education.links.website ||
+                    education.links.facebook ||
+                    education.links.instagram
+                  }
+                  color="primary"
+                  target={"_blank"}
+                >
+                  {education.school}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h6"
+                style={{ color: theme.palette.text.secondary }}
+              >
+                {education.location}
+              </Typography>
+              <br />
+            </TimelineContent>
+          </TimelineItem>
+        ))}
+      </Timeline> */}
+
+      <div className={classes.content}>
+        <ul className={classes.timeline}>
+          {educations.reverse().map((education) => (
+            <li
+              className={classes.event}
+              data-date={`${education.duration.start} - ${education.duration.end}`}
+            >
+              <Typography
+                variant="h5"
+                style={{ color: theme.palette.text.secondary }}
+              >
+                {education.degreeTitle} <br />
+                <Link
+                  href={
+                    education.links.website ||
+                    education.links.facebook ||
+                    education.links.instagram
+                  }
+                  color="primary"
+                  target={"_blank"}
+                >
+                  {education.school}
+                </Link>
+              </Typography>
+              <Typography
+                variant="h6"
+                style={{ color: theme.palette.text.secondary }}
+              >
+                {education.location}
+              </Typography>
+              <br />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  body: {
+    textAlign: "left",
+  },
+}));
 
 export default Education;
