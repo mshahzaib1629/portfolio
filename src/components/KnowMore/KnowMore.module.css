@@ -38,10 +38,9 @@
   text-align: center;
   cursor: pointer;
 }
-/* #tab li div:hover {
-    border-bottom-style: solid;
-    border-color: red;
-} */
+#tab li div:hover {
+    color: red
+}
 
 .body {
   position: relative;

@@ -66,13 +66,13 @@ const KnowMore = () => {
           .reverse()
           .map((tab) => {
             return (
-              <Accordion style={{ marginBottom: "8px" }}>
+              <Accordion style={{ marginBottom: "10px" }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon style={{color: theme.palette.text.secondary}}/>}
                   aria-controls={`${tab}-content`}
                   id={`${tab}-header`}
                 >
-                  <Typography>{tab.toUpperCase()}</Typography>
+                  <Typography variant="h6">{tab.toUpperCase()}</Typography>
                 </AccordionSummary>
                 <AccordionDetails style={{display: "block"}}>{tabs[tab].component}</AccordionDetails>
               </Accordion>
@@ -87,7 +87,7 @@ const KnowMore = () => {
 const useStyles = makeStyles((theme) => ({
   selectedTab: {
     "border-bottom-style": "solid",
-    "border-color": "red",
+    "border-color": theme.palette.primary.main,
   },
 }));
 
