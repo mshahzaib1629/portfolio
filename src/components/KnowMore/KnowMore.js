@@ -40,6 +40,7 @@ const KnowMore = () => {
               return (
                 <li>
                   <div
+                  style={{color: theme.palette.text.primary}}
                     className={
                       selectedTab.index === tabs[tab].index
                         ? localStyles.selectedTab
