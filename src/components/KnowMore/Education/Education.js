@@ -24,6 +24,7 @@ function Education() {
         <ul className={classes.timeline}>
           {loadedEducations.map((education) => (
             <li
+              key={education.id}
               className={classes.event}
               data-date={`${education.duration.start} - ${education.duration.end}`}
             >
@@ -61,9 +62,9 @@ function Education() {
   const mobileView = () => (
     <ul style={{ listStyle: "none" }}>
       {loadedEducations.map((education) => (
-        <li>
+        <li key={education.id}>
           <Typography
-            variant="h7"
+            variant="h6"
             style={{ color: theme.palette.text.primary }}
           >{`${education.duration.start} - ${education.duration.end}`}</Typography>
           <Typography

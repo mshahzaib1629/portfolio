@@ -15,7 +15,7 @@ const Logo = ({ setHomeIsActive, ...rest }) => {
             onSetInactive={() => setHomeIsActive(false)}
             className={classes.root}
         >
-            <img src="images/shahzaib-home-white1.png" alt="logo" width="120px"/>
+            {/* <img src="images/shahzaib-home-white1.png" alt="logo" width="120px"/> */}
         </Link>
     );
 };
