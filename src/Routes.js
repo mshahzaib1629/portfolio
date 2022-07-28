@@ -12,7 +12,7 @@ const Routes = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
-            <Loader />
+            {/* <Loader /> */}
             <Navbar />
             {!isMobile && <Social />}
             <Switch>

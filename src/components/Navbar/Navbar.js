@@ -31,7 +31,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (!isLoading) {
       controls.start({
         y: 0,
         transition: {
@@ -41,10 +40,7 @@ const Navbar = () => {
           damping: 20,
         },
       });
-    } else {
-      controls.start({ y: -100 });
-    }
-  }, [isLoading, controls]);
+  }, [ controls]);
 
   return (
     <motion.div animate={controls}>

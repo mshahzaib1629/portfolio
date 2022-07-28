@@ -14,16 +14,13 @@ const Home = () => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (!isLoading) {
             controls.start((i) => ({
                 y: 0,
                 opacity: 1,
                 transition: { delay: i * 0.1 + 1.2 },
             }));
-        } else {
-            controls.start({ opacity: 0, y: 5 });
-        }
-    }, [isLoading, controls]);
+
+    }, [controls]);
 
     return (
         <HomeContainer id="home">
