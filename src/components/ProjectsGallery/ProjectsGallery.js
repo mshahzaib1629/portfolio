@@ -21,7 +21,7 @@ const ProjectsGallery = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loadedProjects, setLoadedProjects] = useState([]);
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(3);
 
   const getSelected = (id) => projectList.find((elem) => elem.id === id);
 
@@ -36,7 +36,7 @@ const ProjectsGallery = () => {
   }
 
   useEffect(() => {
-    if (isMobile) setPageSize(3);
+    // if (isMobile) setPageSize(3);
     loadProjects();
   }, []);
 
