@@ -64,8 +64,8 @@ function Education() {
       {loadedEducations.map((education) => (
         <li key={education.id}>
           <Typography
-            variant="h6"
-            style={{ color: theme.palette.text.primary }}
+            variant="subtitle2"
+            style={{ color: theme.palette.text.secondary }}
           >{`${education.duration.start} - ${education.duration.end}`}</Typography>
           <Typography
             variant="h5"
