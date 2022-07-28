@@ -18,7 +18,7 @@ function Certifications() {
   const [loadedCertificates, setLoadedCertificates] = useState([]);
   const [pageNo, setPageNo] = useState(0);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(3);
 
   function loadCertificates() {
     const startIndex = pageNo * pageSize;
@@ -36,7 +36,7 @@ function Certifications() {
   }
 
   useEffect(() => {
-    if (isMobile) setPageSize(3);
+    // if (isMobile) setPageSize(3);
     loadCertificates();
   }, []);
 
