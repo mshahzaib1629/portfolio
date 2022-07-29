@@ -18,14 +18,13 @@ const ProjectsGallery = () => {
   const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState(null);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [loadedProjects, setLoadedProjects] = useState([]);
   const [pageNo, setPageNo] = useState(0);
-  const [pageSize, setPageSize] = useState(3);
 
   const getSelected = (id) => projectList.find((elem) => elem.id === id);
 
   function loadProjects() {
+    const pageSize = window.matchMedia("(max-width: 700px)").matches ? 3 : 6;
     const startIndex = pageNo * pageSize;
     const endIndex = startIndex + pageSize;
     let newProjects = projectList.filter((value, index) => {
@@ -36,12 +35,9 @@ const ProjectsGallery = () => {
   }
 
   useEffect(() => {
-    // if (isMobile) setPageSize(3);
     loadProjects();
   }, []);
 
-  console.log('loadedProjects after pageNo: ', pageNo,' pageSize: ', pageSize);
-  console.log(loadedProjects);
   return (
     <>
       <AnimateSharedLayout type="crossfade">
