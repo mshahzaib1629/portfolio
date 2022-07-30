@@ -42,8 +42,8 @@ const Social = ({ mobile }) => {
   if (mobile) {
     return (
       <div className={classes.mobileWrapper}>
-        {socialMediaList.map((social) => (
-          <a href={social.link} target={"_blank"} rel="noreferrer">
+        {socialMediaList.map((social, index) => (
+          <a key={index} href={social.link} target={"_blank"} rel="noreferrer">
             <IconBtn icon={social.icon} m={1} />
           </a>
         ))}
@@ -52,8 +52,9 @@ const Social = ({ mobile }) => {
   } else {
     return (
       <motion.div className={classes.wrapper}>
-        {socialMediaList.map((social) => (
+        {socialMediaList.map((social, index) => (
           <motion.div
+          key={index}
             animate={controls}
             custom={0}
             className={classes.socialIcon}

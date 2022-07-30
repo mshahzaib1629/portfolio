@@ -34,11 +34,11 @@ const KnowMore = () => {
   const webView = () => {
     return (
       <>
-        <div class={classes.wrapper}>
+        <div className={classes.wrapper}>
           <ul id={classes.tab}>
-            {Object.keys(tabs).map((tab) => {
+            {Object.keys(tabs).map((tab, index) => {
               return (
-                <li>
+                <li key={index}>
                   <div
                     className={
                       selectedTab.index === tabs[tab].index
@@ -54,7 +54,7 @@ const KnowMore = () => {
             })}
           </ul>
         </div>
-        <div class={classes.body}>{selectedTab.component}</div>
+        <div className={classes.body}>{selectedTab.component}</div>
       </>
     );
   };
@@ -64,9 +64,9 @@ const KnowMore = () => {
       <>
         {Object.keys(tabs)
           .reverse()
-          .map((tab) => {
+          .map((tab, index) => {
             return (
-              <Accordion style={{ marginBottom: "10px" }}>
+              <Accordion key={index} style={{ marginBottom: "10px" }}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon style={{color: theme.palette.text.secondary}}/>}
                   aria-controls={`${tab}-content`}
