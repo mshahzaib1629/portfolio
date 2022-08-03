@@ -5,6 +5,7 @@ import { Link, Events } from "react-scroll";
 import LangSelector from "./LangSelector";
 import LoaderContext from "../../contexts/loaderContext";
 import { useTranslation } from "react-i18next";
+import { resumeLink } from "../../data";
 
 const smoothScrollProps = {
     spy: true,
@@ -120,7 +121,7 @@ const Menu = ({homeIsActive}) => {
             <motion.div custom={5} animate={controls}>
                 <Button
                     component={MuiLink}
-                    href="https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/Resume.pdf?alt=media&token=2cef9350-894d-4e75-ac00-122611a49715"
+                    href={resumeLink}
                     target="_blank"
                     variant="outlined"
                     color="primary"
