@@ -4,6 +4,7 @@ import { Link } from "react-scroll";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import LangSelector from "./LangSelector";
 import { useTranslation } from "react-i18next";
+import { resumeLink } from "../../data";
 
 const MobileMenu = ({ open, onClose, onOpen }) => {
     const classes = useStyles();
@@ -43,7 +44,7 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
                     <ListItem className={classes.btnContainer}>
                         <Button
                             component={MuiLink}
-                            href="https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/Resume.pdf?alt=media&token=18d6e018-464c-47a9-b8a2-2cc919028749"
+                            href={resumeLink}
                             target="_blank"
                             variant="outlined"
                             color="primary"

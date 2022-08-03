@@ -1,3 +1,6 @@
+const resumeLink =
+  "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/Resume.pdf?alt=media&token=fc8f6255-b487-480d-8c20-7699a1dcd17b";
+
 const skillsList = [
   { title: "React JS", value: 75 },
   { title: "Next JS", value: 80 },
@@ -193,7 +196,8 @@ const certificates = [
     issuedBy: "Google | Coursera",
     nature: "Course",
     date: "July 2020",
-    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fgithub.jpeg?alt=media&token=fb54dca7-c276-42b8-9fa4-fa645e477442",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fgithub.jpeg?alt=media&token=fb54dca7-c276-42b8-9fa4-fa645e477442",
     url: "https://coursera.org/share/c9a556d70bf345ad5eaf10d3ffcd8567",
   },
 
@@ -203,7 +207,8 @@ const certificates = [
     issuedBy: "Google Cloud | Coursera",
     nature: "Specialization",
     date: "Sep 2020",
-    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fgcp-specialization.jpeg?alt=media&token=cd26a76e-b064-4bba-8fca-2f43123b7e4a",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fgcp-specialization.jpeg?alt=media&token=cd26a76e-b064-4bba-8fca-2f43123b7e4a",
     url: "https://coursera.org/share/ea765a0331f5779bf9ae7a3da33b466a",
   },
   {
@@ -221,7 +226,8 @@ const certificates = [
     issuedBy: "University of Alberta | Coursera",
     nature: "Specialization",
     date: "Feb 2021",
-    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fspm.jpeg?alt=media&token=5cd066e7-d6d9-4647-bc1c-0680414970b0",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fspm.jpeg?alt=media&token=5cd066e7-d6d9-4647-bc1c-0680414970b0",
     url: "https://coursera.org/share/7256addd80a78e41a2721b4ad15f8a73",
   },
 
@@ -231,7 +237,8 @@ const certificates = [
     issuedBy: "DeepLearning.AI | Coursera",
     nature: "Course",
     date: "Apr 2022",
-    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fnn.jpeg?alt=media&token=8587dbcd-2c16-4205-8234-9b6a02ebbfc1",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fnn.jpeg?alt=media&token=8587dbcd-2c16-4205-8234-9b6a02ebbfc1",
     url: "https://www.coursera.org/account/accomplishments/verify/5GKJFEBLXG5H",
   },
 
@@ -241,9 +248,17 @@ const certificates = [
     issuedBy: "DeepLearning.AI | Coursera",
     nature: "Course",
     date: "May 2022",
-    image: "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fimproved%20dn.jpeg?alt=media&token=39b3d4b1-b623-431e-89a5-bfb9541fef53",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/portfolio-ff548.appspot.com/o/certificates-images%2Fimproved%20dn.jpeg?alt=media&token=39b3d4b1-b623-431e-89a5-bfb9541fef53",
     url: "https://www.coursera.org/account/accomplishments/verify/DU27KARR7JMC",
   },
 ];
 
-export { skillsList, projectList, experienceList, educations, certificates };
+export {
+  resumeLink,
+  skillsList,
+  projectList,
+  experienceList,
+  educations,
+  certificates,
+};
