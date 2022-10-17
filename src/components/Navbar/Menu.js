@@ -5,6 +5,7 @@ import { Link, Events } from "react-scroll";
 import LangSelector from "./LangSelector";
 import LoaderContext from "../../contexts/loaderContext";
 import { useTranslation } from "react-i18next";
+import { resumeLink } from "../../data";
 
 const smoothScrollProps = {
     spy: true,
@@ -104,15 +105,24 @@ const Menu = ({homeIsActive}) => {
                     component={AnimatedLink}
                     animate={controls}
                     custom={3}
-                    to="contact"
-                    label={t('menu_contact')}
+                    to="know_more"
+                    label={t('menu_know_more')}
                     onSetActive={() => spyHandleChange(3)}
                 />
+                <StyledTab
+                    component={AnimatedLink}
+                    animate={controls}
+                    custom={4}
+                    to="contact"
+                    label={t('menu_contact')}
+                    onSetActive={() => spyHandleChange(4)}
+                />
             </StyledTabs>
-            <motion.div custom={4} animate={controls}>
+            <motion.div custom={5} animate={controls}>
                 <Button
                     component={MuiLink}
-                    href="/resume.pdf"
+                    href={resumeLink}
+                    target="_blank"
                     variant="outlined"
                     color="primary"
                     underline="none"

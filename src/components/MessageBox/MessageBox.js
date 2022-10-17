@@ -101,7 +101,8 @@ const MessageBox = () => {
                                     fullWidth
                                     variant="contained"
                                     color="primary"
-                                    disabled={sending}
+                                    // disabled={sending}
+                                    disabled={true}
                                 >
                                     {t('contact_btn')}
                                 </Button>

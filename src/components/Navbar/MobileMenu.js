@@ -4,6 +4,7 @@ import { Link } from "react-scroll";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import LangSelector from "./LangSelector";
 import { useTranslation } from "react-i18next";
+import { resumeLink } from "../../data";
 
 const MobileMenu = ({ open, onClose, onOpen }) => {
     const classes = useStyles();
@@ -34,13 +35,17 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
                     <ListItem {...listItemProps} to="projects">
                         {t('menu_projects')}
                     </ListItem>
+                    <ListItem {...listItemProps} to="know_more">
+                        {t('menu_know_more')}
+                    </ListItem>
                     <ListItem {...listItemProps} to="contact">
                         {t('menu_contact')}
                     </ListItem>
                     <ListItem className={classes.btnContainer}>
                         <Button
                             component={MuiLink}
-                            href="/resume.pdf"
+                            href={resumeLink}
+                            target="_blank"
                             variant="outlined"
                             color="primary"
                             underline="none"
