@@ -10,6 +10,7 @@ import ThemeContext from "./contexts/themeContext";
 import LoaderContext from "./contexts/loaderContext";
 import Layout from "./portal/layout";
 import LoginPage from "./portal/pages/login";
+import initializeFirebaseSDKs from "./utils/firebase-setup";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -22,6 +23,7 @@ function App() {
     // } else {
     //     setIsDarkMode(false);useHistory
     // }
+    initializeFirebaseSDKs();
   }, []);
 
   const renderPage = () => {
