@@ -39,6 +39,7 @@ function Education() {
                     education.links.facebook ||
                     education.links.instagram
                   }
+                  style={{cursor: "pointer", textDecoration: "none" }}
                   color="primary"
                   target={"_blank"}
                 >
@@ -78,6 +79,7 @@ function Education() {
                 education.links.facebook ||
                 education.links.instagram
               }
+              style={{cursor: "pointer", textDecoration: "none" }}
               color="primary"
               target={"_blank"}
             >
