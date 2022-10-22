@@ -37,7 +37,7 @@ const StyledTabs = () => {
     return (
       <TabPanel value={value} index={exp.id} key={exp.id}>
         <Box mb={4}>
-          <Typography variant="h5">
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
             {exp.jobTitle} @{" "}
             <Link
               href={
@@ -49,7 +49,7 @@ const StyledTabs = () => {
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="body2" color="textSecondary" fontSize="14">
+          <Typography variant="body2" style={{ color: theme.palette.text.secondary }} fontSize="14">
             {exp.duration.start} - {exp.duration.end}
           </Typography>
         </Box>
@@ -74,8 +74,12 @@ const StyledTabs = () => {
     return (
       <TabPanel value={value} index={exp.id} key={exp.id}>
         <Box mb={4}>
-          <Typography variant="h5">{exp.jobTitle}</Typography>
-          <Typography variant="h5">
+        <Typography
+            variant="subtitle2"
+            style={{ color: theme.palette.text.secondary }}
+          >{exp.duration.start} - {exp.duration.end}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>{exp.jobTitle}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
             @{" "}
             <Link
               href={
@@ -86,9 +90,6 @@ const StyledTabs = () => {
             >
               {exp.company}
             </Link>
-          </Typography>
-          <Typography variant="body2" color="textSecondary" fontSize="14">
-            {exp.duration.start} - {exp.duration.end}
           </Typography>
         </Box>
         <Box mb={4}>
