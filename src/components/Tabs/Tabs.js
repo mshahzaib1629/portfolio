@@ -32,6 +32,82 @@ const StyledTabs = () => {
       </a>
     );
   };
+
+  const webViewPanel = (exp) => {
+    return (
+      <TabPanel value={value} index={exp.id} key={exp.id}>
+        <Box mb={4}>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+            {exp.jobTitle} @{" "}
+            <Link
+              href={
+                exp.links.website || exp.links.facebook || exp.links.instagram
+              }
+              color="primary"
+              target={"_blank"}
+            >
+              {exp.company}
+            </Link>
+          </Typography>
+          <Typography variant="body2" style={{ color: theme.palette.text.secondary }} fontSize="14">
+            {exp.duration.start} - {exp.duration.end}
+          </Typography>
+        </Box>
+        <Box mb={4}>
+          <Typography variant="body1" color="textPrimary">
+            {exp.overview}
+          </Typography>
+        </Box>
+        <Box>
+          {exp.links.website &&
+            socialLinkButton({ link: exp.links.website, icon: Language })}
+          {exp.links.facebook &&
+            socialLinkButton({ link: exp.links.facebook, icon: Facebook })}
+          {exp.links.linkedIn &&
+            socialLinkButton({ link: exp.links.linkedIn, icon: LinkedIn })}
+        </Box>
+      </TabPanel>
+    );
+  };
+
+  const mobileViewPanel = (exp) => {
+    return (
+      <TabPanel value={value} index={exp.id} key={exp.id}>
+        <Box mb={4}>
+        <Typography
+            variant="subtitle2"
+            style={{ color: theme.palette.text.secondary }}
+          >{exp.duration.start} - {exp.duration.end}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>{exp.jobTitle}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+            @{" "}
+            <Link
+              href={
+                exp.links.website || exp.links.facebook || exp.links.instagram
+              }
+              color="primary"
+              target={"_blank"}
+            >
+              {exp.company}
+            </Link>
+          </Typography>
+        </Box>
+        <Box mb={4}>
+          <Typography variant="body1" color="textPrimary">
+            {exp.overview}
+          </Typography>
+        </Box>
+        <Box>
+          {exp.links.website &&
+            socialLinkButton({ link: exp.links.website, icon: Language })}
+          {exp.links.facebook &&
+            socialLinkButton({ link: exp.links.facebook, icon: Facebook })}
+          {exp.links.linkedIn &&
+            socialLinkButton({ link: exp.links.linkedIn, icon: LinkedIn })}
+        </Box>
+      </TabPanel>
+    );
+  };
   return (
     <div className={classes.root}>
       <Tabs
@@ -46,44 +122,9 @@ const StyledTabs = () => {
           <Tab label={elem.company} key={elem.id} />
         ))}
       </Tabs>
-      {experienceList.map((elem) => (
-        <TabPanel value={value} index={elem.id} key={elem.id}>
-          <Box mb={4}>
-            <Typography variant="h5">
-              {elem.jobTitle} @{" "}
-              <Link
-                href={
-                  elem.links.website ||
-                  elem.links.facebook ||
-                  elem.links.instagram
-                }
-                color="primary"
-                target={"_blank"}
-              >
-                {elem.company}
-              </Link>
-            </Typography>
-            <Typography variant="body2" color="textSecondary" fontSize="14">
-              {elem.duration.start} - {elem.duration.end}
-            </Typography>
-          </Box>
-          <Box mb={4}>
-            <Typography variant="body1" color="textPrimary">
-              {elem.overview}
-            </Typography>
-          </Box>
-          <Box>
-            {elem.links.website &&
-              socialLinkButton({ link: elem.links.website, icon: Language })}
-            {elem.links.facebook && (
-              socialLinkButton({link: elem.links.facebook, icon: Facebook})
-            )}
-            {elem.links.linkedIn && (
-              socialLinkButton({link: elem.links.linkedIn, icon: LinkedIn})
-            )}
-          </Box>
-        </TabPanel>
-      ))}
+      {experienceList.map((elem) =>
+        isMobile ? mobileViewPanel(elem) : webViewPanel(elem)
+      )}
     </div>
   );
 };
