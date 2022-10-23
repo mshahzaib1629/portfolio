@@ -49,7 +49,7 @@ const StyledTabs = () => {
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="body2" style={{ color: theme.palette.text.secondary }} fontSize="14">
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }} fontSize="14">
             {exp.location} &nbsp; | &nbsp; {exp.duration.start} - {exp.duration.end}
           </Typography>
         </Box>
@@ -91,7 +91,7 @@ const StyledTabs = () => {
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="subtitle1" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
         </Box>
         <Box mb={4}>
           <Typography variant="body1" color="textPrimary">
