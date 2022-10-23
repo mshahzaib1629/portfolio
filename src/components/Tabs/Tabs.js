@@ -44,13 +44,14 @@ const StyledTabs = () => {
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="body2" style={{ color: theme.palette.text.secondary }} fontSize="14">
-            {exp.duration.start} - {exp.duration.end}
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }} fontSize="14">
+            {exp.location} &nbsp; | &nbsp; {exp.duration.start} - {exp.duration.end}
           </Typography>
         </Box>
         <Box mb={4}>
@@ -86,11 +87,13 @@ const StyledTabs = () => {
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
             </Link>
           </Typography>
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
         </Box>
         <Box mb={4}>
           <Typography variant="body1" color="textPrimary">
