@@ -87,7 +87,7 @@ function Education() {
             </Link>
           </Typography>
           <Typography
-            variant="h6"
+            variant="subtitle1"
             style={{ color: theme.palette.text.secondary }}
           >
             {education.location}
