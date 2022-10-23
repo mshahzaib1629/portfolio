@@ -92,7 +92,6 @@ const StyledTabs = () => {
             </Link>
           </Typography>
           <Typography variant="subtitle1" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
-          {/* <Typography variant="body1" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography> */}
         </Box>
         <Box mb={4}>
           <Typography variant="body1" color="textPrimary">
