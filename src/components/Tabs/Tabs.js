@@ -44,6 +44,7 @@ const StyledTabs = () => {
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
@@ -86,6 +87,7 @@ const StyledTabs = () => {
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
