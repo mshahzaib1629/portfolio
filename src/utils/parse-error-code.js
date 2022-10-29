@@ -4,7 +4,7 @@ export default function parseErrorCode(errorCode) {
   const errorCatalogue = {
     "auth/user-not-found": "Invalid Email / Password",
     "auth/wrong-password": "Invalid Email / Password",
-    "auth/too-many-requests": "Requests blocked, try again after sometime",
+    "auth/too-many-requests": "Request blocked, try again after sometime",
   };
 
   let errorMessage = "Something went wrong!";

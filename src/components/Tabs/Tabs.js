@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   makeStyles,
   Tabs,
@@ -13,6 +13,8 @@ import { Language, Facebook, LinkedIn } from "@material-ui/icons";
 import { experienceList } from "../../data";
 import IconBtn from "../../components/IconBtn";
 import { useTranslation } from "react-i18next";
+import { firestore } from "../../utils/firebase-setup";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 
 const StyledTabs = () => {
   const theme = useTheme();
@@ -25,6 +27,43 @@ const StyledTabs = () => {
     setValue(newValue);
   };
 
+  async function addDummyExperience() {
+    try {
+      const experienceData = {
+        company: "Code District",
+        jobTitle: "MERN Stack Developer",
+        overview:
+          "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
+        duration: {
+          start: "Jan 2022",
+          end: "cont.",
+        },
+        links: {
+          website: "https://www.codedistrict.com/",
+          facebook: "https://www.facebook.com/codedistrictpk/",
+          linkedIn: "https://www.linkedin.com/company/the-code-district/",
+        },
+      };
+      const docRef = await addDoc(
+        collection(firestore, "experience"),
+        experienceData
+      );
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+
+  async function getExperienceData() {
+    const querySnapshot = await getDocs(collection(firestore, "experience"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+    });
+  }
+  useEffect(() => {
+    // addDummyExperience();
+    getExperienceData();
+  }, []);
   const socialLinkButton = (social) => {
     return (
       <a href={social.link} target="_blank" rel="noreferrer">
@@ -75,12 +114,10 @@ const StyledTabs = () => {
           <Box>
             {elem.links.website &&
               socialLinkButton({ link: elem.links.website, icon: Language })}
-            {elem.links.facebook && (
-              socialLinkButton({link: elem.links.facebook, icon: Facebook})
-            )}
-            {elem.links.linkedIn && (
-              socialLinkButton({link: elem.links.linkedIn, icon: LinkedIn})
-            )}
+            {elem.links.facebook &&
+              socialLinkButton({ link: elem.links.facebook, icon: Facebook })}
+            {elem.links.linkedIn &&
+              socialLinkButton({ link: elem.links.linkedIn, icon: LinkedIn })}
           </Box>
         </TabPanel>
       ))}
