@@ -26,6 +26,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { signOut, getAuth } from "firebase/auth";
+
+const mdTheme = createTheme();
+const drawerWidth = 240;
 
 function Copyright(props) {
   return (
@@ -45,7 +49,6 @@ function Copyright(props) {
   );
 }
 
-const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -91,7 +94,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
 
 function DashboardContent() {
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -111,8 +113,12 @@ function DashboardContent() {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/", { replace: true });
+    signOut(getAuth()).then(() => {
+      console.log('logging out...');
+      navigate("/", { replace: true });
+    }).catch((error) => {
+      console.log('logging out error: ', error);
+    });
   };
 
   const getPageTitle = () => {

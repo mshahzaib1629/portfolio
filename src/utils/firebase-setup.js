@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,11 +14,17 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
+export let firestore;
+export let fireStorage;
+export let fireAuth;
+
 export default function initializeFirebaseSDKs() {
   if (firebaseConfig.projectId) {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    const db = getFirestore(app);
+    fireAuth = getAuth(app);
+    firestore = getFirestore(app);
+    fireStorage = getStorage(app);
     console.log("firebase connected!");
   }
 }

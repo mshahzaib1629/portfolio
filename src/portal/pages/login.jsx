@@ -13,6 +13,16 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useState } from "react";
+import BackdropLoading from "../../components/BackdropLoading";
+import MuiAlert from "@mui/material/Alert";
+import AlertTitle from '@mui/material/AlertTitle';
+import parseErrorCode from "../../utils/parse-error-code";
+import Snackbar from '@mui/material/Snackbar';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -36,21 +46,62 @@ const theme = createTheme();
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
+  const [snackAlert, setSnackAlert] = useState(null);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    localStorage.setItem("token", "abcdef");
-    navigate("/", { replace: true });
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    try {
+      const data = new FormData(event.currentTarget);
+      const email = data.get("email");
+      const password = data.get("password");
+
+      setIsAuthLoading(true);
+      const userCredential = await signInWithEmailAndPassword(
+        getAuth(),
+        email,
+        password
+      );
+      setIsAuthLoading(false);
+      const user = userCredential.user;
+      navigate("/", { replace: true });
+    } catch (error) {
+      setIsAuthLoading(false);
+      const errorMessage = parseErrorCode(error.code);
+      setSnackAlert({ severity: "error", title: "Error", message: errorMessage });
+    }
   };
+
+  const closeSnackAlert = () => {
+    setSnackAlert(null);
+  };
+
+  const snackbar = () => (
+    <Snackbar
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      severity={snackAlert?.severity}
+      autoHideDuration={6000}
+      open={snackAlert ? true : false}
+      onClose={closeSnackAlert}
+    >
+      <Alert
+        onClose={closeSnackAlert}
+        severity={snackAlert?.severity}
+        sx={{ width: "100%" }}
+      >
+        {snackAlert?.title && <AlertTitle>{snackAlert?.title}</AlertTitle>}
+        {snackAlert?.message}
+      </Alert>
+    </Snackbar>
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <BackdropLoading isLoading={isAuthLoading} />
+        {snackbar()}
         <Box
           sx={{
             marginTop: 8,
