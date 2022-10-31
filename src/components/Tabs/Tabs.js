@@ -10,17 +10,26 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { Language, Facebook, LinkedIn } from "@material-ui/icons";
-import { experienceList } from "../../data";
 import IconBtn from "../../components/IconBtn";
 import { useTranslation } from "react-i18next";
 import { firestore } from "../../utils/firebase-setup";
 import { collection, addDoc, getDocs } from "firebase/firestore";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchExperienceThunk } from "../../redux/slices/experienceSlice";
 
 const StyledTabs = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles({ isMobile });
+
+  const dispatch = useDispatch();
+
+  const { experienceList } = useSelector(
+    (state) => state.experience
+  );
+
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,13 +64,16 @@ const StyledTabs = () => {
   }
 
   async function getExperienceData() {
-    const querySnapshot = await getDocs(collection(firestore, "experience"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-    });
+    try {
+      setIsLoading(true);
+      await dispatch(fetchExperienceThunk());
+      setIsLoading(false);
+    } catch (error) {
+      console.log("error: ", error);
+      setIsLoading(false);
+    }
   }
   useEffect(() => {
-    // addDummyExperience();
     getExperienceData();
   }, []);
   const socialLinkButton = (social) => {
@@ -71,7 +83,9 @@ const StyledTabs = () => {
       </a>
     );
   };
-  return (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <div className={classes.root}>
       <Tabs
         orientation={isMobile ? "horizontal" : "vertical"}
@@ -86,7 +100,7 @@ const StyledTabs = () => {
         ))}
       </Tabs>
       {experienceList.map((elem) => (
-        <TabPanel value={value} index={elem.id} key={elem.id}>
+        <TabPanel value={value} index={elem.index} key={elem.id}>
           <Box mb={4}>
             <Typography variant="h5">
               {elem.jobTitle} @{" "}
