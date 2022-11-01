@@ -15,7 +15,12 @@ import { useTranslation } from "react-i18next";
 import { firestore } from "../../utils/firebase-setup";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchExperienceThunk } from "../../redux/slices/experienceSlice";
+import {
+  fetchExperienceThunk,
+  addNewExperienceThunk,
+  deleteExperienceThunk,
+  editExperienceThunk,
+} from "../../redux/slices/experienceSlice";
 
 const StyledTabs = () => {
   const theme = useTheme();
@@ -25,11 +30,10 @@ const StyledTabs = () => {
 
   const dispatch = useDispatch();
 
-  const { experienceList } = useSelector(
+  const { experienceList, isLoading } = useSelector(
     (state) => state.experience
   );
 
-  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -39,8 +43,8 @@ const StyledTabs = () => {
   async function addDummyExperience() {
     try {
       const experienceData = {
-        company: "Code District",
-        jobTitle: "MERN Stack Developer",
+        company: "TESTING 2",
+        jobTitle: "TESTING DOC",
         overview:
           "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
         duration: {
@@ -53,27 +57,69 @@ const StyledTabs = () => {
           linkedIn: "https://www.linkedin.com/company/the-code-district/",
         },
       };
-      const docRef = await addDoc(
-        collection(firestore, "experience"),
-        experienceData
-      );
-      console.log("Document written with ID: ", docRef.id);
+      console.log("add dispatched");
+      await dispatch(addNewExperienceThunk(experienceData));
+      console.log("add done");
+      getExperienceData();
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
 
-  async function getExperienceData() {
+  async function deleteDummyExperience() {
     try {
-      setIsLoading(true);
-      await dispatch(fetchExperienceThunk());
-      setIsLoading(false);
-    } catch (error) {
-      console.log("error: ", error);
-      setIsLoading(false);
+      const eId = "zzWCKH5K5UOhzr6xUR09";
+      console.log("delete dispatched");
+      await dispatch(deleteExperienceThunk(eId));
+      console.log("delete done");
+    } catch (e) {
+      console.error("Error deleting document: ", e);
     }
   }
+
+  async function updateDummyExperience() {
+    try {
+      const eId = "zzWCKH5K5UOhzr6xUR09";
+      const experienceData = {
+        id: eId,
+        company: "TESTING 2",
+        jobTitle: "TESTING DOC",
+        overview:
+          "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
+        duration: {
+          start: "Jan 2022",
+          end: "cont.",
+        },
+        links: {
+          website: "https://www.codedistrict.com/",
+          facebook: "https://www.facebook.com/codedistrictpk/",
+          linkedIn: "https://www.linkedin.com/company/the-code-district/",
+        },
+      };
+      console.log("update dispatched");
+      await dispatch(editExperienceThunk(experienceData));
+      console.log("update done");
+    } catch (e) {
+      console.error("Error deleting document: ", e);
+    }
+  }
+
+  async function getExperienceData() {
+    try {
+      // We can wait for this async operation, and can update states 
+      // before & after of this async operation by using setState()
+      await dispatch(fetchExperienceThunk());
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
   useEffect(() => {
+    // setTimeout(() => {
+    //   addDummyExperience();
+    // }, 3000);
+    // deleteDummyExperience();
+    // updateDummyExperience();
     getExperienceData();
   }, []);
   const socialLinkButton = (social) => {
