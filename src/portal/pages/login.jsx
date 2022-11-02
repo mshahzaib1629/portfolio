@@ -13,13 +13,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useState } from "react";
 import BackdropLoading from "../../components/BackdropLoading";
 import MuiAlert from "@mui/material/Alert";
-import AlertTitle from '@mui/material/AlertTitle';
+import AlertTitle from "@mui/material/AlertTitle";
 import parseErrorCode from "../../utils/parse-error-code";
-import Snackbar from '@mui/material/Snackbar';
+import Snackbar from "@mui/material/Snackbar";
+import { useSelector, useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/slices/authSlice";
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -46,8 +48,10 @@ const theme = createTheme();
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [snackAlert, setSnackAlert] = useState(null);
+
+  const { isLoading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,20 +60,15 @@ export default function LoginPage() {
       const data = new FormData(event.currentTarget);
       const email = data.get("email");
       const password = data.get("password");
-
-      setIsAuthLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        getAuth(),
-        email,
-        password
-      );
-      setIsAuthLoading(false);
-      const user = userCredential.user;
+      await dispatch(loginThunk(email, password));
       navigate("/", { replace: true });
     } catch (error) {
-      setIsAuthLoading(false);
       const errorMessage = parseErrorCode(error.code);
-      setSnackAlert({ severity: "error", title: "Error", message: errorMessage });
+      setSnackAlert({
+        severity: "error",
+        title: "Error",
+        message: errorMessage,
+      });
     }
   };
 
@@ -100,7 +99,7 @@ export default function LoginPage() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <BackdropLoading isLoading={isAuthLoading} />
+        <BackdropLoading isLoading={isLoading} />
         {snackbar()}
         <Box
           sx={{

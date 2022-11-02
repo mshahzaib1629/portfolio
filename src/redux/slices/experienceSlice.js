@@ -18,7 +18,7 @@ const slice = createSlice({
       state.isLoading = true;
     },
     requestFailedAction: (state, action) => {
-      state.error = action.error;
+      state.error = action.payload;
       state.isLoading = false;
     },
     getExperienceListSuccessAction: (state, action) => {
