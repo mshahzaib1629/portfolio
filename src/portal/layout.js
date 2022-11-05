@@ -20,6 +20,7 @@ import { mainListItems } from "./drawerItems";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { protectedRoutes } from "../utils/routes";
 import Avatar from "@mui/material/Avatar";
+import Paper from '@mui/material/Paper';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -48,7 +49,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -94,7 +94,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-
 function DashboardContent() {
   const [openDrawer, setOpenDrawer] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -113,12 +112,14 @@ function DashboardContent() {
   };
 
   const handleLogout = () => {
-    signOut(getAuth()).then(() => {
-      console.log('logging out...');
-      navigate("/", { replace: true });
-    }).catch((error) => {
-      console.log('logging out error: ', error);
-    });
+    signOut(getAuth())
+      .then(() => {
+        console.log("logging out...");
+        navigate("/", { replace: true });
+      })
+      .catch((error) => {
+        console.log("logging out error: ", error);
+      });
   };
 
   const getPageTitle = () => {
@@ -141,6 +142,7 @@ function DashboardContent() {
         break;
       case "social-media":
         title = "Manage Social Media";
+        break;
     }
     return title;
   };
@@ -286,19 +288,21 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Routes>
-              {protectedRoutes.map((route) => (
+            <Paper sx={{ p: 2, display: "flex", flexDirection: "column", minHeight: "640px" }}>
+              <Routes>
+                {protectedRoutes.map((route) => (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={route.element}
+                  />
+                ))}
                 <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
+                  path="/"
+                  element={<Navigate replace to={protectedRoutes[0].path} />}
                 />
-              ))}
-              <Route
-                path="/"
-                element={<Navigate replace to={protectedRoutes[0].path} />}
-              />
-            </Routes>
+              </Routes>
+            </Paper>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

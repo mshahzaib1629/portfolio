@@ -12,8 +12,6 @@ import {
 import { Language, Facebook, LinkedIn } from "@material-ui/icons";
 import IconBtn from "../../components/IconBtn";
 import { useTranslation } from "react-i18next";
-import { firestore } from "../../utils/firebase-setup";
-import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchExperienceThunk,
