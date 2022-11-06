@@ -42,6 +42,7 @@ const StyledTabs = () => {
     try {
       const experienceData = {
         company: "TESTING 2",
+        location: "Lahore, Pakistan",
         jobTitle: "TESTING DOC",
         overview:
           "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
@@ -81,6 +82,7 @@ const StyledTabs = () => {
       const experienceData = {
         id: eId,
         company: "TESTING 2",
+        location: "Lahore, Pakistan",
         jobTitle: "TESTING DOC",
         overview:
           "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",

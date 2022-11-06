@@ -17,9 +17,7 @@ import {
 } from "../../redux/slices/experienceSlice";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const theme = createTheme();
 
 function ExperiencePage() {
   const classes = useStyles();
@@ -70,6 +68,7 @@ function ExperiencePage() {
                 <TableCell>Job Title</TableCell>
                 <TableCell>From</TableCell>
                 <TableCell>To</TableCell>
+                <TableCell>Location</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -80,6 +79,7 @@ function ExperiencePage() {
                   <TableCell>{exp.jobTitle}</TableCell>
                   <TableCell>{exp.duration.start}</TableCell>
                   <TableCell>{exp.duration.end}</TableCell>
+                  <TableCell>{exp.location}</TableCell>
                   <TableCell align="right">
                     <Edit fontSize="small" onClick={() => onEdit(exp.id)} />
                     {"  "}

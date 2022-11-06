@@ -115,6 +115,7 @@ const experienceList = [
   {
     id: 0,
     company: "Code District",
+    location: "Lahore, Pakistan",
     jobTitle: "MERN Stack Developer",
     overview:
       "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
@@ -131,6 +132,7 @@ const experienceList = [
   {
     id: 1,
     company: "Venture Studio",
+    location: "Dubai, UAE",
     jobTitle: "Flutter Developer",
     overview:
       "Venture Studio is a Dubai based startup company. Its main focus is on PaaS. Here we developed many applications that bring ease in consumers' daily routine tasks.",
