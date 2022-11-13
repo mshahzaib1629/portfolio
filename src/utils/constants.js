@@ -18,6 +18,22 @@ const K = {
       name: "certifications",
     },
   },
+  app: {
+    months: [
+      "January",
+      "Fabruary",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+  },
 };
 
 export default K;

@@ -30,7 +30,7 @@ const slice = createSlice({
       state.isLoading = false;
     },
     setEditableExperienceAction: (state, action) => {
-      state.editableExperienceId = action.payload.experienceId;
+      state.editableExperienceId = action?.payload?.experienceId;
     },
     editExperienceSuccessAction: (state, action) => {
       state.editableExperienceId = null;
