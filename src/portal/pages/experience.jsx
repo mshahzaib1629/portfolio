@@ -28,6 +28,7 @@ import {
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import K from "../../utils/constants";
+import { useFormik } from "formik";
 
 function ExperiencePage() {
   const classes = useStyles();
@@ -36,7 +37,32 @@ function ExperiencePage() {
   const { experienceList, isLoading, editableExperienceId } = useSelector(
     (state) => state.experience
   );
+  // TODO: obsolete code
   const [form, setForm] = useState(null);
+
+  const formik = useFormik({
+    initialValues: {
+      company: "",
+      jobTitle: "",
+      location: "",
+      duration: {
+        startMonth: "",
+        startYear: "",
+        endMonth: "",
+        endYear: "",
+        currentlyWorkingHere: false,
+      },
+      description: "",
+      links: {
+        linkedIn: "",
+        websiteUrl: "",
+      },
+    },
+    onSubmit: (values) => {
+      console.log("formik values: ", values);
+      formik.resetForm();
+    },
+  });
 
   async function getExperienceData() {
     try {
@@ -52,7 +78,9 @@ function ExperiencePage() {
     )[0];
     console.log("editing exp: ", targetExperience);
     if (targetExperience != undefined && targetExperience != null)
+      // TODO: obsolete code; update editable form
       setForm(targetExperience);
+    // formik.setValues(target)
   }, [editableExperienceId]);
 
   useEffect(() => {
@@ -70,20 +98,32 @@ function ExperiencePage() {
 
   const createNewForm = () => {
     dispatch(setEditableExperienceAction(null));
+    // TODO: obsolete code
     setForm({});
   };
 
   const resetForm = () => {
     dispatch(setEditableExperienceAction(null));
+    // TODO: obsolete code; update code
     setForm(null);
   };
 
   const submitForm = (event) => {
+    // TODO: obsolete code
     event.preventDefault();
     const isEditing = editableExperienceId != (null || undefined);
-    
+    console.log("form: ", form);
     // After saving data in db
     resetForm();
+  };
+
+  const handleFormChange = (event) => {
+    // TODO: obsolete code
+    console.log("event.target: ", event.target.name);
+    setForm((state) => ({
+      ...state,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   function showExperienceListing() {
@@ -151,7 +191,7 @@ function ExperiencePage() {
         <div className={classes.pageHead}>
           <h2>{editableExperienceId ? "Edit" : "Add New"} Experience</h2>
         </div>
-        <form onSubmit={submitForm}>
+        <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item md={6}>
               <TextField
@@ -161,6 +201,8 @@ function ExperiencePage() {
                 id="company"
                 label="Company Name"
                 name="company"
+                value={formik.values.company}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item md={6}>
@@ -171,18 +213,21 @@ function ExperiencePage() {
                 id="jobTitle"
                 label="Job Title"
                 name="jobTitle"
+                value={formik.values.jobTitle}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid container item md={6} className={classes.pageHead}>
-              <Grid md={3}>
+              <Grid item md={3}>
                 <FormControl fullWidth margin="normal">
                   <InputLabel id="start-month-label">Start Month</InputLabel>
                   <Select
                     labelId="start-month-label"
                     id="start-month"
-                    // value={form.year}
                     label="Start Month"
-                    // onChange={handleChange}
+                    name="duration.startMonth"
+                    value={formik.values.duration.startMonth}
+                    onChange={formik.handleChange}
                   >
                     {K.app.months.map((month, index) => (
                       <MenuItem id={index} value={month}>
@@ -193,15 +238,16 @@ function ExperiencePage() {
                 </FormControl>
               </Grid>
 
-              <Grid md={2.5}>
+              <Grid item md={2.5}>
                 <FormControl fullWidth margin="normal">
                   <InputLabel id="start-year-label">Start Year</InputLabel>
                   <Select
                     labelId="start-year-label"
                     id="start-year"
-                    // value={form.year}
                     label="Start Year"
-                    // onChange={handleChange}
+                    name="duration.startYear"
+                    value={formik.values.duration.startYear}
+                    onChange={formik.handleChange}
                   >
                     {getYearRange().map((year, index) => (
                       <MenuItem id={index} value={year}>
@@ -211,15 +257,17 @@ function ExperiencePage() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid md={3}>
+              <Grid item md={3}>
                 <FormControl fullWidth margin="normal">
                   <InputLabel id="end-month-label">End Month</InputLabel>
                   <Select
                     labelId="end-month-label"
                     id="end-month"
-                    // value={form.year}
                     label="End Month"
-                    // onChange={handleChange}
+                    name="duration.endMonth"
+                    value={formik.values.duration.endMonth}
+                    onChange={formik.handleChange}
+                    disabled={formik.values.duration.currentlyWorkingHere}
                   >
                     {K.app.months.map((month, index) => (
                       <MenuItem id={index} value={month}>
@@ -229,15 +277,17 @@ function ExperiencePage() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid md={2.5}>
+              <Grid item md={2.5}>
                 <FormControl fullWidth margin="normal">
                   <InputLabel id="end-year-label">End Year</InputLabel>
                   <Select
                     labelId="end-year-label"
                     id="end-year"
-                    // value={form.year}
                     label="End Year"
-                    // onChange={handleChange}
+                    name="duration.endYear"
+                    value={formik.values.duration.endYear}
+                    onChange={formik.handleChange}
+                    disabled={formik.values.duration.currentlyWorkingHere}
                   >
                     {getYearRange().map((year, index) => (
                       <MenuItem id={index} value={year}>
@@ -257,11 +307,19 @@ function ExperiencePage() {
                 label="Location"
                 placeholder="City, Country"
                 name="location"
+                value={formik.values.location}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item md={12}>
               <FormControlLabel
-                control={<Checkbox />}
+                control={
+                  <Checkbox
+                    name="duration.currentlyWorkingHere"
+                    value={formik.values.duration.currentlyWorkingHere}
+                    onChange={formik.handleChange}
+                  />
+                }
                 label="Currently Working Here"
               />
             </Grid>
@@ -270,20 +328,13 @@ function ExperiencePage() {
                 margin="normal"
                 required
                 id="description"
+                name="description"
                 label="Description"
                 multiline
                 fullWidth
                 rows={4}
-              />
-            </Grid>
-            <Grid item md={6}>
-              <TextField
-                margin="normal"
-                fullWidth
-                id="facebookUrl"
-                label="Facebook URL"
-                placeholder="https://www.facebook.com/"
-                name="facebookUrl"
+                value={formik.values.description}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item md={6}>
@@ -293,7 +344,9 @@ function ExperiencePage() {
                 id="linkedInUrl"
                 label="LinkedIn URL"
                 placeholder="https://www.linkedin.com/in/"
-                name="linkedInUrl"
+                name="links.linkedIn"
+                value={formik.values.links.linkedIn}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item md={6}>
@@ -303,7 +356,9 @@ function ExperiencePage() {
                 id="websiteUrl"
                 label="Website URL"
                 placeholder="https://"
-                name="websiteUrl"
+                name="links.websiteUrl"
+                value={formik.values.links.websiteUrl}
+                onChange={formik.handleChange}
               />
             </Grid>
           </Grid>
@@ -330,7 +385,7 @@ function ExperiencePage() {
       </Container>
     );
   }
-
+  // TODO: obsolete code, update condition
   return form === null ? showExperienceListing() : showExperienceForm();
 }
 
