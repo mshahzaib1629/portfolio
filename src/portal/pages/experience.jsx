@@ -37,8 +37,8 @@ function ExperiencePage() {
   const { experienceList, isLoading, editableExperienceId } = useSelector(
     (state) => state.experience
   );
-  // TODO: obsolete code
-  const [form, setForm] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -52,16 +52,13 @@ function ExperiencePage() {
         endYear: "",
         isWorkingHere: false,
       },
-      description: "",
+      overview: "",
       links: {
         linkedIn: "",
         websiteUrl: "",
       },
     },
-    onSubmit: (values) => {
-      console.log("formik values: ", values);
-      formik.resetForm();
-    },
+    onSubmit: (values) => formSubmit(values),
   });
 
   async function getExperienceData() {
@@ -76,31 +73,10 @@ function ExperiencePage() {
     const targetExperience = experienceList.filter(
       (exp) => exp.id === editableExperienceId
     )[0];
-    console.log("editing exp: ", targetExperience);
     if (targetExperience != undefined && targetExperience != null) {
-      // TODO: obsolete code; update editable form
-      setForm(targetExperience);
-      // formik.setValues({
-      //   company: targetExperience?.company,
-      //   jobTitle: targetExperience?.jobTitle,
-      //   location: targetExperience?.location,
-      //   duration: {
-      //     startMonth: targetExperience?.duration?.startMonth,
-      //     startYear: targetExperience?.duration?.startYear,
-      //     endMonth: targetExperience?.duration?.endMonth,
-      //     endYear: targetExperience?.duration?.endYear,
-      //     isWorkingHere: targetExperience?.duration?.isWorkingHere,
-      //   },
-      //   description: targetExperience?.description,
-      //   links: {
-      //     linkedIn: targetExperience?.links?.linkedIn,
-      //     websiteUrl: targetExperience?.links?.websiteUrl,
-      //   },
-      // });
-      // OR simply we can
+      setShowForm(true);
       formik.setValues(targetExperience);
     }
-    // formik.setValues(target)
   }, [editableExperienceId]);
 
   useEffect(() => {
@@ -118,32 +94,35 @@ function ExperiencePage() {
 
   const createNewForm = () => {
     dispatch(setEditableExperienceAction(null));
-    // TODO: obsolete code
-    setForm({});
+    setShowForm(true);
   };
 
   const resetForm = () => {
     dispatch(setEditableExperienceAction(null));
-    // TODO: obsolete code; update code
-    setForm(null);
+    formik.resetForm();
+    setShowForm(false);
   };
 
-  const submitForm = (event) => {
-    // TODO: obsolete code
-    event.preventDefault();
+  const formSubmit = async (values) => {
+    console.log("formik values: ", values);
     const isEditing = editableExperienceId != (null || undefined);
-    console.log("form: ", form);
-    // After saving data in db
-    resetForm();
-  };
-
-  const handleFormChange = (event) => {
-    // TODO: obsolete code
-    console.log("event.target: ", event.target.name);
-    setForm((state) => ({
-      ...state,
-      [event.target.name]: event.target.value,
-    }));
+    try {
+      setIsFormLoading(true);
+      if (values.duration.isWorkingHere) {
+        values['duration']['endMonth'] = "";
+        values['duration']['endYear'] = "";
+      }
+      if (isEditing) {
+        await dispatch(editExperienceThunk(values));
+      } else {
+        await dispatch(addNewExperienceThunk(values));
+      }
+      setIsFormLoading(false);
+      resetForm();
+      getExperienceData();
+    } catch (error) {
+      console.log("error on form submission: ", error);
+    }
   };
 
   function showExperienceListing() {
@@ -179,8 +158,14 @@ function ExperiencePage() {
                 <TableRow key={exp.id}>
                   <TableCell>{exp.company}</TableCell>
                   <TableCell>{exp.jobTitle}</TableCell>
-                  <TableCell>{exp.duration.start}</TableCell>
-                  <TableCell>{exp.duration.end}</TableCell>
+                  <TableCell>
+                    {exp.duration.startMonth} {exp.duration.startYear}
+                  </TableCell>
+                  <TableCell>
+                    {exp.duration.endMonth && exp.duration.endYear
+                      ? `${exp.duration.endMonth} ${exp.duration.endYear}`
+                      : "cont."}
+                  </TableCell>
                   <TableCell>{exp.location}</TableCell>
                   <TableCell align="right">
                     <Edit fontSize="small" onClick={() => onEdit(exp.id)} />
@@ -208,6 +193,7 @@ function ExperiencePage() {
   function showExperienceForm() {
     return (
       <Container>
+        <BackdropLoading isLoading={isFormLoading} />
         <div className={classes.pageHead}>
           <h2>{editableExperienceId ? "Edit" : "Add New"} Experience</h2>
         </div>
@@ -248,9 +234,10 @@ function ExperiencePage() {
                     name="duration.startMonth"
                     value={formik.values.duration.startMonth}
                     onChange={formik.handleChange}
+                    required
                   >
                     {K.app.months.map((month, index) => (
-                      <MenuItem id={index} value={month}>
+                      <MenuItem id={index} key={index} value={month}>
                         {month}
                       </MenuItem>
                     ))}
@@ -268,9 +255,10 @@ function ExperiencePage() {
                     name="duration.startYear"
                     value={formik.values.duration.startYear}
                     onChange={formik.handleChange}
+                    required
                   >
                     {getYearRange().map((year, index) => (
-                      <MenuItem id={index} value={year}>
+                      <MenuItem id={index} key={index} value={year}>
                         {year}
                       </MenuItem>
                     ))}
@@ -288,9 +276,10 @@ function ExperiencePage() {
                     value={formik.values.duration.endMonth}
                     onChange={formik.handleChange}
                     disabled={formik.values.duration.isWorkingHere}
+                    required={!formik.values.duration.isWorkingHere}
                   >
                     {K.app.months.map((month, index) => (
-                      <MenuItem id={index} value={month}>
+                      <MenuItem id={index} key={index} value={month}>
                         {month}
                       </MenuItem>
                     ))}
@@ -308,9 +297,10 @@ function ExperiencePage() {
                     value={formik.values.duration.endYear}
                     onChange={formik.handleChange}
                     disabled={formik.values.duration.isWorkingHere}
+                    required={!formik.values.duration.isWorkingHere}
                   >
                     {getYearRange().map((year, index) => (
-                      <MenuItem id={index} value={year}>
+                      <MenuItem id={index} key={index} value={year}>
                         {year}
                       </MenuItem>
                     ))}
@@ -336,7 +326,7 @@ function ExperiencePage() {
                 control={
                   <Checkbox
                     name="duration.isWorkingHere"
-                    value={formik.values.duration.isWorkingHere}
+                    checked={formik.values.duration.isWorkingHere}
                     onChange={formik.handleChange}
                   />
                 }
@@ -347,13 +337,13 @@ function ExperiencePage() {
               <TextField
                 margin="normal"
                 required
-                id="description"
-                name="description"
-                label="Description"
+                id="overview"
+                name="overview"
+                label="Overview"
                 multiline
                 fullWidth
                 rows={4}
-                value={formik.values.description}
+                value={formik.values.overview}
                 onChange={formik.handleChange}
               />
             </Grid>
@@ -405,8 +395,7 @@ function ExperiencePage() {
       </Container>
     );
   }
-  // TODO: obsolete code, update condition
-  return form === null ? showExperienceListing() : showExperienceForm();
+  return showForm === false ? showExperienceListing() : showExperienceForm();
 }
 
 const useStyles = makeStyles((theme) => ({
