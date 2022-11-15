@@ -29,6 +29,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // I
 
 function ExperiencePage() {
   const classes = useStyles();
@@ -88,8 +90,29 @@ function ExperiencePage() {
     dispatch(setEditableExperienceAction({ experienceId: id }));
   };
 
-  const onDelete = (experience) => {
-    console.log("delete clicked for id=", experience.id);
+  const onDelete = async (experience) => {
+    const confirmDelete = async () => {
+      try {
+        await dispatch(deleteExperienceThunk(experience.id));
+        getExperienceData();
+      } catch (error) {
+        console.log("error on deleting expereince: ", error);
+      }
+    };
+
+    confirmAlert({
+      message: `Sure to delete experience at ${experience.company}?`,
+      buttons: [
+        {
+          label: "No",
+          onClick: () => {},
+        },
+        {
+          label: "Yes",
+          onClick: confirmDelete,
+        },
+      ],
+    });
   };
 
   const createNewForm = () => {
@@ -109,8 +132,8 @@ function ExperiencePage() {
     try {
       setIsFormLoading(true);
       if (values.duration.isWorkingHere) {
-        values['duration']['endMonth'] = "";
-        values['duration']['endYear'] = "";
+        values["duration"]["endMonth"] = "";
+        values["duration"]["endYear"] = "";
       }
       if (isEditing) {
         await dispatch(editExperienceThunk(values));
