@@ -50,7 +50,7 @@ function ExperiencePage() {
         startYear: "",
         endMonth: "",
         endYear: "",
-        currentlyWorkingHere: false,
+        isWorkingHere: false,
       },
       description: "",
       links: {
@@ -77,9 +77,29 @@ function ExperiencePage() {
       (exp) => exp.id === editableExperienceId
     )[0];
     console.log("editing exp: ", targetExperience);
-    if (targetExperience != undefined && targetExperience != null)
+    if (targetExperience != undefined && targetExperience != null) {
       // TODO: obsolete code; update editable form
       setForm(targetExperience);
+      // formik.setValues({
+      //   company: targetExperience?.company,
+      //   jobTitle: targetExperience?.jobTitle,
+      //   location: targetExperience?.location,
+      //   duration: {
+      //     startMonth: targetExperience?.duration?.startMonth,
+      //     startYear: targetExperience?.duration?.startYear,
+      //     endMonth: targetExperience?.duration?.endMonth,
+      //     endYear: targetExperience?.duration?.endYear,
+      //     isWorkingHere: targetExperience?.duration?.isWorkingHere,
+      //   },
+      //   description: targetExperience?.description,
+      //   links: {
+      //     linkedIn: targetExperience?.links?.linkedIn,
+      //     websiteUrl: targetExperience?.links?.websiteUrl,
+      //   },
+      // });
+      // OR simply we can
+      formik.setValues(targetExperience);
+    }
     // formik.setValues(target)
   }, [editableExperienceId]);
 
@@ -267,7 +287,7 @@ function ExperiencePage() {
                     name="duration.endMonth"
                     value={formik.values.duration.endMonth}
                     onChange={formik.handleChange}
-                    disabled={formik.values.duration.currentlyWorkingHere}
+                    disabled={formik.values.duration.isWorkingHere}
                   >
                     {K.app.months.map((month, index) => (
                       <MenuItem id={index} value={month}>
@@ -287,7 +307,7 @@ function ExperiencePage() {
                     name="duration.endYear"
                     value={formik.values.duration.endYear}
                     onChange={formik.handleChange}
-                    disabled={formik.values.duration.currentlyWorkingHere}
+                    disabled={formik.values.duration.isWorkingHere}
                   >
                     {getYearRange().map((year, index) => (
                       <MenuItem id={index} value={year}>
@@ -315,8 +335,8 @@ function ExperiencePage() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    name="duration.currentlyWorkingHere"
-                    value={formik.values.duration.currentlyWorkingHere}
+                    name="duration.isWorkingHere"
+                    value={formik.values.duration.isWorkingHere}
                     onChange={formik.handleChange}
                   />
                 }
