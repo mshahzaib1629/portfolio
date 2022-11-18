@@ -131,20 +131,24 @@ function ExperiencePage() {
     const isEditing = editableExperienceId != (null || undefined);
     try {
       setIsFormLoading(true);
-      if (values.duration.isWorkingHere) {
-        values["duration"]["endMonth"] = "";
-        values["duration"]["endYear"] = "";
+      const data = JSON.parse(JSON.stringify(values));
+
+      if (data.duration.isWorkingHere) {
+        data["duration"]["endMonth"] = "";
+        data["duration"]["endYear"] = "";
       }
+      console.log("form data: ", data);
       if (isEditing) {
-        await dispatch(editExperienceThunk(values));
+        await dispatch(editExperienceThunk(data));
       } else {
-        await dispatch(addNewExperienceThunk(values));
+        await dispatch(addNewExperienceThunk(data));
       }
       setIsFormLoading(false);
       resetForm();
       getExperienceData();
     } catch (error) {
       console.log("error on form submission: ", error);
+      setIsFormLoading(false);
     }
   };
 
