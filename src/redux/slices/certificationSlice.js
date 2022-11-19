@@ -30,7 +30,7 @@ const slice = createSlice({
       state.isLoading = false;
     },
     setEditableCertificationAction: (state, action) => {
-      state.editableCertificationId = action.payload.certificationId;
+      state.editableCertificationId = action.payload?.certificationId;
     },
     editCertificationSuccessAction: (state, action) => {
       state.editableCertificationId = null;
