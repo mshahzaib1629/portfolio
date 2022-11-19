@@ -14,7 +14,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import BackdropLoading from "../../components/BackdropLoading";
-import { experienceList } from "../../data";
 import { Delete, Edit } from "@material-ui/icons";
 import { Button } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
@@ -29,12 +28,10 @@ import {
 import { useState, useEffect } from "react";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // I
 import ConfirmDialog from "../../components/ConfirmDialog";
 function ExperiencePage() {
+  
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const { experienceList, isLoading, editableExperienceId } = useSelector(
     (state) => state.experience
@@ -147,38 +144,6 @@ function ExperiencePage() {
   function showExperienceListing() {
     return (
       <Container>
-        {/* <Dialog
-          open={experienceToDelete != null}
-          onClose={() => {
-            setExperienceToDelete(null);
-          }}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        > */}
-        {/* <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Do you want to delete experience at{" "}
-              <b>{experienceToDelete?.company}</b>? <br />
-              This action can not be reverted.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setExperienceToDelete(null);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={deleteExperience}
-              autoFocus
-            >
-              Yes
-            </Button>
-          </DialogActions>
-        </Dialog> */}
         <ConfirmDialog
           shouldOpen={experienceToDelete != null}
           title="Are you sure?"

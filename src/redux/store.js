@@ -11,7 +11,7 @@ const store = configureStore({
     experience: experienceReducer,
     auth: authReducer,
     certification: certificationReducer,
-    educaiton: educationReducer,
+    education: educationReducer,
     project: projectReducer,
     profile: profileReducer,
   },

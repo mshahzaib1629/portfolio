@@ -22,6 +22,10 @@ const getEducationList = async () => {
         ...doc.data(),
       });
     });
+    // TODO: IT'S A TEMPORARY SOLUTION. ULTIMATE SOLUTION WILL BE SORTING BY ROWS RE-ORDERING
+    data
+      .sort((a, b) => b.duration.endYear - a.duration.endYear)
+      .sort((a, b) => b.duration.isStudying - a.duration.isStudying);
     return data;
   } catch (error) {
     throw error;

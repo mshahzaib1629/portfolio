@@ -30,7 +30,7 @@ const slice = createSlice({
       state.isLoading = false;
     },
     setEditableEducationAction: (state, action) => {
-      state.editableEducationId = action.payload.educationId;
+      state.editableEducationId = action.payload?.educationId;
     },
     editEducationSuccessAction: (state, action) => {
       state.editableEducationId = null;
