@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import BackdropLoading from "../../components/BackdropLoading";
 import { experienceList } from "../../data";
 import { Delete, Edit } from "@material-ui/icons";
+import { Button } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -26,12 +27,11 @@ import {
   setEditableExperienceAction,
 } from "../../redux/slices/experienceSlice";
 import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // I
-
+import ConfirmDialog from "../../components/ConfirmDialog";
 function ExperiencePage() {
   const classes = useStyles();
 
@@ -40,7 +40,8 @@ function ExperiencePage() {
     (state) => state.experience
   );
   const [showForm, setShowForm] = useState(false);
-  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(false);
+  const [experienceToDelete, setExperienceToDelete] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -90,29 +91,20 @@ function ExperiencePage() {
     dispatch(setEditableExperienceAction({ experienceId: id }));
   };
 
-  const onDelete = async (experience) => {
-    const confirmDelete = async () => {
-      try {
-        await dispatch(deleteExperienceThunk(experience.id));
-        getExperienceData();
-      } catch (error) {
-        console.log("error on deleting expereince: ", error);
-      }
-    };
+  const deleteExperience = async () => {
+    try {
+      setExperienceToDelete(null);
+      setIsPageLoading(true);
+      await dispatch(deleteExperienceThunk(experienceToDelete.id));
+      setIsPageLoading(false);
+      getExperienceData();
+    } catch (error) {
+      console.log("error on deleting expereince: ", error);
+    }
+  };
 
-    confirmAlert({
-      message: `Sure to delete experience at ${experience.company}?`,
-      buttons: [
-        {
-          label: "No",
-          onClick: () => {},
-        },
-        {
-          label: "Yes",
-          onClick: confirmDelete,
-        },
-      ],
-    });
+  const cancelDelete = () => {
+    setExperienceToDelete(null);
   };
 
   const createNewForm = () => {
@@ -130,7 +122,7 @@ function ExperiencePage() {
     console.log("formik values: ", values);
     const isEditing = editableExperienceId != (null || undefined);
     try {
-      setIsFormLoading(true);
+      setIsPageLoading(true);
       const data = JSON.parse(JSON.stringify(values));
 
       if (data.duration.isWorkingHere) {
@@ -143,18 +135,57 @@ function ExperiencePage() {
       } else {
         await dispatch(addNewExperienceThunk(data));
       }
-      setIsFormLoading(false);
+      setIsPageLoading(false);
       resetForm();
       getExperienceData();
     } catch (error) {
       console.log("error on form submission: ", error);
-      setIsFormLoading(false);
+      setIsPageLoading(false);
     }
   };
 
   function showExperienceListing() {
     return (
       <Container>
+        {/* <Dialog
+          open={experienceToDelete != null}
+          onClose={() => {
+            setExperienceToDelete(null);
+          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        > */}
+        {/* <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Do you want to delete experience at{" "}
+              <b>{experienceToDelete?.company}</b>? <br />
+              This action can not be reverted.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setExperienceToDelete(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={deleteExperience}
+              autoFocus
+            >
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog> */}
+        <ConfirmDialog
+          shouldOpen={experienceToDelete != null}
+          title="Are you sure?"
+          content={`Do you want to delete experience at ${experienceToDelete?.company}?`}
+          cancelCallback={cancelDelete}
+          actionCallback={deleteExperience}
+        />
         <div className={classes.pageHead}>
           <h2>Manage Experience</h2>
           <Button
@@ -197,7 +228,10 @@ function ExperiencePage() {
                   <TableCell align="right">
                     <Edit fontSize="small" onClick={() => onEdit(exp.id)} />
                     {"  "}
-                    <Delete fontSize="small" onClick={() => onDelete(exp)} />
+                    <Delete
+                      fontSize="small"
+                      onClick={() => setExperienceToDelete(exp)}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -220,7 +254,6 @@ function ExperiencePage() {
   function showExperienceForm() {
     return (
       <Container>
-        <BackdropLoading isLoading={isFormLoading} />
         <div className={classes.pageHead}>
           <h2>{editableExperienceId ? "Edit" : "Add New"} Experience</h2>
         </div>
@@ -422,7 +455,12 @@ function ExperiencePage() {
       </Container>
     );
   }
-  return showForm === false ? showExperienceListing() : showExperienceForm();
+  return (
+    <>
+      <BackdropLoading isLoading={isPageLoading} />
+      {showForm === false ? showExperienceListing() : showExperienceForm()}
+    </>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
