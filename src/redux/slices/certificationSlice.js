@@ -36,6 +36,9 @@ const slice = createSlice({
       state.editableCertificationId = null;
       state.isLoading = false;
     },
+    updateCertificationSortingSuccessAction: (state, action) => {
+      state.isLoading = false;
+    },
     deleteCertificationSuccessAction: (state, action) => {
       state.isLoading = false;
     },
@@ -49,6 +52,7 @@ export const {
   addNewCertificationSuccessAction,
   setEditableCertificationAction,
   editCertificationSuccessAction,
+  updateCertificationSortingSuccessAction,
   deleteCertificationSuccessAction,
 } = slice.actions;
 
@@ -85,6 +89,19 @@ export function editCertificationThunk(data) {
     try {
       await CertificationService.updateCertification(data);
       dispatch(editCertificationSuccessAction());
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function updateCertificationSortingThunk(certificate1, certificate2) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      await CertificationService.updateCertificationSorting(certificate1, certificate2);
+      dispatch(updateCertificationSortingSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));
       throw error;

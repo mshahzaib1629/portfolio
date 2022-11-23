@@ -42,8 +42,10 @@ const addNewProject = async (data) => {
 
 const updateProject = async (data) => {
   try {
+    const dataToUpdate = JSON.parse(JSON.stringify(data));
+    delete dataToUpdate['id'];
     const docRef = doc(firestore, K.collections.projects.name, data?.id);
-    await updateDoc(docRef, data);
+    await updateDoc(docRef, dataToUpdate);
     // console.log("document updated with ID: ", docRef.id);
   } catch (error) {
     throw error;

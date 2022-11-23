@@ -46,8 +46,10 @@ const addNewEducation = async (data) => {
 
 const updateEducation = async (data) => {
   try {
+    const dataToUpdate = JSON.parse(JSON.stringify(data));
+    delete dataToUpdate["id"];
     const docRef = doc(firestore, K.collections.education.name, data?.id);
-    await updateDoc(docRef, data);
+    await updateDoc(docRef, dataToUpdate);
     // console.log("document updated with ID: ", docRef.id);
   } catch (error) {
     throw error;

@@ -33,6 +33,14 @@ const K = {
       "Nov",
       "Dec",
     ],
+    certificateTypes: [
+      "Bootcamp",
+      "Competition",
+      "Course",
+      "Seminar",
+      "Specialization",
+      "Workshop",
+    ],
   },
 };
 
