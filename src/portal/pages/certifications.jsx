@@ -23,6 +23,7 @@ import {
   deleteCertificationThunk,
   editCertificationThunk,
   updateCertificationSortingThunk,
+  deleteImageThunk,
   updateImageThunk,
   setEditableCertificationAction,
 } from "../../redux/slices/certificationSlice";
@@ -48,6 +49,7 @@ function CertificationPage() {
       issuedBy: "",
       type: "",
       imageUrl: "",
+      imageRef: "",
       date: {
         year: "",
         month: "",
@@ -88,7 +90,7 @@ function CertificationPage() {
     try {
       setCertificationToDelete(null);
       setIsPageLoading(true);
-      await dispatch(deleteCertificationThunk(certificationToDelete.id));
+      await dispatch(deleteCertificationThunk(certificationToDelete));
       setIsPageLoading(false);
       getCertificationData();
     } catch (error) {
@@ -118,11 +120,16 @@ function CertificationPage() {
       setIsPageLoading(true);
       const data = JSON.parse(JSON.stringify(values));
 
-      if (newImage)
-        data["imageUrl"] = await dispatch(
-          updateImageThunk("", newImage?.imageFile)
+      if (newImage) {
+        const { imageUrl, imageRef } = await dispatch(
+          updateImageThunk(data["imageRef"], newImage?.imageFile)
         );
-      console.log("form to submit: ", data);
+        data["imageUrl"] = imageUrl;
+        data["imageRef"] = imageRef;
+      } else if (data.imageUrl === "" && data.imageRef != "") {
+        await dispatch(deleteImageThunk(data.imageRef));
+        data["imageRef"] = "";
+      }
 
       if (isEditing) {
         await dispatch(editCertificationThunk(data));
@@ -195,6 +202,11 @@ function CertificationPage() {
         thumbnail: reader.result,
       });
     };
+  };
+
+  const deleteImage = () => {
+    formik.setFieldValue("imageUrl", "");
+    setNewImage(null);
   };
 
   const getYearRange = () => {
@@ -387,7 +399,7 @@ function CertificationPage() {
                     alignItems: "center",
                   }}
                 >
-                  {(newImage || formik.values.imageUrl) ? (
+                  {newImage || formik.values.imageUrl ? (
                     <div>
                       <img
                         width={70}
@@ -401,18 +413,31 @@ function CertificationPage() {
                       />
                       <span>{newImage?.imageFile?.name}</span>
                     </div>
-                  ): <sub>No Image Uploaded...</sub>}
-                  <Button variant="outlined" component="label">
-                    Upload Image
-                    <input
-                      hidden
-                      id="imageFile"
-                      name="imageFile"
-                      accept="image/*"
-                      type="file"
-                      onChange={handleNewImage}
-                    />
-                  </Button>
+                  ) : (
+                    <sub>No Image Uploaded...</sub>
+                  )}
+                  <div>
+                    {newImage != null || formik?.values?.imageUrl ? (
+                      <Button
+                        variant="outlined"
+                        component="label"
+                        onClick={deleteImage}
+                      >
+                        X
+                      </Button>
+                    ) : null}
+                    <Button variant="outlined" component="label">
+                      Upload Image
+                      <input
+                        hidden
+                        id="imageFile"
+                        name="imageFile"
+                        accept="image/*"
+                        type="file"
+                        onChange={handleNewImage}
+                      />
+                    </Button>
+                  </div>
                 </FormControl>
               </Grid>
               <Grid item md={12}>

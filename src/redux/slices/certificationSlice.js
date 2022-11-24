@@ -18,7 +18,7 @@ const slice = createSlice({
       state.isLoading = true;
     },
     requestFailedAction: (state, action) => {
-      state.error = action.payload;
+      // state.error = action.payload;
       state.isLoading = false;
     },
     getCertificationListSuccessAction: (state, action) => {
@@ -96,12 +96,24 @@ export function editCertificationThunk(data) {
   };
 }
 
-export function updateImageThunk(previousImageUrl, newImageFile) {
+export function deleteImageThunk(imageRef) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      await CertificationService.deleteImage(imageRef);
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function updateImageThunk(previousImageRef, newImageFile) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
       const imageUrl = await CertificationService.updateImage(
-        previousImageUrl,
+        previousImageRef,
         newImageFile
       );
       return imageUrl;
@@ -128,11 +140,11 @@ export function updateCertificationSortingThunk(certificate1, certificate2) {
   };
 }
 
-export function deleteCertificationThunk(id) {
+export function deleteCertificationThunk(certification) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await CertificationService.deleteCertification(id);
+      await CertificationService.deleteCertification(certification);
       dispatch(deleteCertificationSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

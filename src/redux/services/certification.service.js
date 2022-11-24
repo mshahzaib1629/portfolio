@@ -1,5 +1,11 @@
 import { firestore } from "../../utils/firebase-setup";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import {
   collection,
   doc,
@@ -48,9 +54,19 @@ const addNewCertification = async (data) => {
   }
 };
 
-const updateImage = async (previousImageUrl, newImageFile) => {
+const deleteImage = async (imageRef) => {
   try {
-    const imageId = uuidv4();
+    const storage = getStorage();
+    const storageRef = ref(storage, imageRef);
+    await deleteObject(storageRef);
+  } catch (error) {
+    console.log("error while deleting image: ", imageRef);
+    // throw error;
+  }
+};
+
+const updateImage = async (previousImageRef, newImageFile) => {
+  try {
     const storage = getStorage();
     const storageRef = ref(
       storage,
@@ -60,10 +76,11 @@ const updateImage = async (previousImageUrl, newImageFile) => {
         "." +
         newImageFile.name.split(".")[1]
     );
+    if (previousImageRef != "") deleteImage(previousImageRef);
     const uploadResponse = await uploadBytes(storageRef, newImageFile);
     const imageUrl = await getDownloadURL(storageRef);
-    // console.log("file uploaded: ", imageUrl);
-    return imageUrl;
+    console.log("file uploaded: ", imageUrl);
+    return { imageUrl: imageUrl, imageRef: uploadResponse?.metadata?.fullPath };
   } catch (error) {
     throw error;
   }
@@ -104,11 +121,11 @@ const updateCertificationSorting = async (certificate1, certificate2) => {
   }
 };
 
-const deleteCertification = async (id) => {
+const deleteCertification = async (cert) => {
   try {
-    const docRef = doc(firestore, K.collections.certifications.name, id);
+    if (cert?.imageRef != null) await deleteImage(cert?.imageRef);
+    const docRef = doc(firestore, K.collections.certifications.name, cert.id);
     await deleteDoc(docRef);
-    // console.log("Document updated with ID: ", docRef.id);
   } catch (error) {
     throw error;
   }
@@ -117,6 +134,7 @@ const deleteCertification = async (id) => {
 const CertificationService = {
   getCertificationList,
   addNewCertification,
+  deleteImage,
   updateImage,
   updateCertification,
   updateCertificationSorting,
