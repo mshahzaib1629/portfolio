@@ -96,11 +96,30 @@ export function editCertificationThunk(data) {
   };
 }
 
+export function updateImageThunk(previousImageUrl, newImageFile) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      const imageUrl = await CertificationService.updateImage(
+        previousImageUrl,
+        newImageFile
+      );
+      return imageUrl;
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
 export function updateCertificationSortingThunk(certificate1, certificate2) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await CertificationService.updateCertificationSorting(certificate1, certificate2);
+      await CertificationService.updateCertificationSorting(
+        certificate1,
+        certificate2
+      );
       dispatch(updateCertificationSortingSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

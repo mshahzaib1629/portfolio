@@ -1,4 +1,5 @@
 import { firestore } from "../../utils/firebase-setup";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   collection,
   doc,
@@ -11,6 +12,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import K from "../../utils/constants";
+import { v4 as uuidv4 } from "uuid";
 
 const getCertificationList = async () => {
   try {
@@ -41,6 +43,27 @@ const addNewCertification = async (data) => {
       data
     );
     // console.log("document written with ID: ", docRef.id);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateImage = async (previousImageUrl, newImageFile) => {
+  try {
+    const imageId = uuidv4();
+    const storage = getStorage();
+    const storageRef = ref(
+      storage,
+      K.collections.certifications.name +
+        "/" +
+        uuidv4() +
+        "." +
+        newImageFile.name.split(".")[1]
+    );
+    const uploadResponse = await uploadBytes(storageRef, newImageFile);
+    const imageUrl = await getDownloadURL(storageRef);
+    // console.log("file uploaded: ", imageUrl);
+    return imageUrl;
   } catch (error) {
     throw error;
   }
@@ -94,6 +117,7 @@ const deleteCertification = async (id) => {
 const CertificationService = {
   getCertificationList,
   addNewCertification,
+  updateImage,
   updateCertification,
   updateCertificationSorting,
   deleteCertification,
