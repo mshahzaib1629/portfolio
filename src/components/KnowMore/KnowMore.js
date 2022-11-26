@@ -9,8 +9,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import Certifications from "./Certifications/index";
 import Education from "./Education/index";
+import Skills from "./Skills";
 
 const tabs = {
+  Skills: {
+    index: 2,
+    component: <Skills />,
+  },
   Certifications: {
     index: 1,
     component: <Certifications />,

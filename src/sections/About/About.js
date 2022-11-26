@@ -30,7 +30,7 @@ const About = () => {
                     <Box mb={4}>
                         <Typography variant="body1">{t('about_desc')}</Typography>
                         <br/>
-                        <Skills />
+                        {/* <Skills /> */}
                     </Box>
                     
                 </Grid>
