@@ -19,6 +19,7 @@ import {
   deleteExperienceThunk,
   editExperienceThunk,
 } from "../../redux/slices/experienceSlice";
+import {experienceList} from "../../data";
 
 const StyledTabs = () => {
   const theme = useTheme();
@@ -28,81 +29,12 @@ const StyledTabs = () => {
 
   const dispatch = useDispatch();
 
-  const { experienceList, isLoading } = useSelector(
-    (state) => state.experience
-  );
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  async function addDummyExperience() {
-    try {
-      const experienceData = {
-        company: "TESTING 2",
-        location: "Lahore, Pakistan",
-        jobTitle: "TESTING DOC",
-        overview:
-          "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
-        duration: {
-          start: "Jan 2022",
-          end: "cont.",
-        },
-        links: {
-          website: "https://www.codedistrict.com/",
-          facebook: "https://www.facebook.com/codedistrictpk/",
-          linkedIn: "https://www.linkedin.com/company/the-code-district/",
-        },
-      };
-      console.log("add dispatched");
-      await dispatch(addNewExperienceThunk(experienceData));
-      console.log("add done");
-      getExperienceData();
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-
-  async function deleteDummyExperience() {
-    try {
-      const eId = "zzWCKH5K5UOhzr6xUR09";
-      console.log("delete dispatched");
-      await dispatch(deleteExperienceThunk(eId));
-      console.log("delete done");
-    } catch (e) {
-      console.error("Error deleting document: ", e);
-    }
-  }
-
-  async function updateDummyExperience() {
-    try {
-      const eId = "zzWCKH5K5UOhzr6xUR09";
-      const experienceData = {
-        id: eId,
-        company: "TESTING 2",
-        location: "Lahore, Pakistan",
-        jobTitle: "TESTING DOC",
-        overview:
-          "Code District is a software provider of custom web and mobile application development services. Here we're providing full-cycle services in the areas of SaaS-based product development, content management solutions, web portals, e-commerce, web-based enterprise solutions and mobile applications. ",
-        duration: {
-          start: "Jan 2022",
-          end: "cont.",
-        },
-        links: {
-          website: "https://www.codedistrict.com/",
-          facebook: "https://www.facebook.com/codedistrictpk/",
-          linkedIn: "https://www.linkedin.com/company/the-code-district/",
-        },
-      };
-      console.log("update dispatched");
-      await dispatch(editExperienceThunk(experienceData));
-      console.log("update done");
-    } catch (e) {
-      console.error("Error deleting document: ", e);
-    }
-  }
 
   async function getExperienceData() {
     try {
@@ -115,11 +47,6 @@ const StyledTabs = () => {
   }
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   addDummyExperience();
-    // }, 3000);
-    // deleteDummyExperience();
-    // updateDummyExperience();
     getExperienceData();
   }, []);
   const socialLinkButton = (social) => {
@@ -129,9 +56,86 @@ const StyledTabs = () => {
       </a>
     );
   };
-  return isLoading ? (
-    <p>Loading...</p>
-  ) : (
+
+  const webViewPanel = (exp) => {
+    return (
+      <TabPanel value={value} index={exp.id} key={exp.id}>
+        <Box mb={4}>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+            {exp.jobTitle} @{" "}
+            <Link
+              href={
+                exp.links.website || exp.links.facebook || exp.links.instagram
+              }
+              color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
+              target={"_blank"}
+            >
+              {exp.company}
+            </Link>
+          </Typography>
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }} fontSize="14">
+            {exp.location} &nbsp; | &nbsp; {exp.duration.start} - {exp.duration.end}
+          </Typography>
+        </Box>
+        <Box mb={4}>
+          <Typography variant="body1" color="textPrimary">
+            {exp.overview}
+          </Typography>
+        </Box>
+        <Box>
+          {exp.links.website &&
+            socialLinkButton({ link: exp.links.website, icon: Language })}
+          {exp.links.facebook &&
+            socialLinkButton({ link: exp.links.facebook, icon: Facebook })}
+          {exp.links.linkedIn &&
+            socialLinkButton({ link: exp.links.linkedIn, icon: LinkedIn })}
+        </Box>
+      </TabPanel>
+    );
+  };
+
+  const mobileViewPanel = (exp) => {
+    return (
+      <TabPanel value={value} index={exp.id} key={exp.id}>
+        <Box mb={4}>
+        <Typography
+            variant="subtitle2"
+            style={{ color: theme.palette.text.secondary }}
+          >{exp.duration.start} - {exp.duration.end}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>{exp.jobTitle}</Typography>
+          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+            @{" "}
+            <Link
+              href={
+                exp.links.website || exp.links.facebook || exp.links.instagram
+              }
+              color="primary"
+              style={{cursor: "pointer", textDecoration: "none" }}
+              target={"_blank"}
+            >
+              {exp.company}
+            </Link>
+          </Typography>
+          <Typography variant="h6" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
+        </Box>
+        <Box mb={4}>
+          <Typography variant="body1" color="textPrimary">
+            {exp.overview}
+          </Typography>
+        </Box>
+        <Box>
+          {exp.links.website &&
+            socialLinkButton({ link: exp.links.website, icon: Language })}
+          {exp.links.facebook &&
+            socialLinkButton({ link: exp.links.facebook, icon: Facebook })}
+          {exp.links.linkedIn &&
+            socialLinkButton({ link: exp.links.linkedIn, icon: LinkedIn })}
+        </Box>
+      </TabPanel>
+    );
+  };
+  return (
     <div className={classes.root}>
       <Tabs
         orientation={isMobile ? "horizontal" : "vertical"}
@@ -145,42 +149,9 @@ const StyledTabs = () => {
           <Tab label={elem.company} key={elem.id} />
         ))}
       </Tabs>
-      {experienceList.map((elem) => (
-        <TabPanel value={value} index={elem.index} key={elem.id}>
-          <Box mb={4}>
-            <Typography variant="h5">
-              {elem.jobTitle} @{" "}
-              <Link
-                href={
-                  elem.links.website ||
-                  elem.links.facebook ||
-                  elem.links.instagram
-                }
-                color="primary"
-                target={"_blank"}
-              >
-                {elem.company}
-              </Link>
-            </Typography>
-            <Typography variant="body2" color="textSecondary" fontSize="14">
-              {elem.duration.start} - {elem.duration.end}
-            </Typography>
-          </Box>
-          <Box mb={4}>
-            <Typography variant="body1" color="textPrimary">
-              {elem.overview}
-            </Typography>
-          </Box>
-          <Box>
-            {elem.links.website &&
-              socialLinkButton({ link: elem.links.website, icon: Language })}
-            {elem.links.facebook &&
-              socialLinkButton({ link: elem.links.facebook, icon: Facebook })}
-            {elem.links.linkedIn &&
-              socialLinkButton({ link: elem.links.linkedIn, icon: LinkedIn })}
-          </Box>
-        </TabPanel>
-      ))}
+      {experienceList.map((elem) =>
+        isMobile ? mobileViewPanel(elem) : webViewPanel(elem)
+      )}
     </div>
   );
 };

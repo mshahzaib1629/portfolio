@@ -79,7 +79,6 @@ const updateImage = async (previousImageRef, newImageFile) => {
     if (previousImageRef != "") deleteImage(previousImageRef);
     const uploadResponse = await uploadBytes(storageRef, newImageFile);
     const imageUrl = await getDownloadURL(storageRef);
-    console.log("file uploaded: ", imageUrl);
     return { imageUrl: imageUrl, imageRef: uploadResponse?.metadata?.fullPath };
   } catch (error) {
     throw error;

@@ -75,6 +75,9 @@ const Social = ({ mobile }) => {
 const useStyles = makeStyles((theme) => ({
   socialIcon: {
     marginBottom: "5px",
+    "&:hover": {
+      marginBottom: "10px",
+    }
   },
   wrapper: {
     display: "flex",
