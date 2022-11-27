@@ -38,7 +38,7 @@ const tabsList = [
     component: <Certifications />,
   },
   {
-    title: "Skills",
+    title: "Skill Set",
     index: 2,
     component: <Skills />,
   },
@@ -64,22 +64,24 @@ const KnowMore = () => {
       <>
         <div className={classes.wrapper}>
           <ul id={classes.tab}>
-            {tabsList.sort((a,b) => b.index-a.index).map((tab, index) => {
-              return (
-                <li key={index}>
-                  <div
-                    className={
-                      selectedTabIndex === tab.index
-                        ? localStyles.selectedTab
-                        : null
-                    }
-                    onClick={() => onTabChange(tab.index)}
-                  >
-                    {tab.title.toUpperCase()}
-                  </div>
-                </li>
-              );
-            })}
+            {tabsList
+              .sort((a, b) => b.index - a.index)
+              .map((tab, index) => {
+                return (
+                  <li key={index}>
+                    <div
+                      className={
+                        selectedTabIndex === tab.index
+                          ? localStyles.selectedTab
+                          : null
+                      }
+                      onClick={() => onTabChange(tab.index)}
+                    >
+                      {tab.title.toUpperCase()}
+                    </div>
+                  </li>
+                );
+              })}
           </ul>
         </div>
         <div className={classes.body}>{selectedComponent()}</div>
@@ -90,31 +92,34 @@ const KnowMore = () => {
   const mobileView = () => {
     return (
       <>
-        {tabsList.sort((a,b) => a.index-b.index).map((tab, index) => {
-        return (
-            <Accordion
-              key={index}
-              style={{ marginBottom: "10px" }}
-              expanded={tab.index === selectedTabIndex}
-              onClick={() => onTabChange(tab.index)}
-            >
-              <AccordionSummary
-                expandIcon={
-                  <ExpandMoreIcon
-                    style={{ color: theme.palette.text.secondary }}
-                  />
-                }
-                aria-controls={`${tab.index}-content`}
-                id={`${tab.index}-header`}
+        {tabsList
+          .sort((a, b) => a.index - b.index)
+          .map((tab, index) => {
+            return (
+              <Accordion
+                key={index}
+                style={{ marginBottom: "10px" }}
+                onClick={() => onTabChange(tab.index)}
               >
-                <Typography variant="h6">{tab.title.toUpperCase()}</Typography>
-              </AccordionSummary>
-              <AccordionDetails style={{ display: "block" }}>
-                {tab.component}
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
+                <AccordionSummary
+                  expandIcon={
+                    <ExpandMoreIcon
+                      style={{ color: theme.palette.text.secondary }}
+                    />
+                  }
+                  aria-controls={`${tab.index}-content`}
+                  id={`${tab.index}-header`}
+                >
+                  <Typography variant="h6">
+                    {tab.title.toUpperCase()}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails style={{ display: "block" }}>
+                  {tab.component}
+                </AccordionDetails>
+              </Accordion>
+            );
+          })}
       </>
     );
   };
