@@ -49,7 +49,7 @@ function Skills() {
                 {skill.categoryTitle}
               </Typography>
             </AccordionSummary>
-            <AccordionDetails style={{ display: "block", minHeight: "13.5em" }}>
+            <AccordionDetails style={{ display: "block", minHeight: "14.5em" }}>
               {skill.data.map((skillData, index) => (
                 <span>
                   {skillData}{" "}

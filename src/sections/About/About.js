@@ -28,7 +28,7 @@ const About = () => {
                     style={{ flexDirection: "column", alignItems: "space-around" }}
                 >
                     <Box mb={4}>
-                        <Typography variant="body1">{t('about_desc')}</Typography>
+                        <Typography variant="body1" style={{textAlign: "justify"}}>{t('about_desc')}</Typography>
                         <br/>
                         {/* <Skills /> */}
                     </Box>
