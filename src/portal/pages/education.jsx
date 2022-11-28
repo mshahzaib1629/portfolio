@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
+import { getYearRange } from "../../utils/common";
 
 function EducationPage() {
   const classes = useStyles();
@@ -177,10 +178,15 @@ function EducationPage() {
                   </TableCell>
                   <TableCell>{edu.location}</TableCell>
                   <TableCell align="right">
-                    <Edit fontSize="small" onClick={() => onEdit(edu.id)} />
+                    <Edit
+                      fontSize="small"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onEdit(edu.id)}
+                    />
                     {"  "}
                     <Delete
                       fontSize="small"
+                      style={{ cursor: "pointer" }}
                       onClick={() => setEducationToDelete(edu)}
                     />
                   </TableCell>
@@ -192,15 +198,6 @@ function EducationPage() {
       </Container>
     );
   }
-
-  const getYearRange = () => {
-    const years = [];
-    const currentYear = new Date().getFullYear();
-    for (let i = currentYear - 20; i <= currentYear; i++) {
-      years.push(i);
-    }
-    return years.sort((a, b) => b - a);
-  };
 
   function showEducationForm() {
     return (

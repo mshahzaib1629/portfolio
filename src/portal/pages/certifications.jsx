@@ -22,7 +22,7 @@ import {
   addNewCertificationThunk,
   deleteCertificationThunk,
   editCertificationThunk,
-  updateCertificationSortingThunk,
+  updateSortingThunk,
   deleteImageThunk,
   updateImageThunk,
   setEditableCertificationAction,
@@ -31,6 +31,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
+
+import { getYearRange } from "../../utils/common";
 
 function CertificationPage() {
   const classes = useStyles();
@@ -188,7 +190,7 @@ function CertificationPage() {
       }
       return cert;
     });
-    await dispatch(updateCertificationSortingThunk(dropObject, dragObject));
+    await dispatch(updateSortingThunk(dropObject, dragObject));
     getCertificationData();
   };
 
@@ -207,15 +209,6 @@ function CertificationPage() {
   const deleteImage = () => {
     formik.setFieldValue("imageUrl", "");
     setNewImage(null);
-  };
-
-  const getYearRange = () => {
-    const years = [];
-    const currentYear = new Date().getFullYear();
-    for (let i = currentYear - 20; i <= currentYear; i++) {
-      years.push(i);
-    }
-    return years.sort((a, b) => b - a);
   };
 
   function showCertificationListing() {

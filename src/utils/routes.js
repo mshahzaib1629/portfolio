@@ -9,7 +9,7 @@ import EducationPage from "../portal/pages/education";
 import CertificationPage from "../portal/pages/certifications";
 import ExperiencePage from "../portal/pages/experience";
 import ProjectPage from "../portal/pages/projects";
-import SocialMediaPage from "../portal/pages/socialMedia";
+import SkillSetPage from "../portal/pages/skillSet";
 
 export const protectedRoutes = [
   {
@@ -43,9 +43,9 @@ export const protectedRoutes = [
     element: <ProjectPage />,
   },
   {
-    title: "Social Media",
-    path: "/social-media",
+    title: "Skill Set",
+    path: "/skill-set",
     navIcon: PublicIcon,
-    element: <SocialMediaPage />,
+    element: <SkillSetPage />,
   },
 ];

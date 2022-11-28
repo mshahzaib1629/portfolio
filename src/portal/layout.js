@@ -140,8 +140,8 @@ function DashboardContent() {
       case "projects":
         title = "My Projects";
         break;
-      case "social-media":
-        title = "Manage Social Media";
+      case "skill-set":
+        title = "My Skill Set";
         break;
     }
     return title;

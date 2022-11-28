@@ -29,8 +29,8 @@ import { useState, useEffect } from "react";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import { getYearRange } from "../../utils/common";
 function ExperiencePage() {
-  
   const classes = useStyles();
   const dispatch = useDispatch();
   const { experienceList, isLoading, editableExperienceId } = useSelector(
@@ -191,10 +191,15 @@ function ExperiencePage() {
                   </TableCell>
                   <TableCell>{exp.location}</TableCell>
                   <TableCell align="right">
-                    <Edit fontSize="small" onClick={() => onEdit(exp.id)} />
+                    <Edit
+                      fontSize="small"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onEdit(exp.id)}
+                    />
                     {"  "}
                     <Delete
                       fontSize="small"
+                      style={{ cursor: "pointer" }}
                       onClick={() => setExperienceToDelete(exp)}
                     />
                   </TableCell>
@@ -206,15 +211,6 @@ function ExperiencePage() {
       </Container>
     );
   }
-
-  const getYearRange = () => {
-    const years = [];
-    const currentYear = new Date().getFullYear();
-    for (let i = currentYear - 20; i <= currentYear; i++) {
-      years.push(i);
-    }
-    return years.sort((a, b) => b - a);
-  };
 
   function showExperienceForm() {
     return (
