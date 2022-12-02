@@ -30,10 +30,13 @@ const slice = createSlice({
       state.isLoading = false;
     },
     setEditableProjectAction: (state, action) => {
-      state.editableProjectId = action.payload.projectId;
+      state.editableProjectId = action.payload?.projectId;
     },
     editProjectSuccessAction: (state, action) => {
       state.editableProjectId = null;
+      state.isLoading = false;
+    },
+    updateSortingSuccessAction: (state, action) => {
       state.isLoading = false;
     },
     deleteProjectSuccessAction: (state, action) => {
@@ -49,6 +52,7 @@ export const {
   addNewProjectSuccessAction,
   setEditableProjectAction,
   editProjectSuccessAction,
+  updateSortingSuccessAction,
   deleteProjectSuccessAction,
 } = slice.actions;
 
@@ -85,6 +89,47 @@ export function editProjectThunk(data) {
     try {
       await ProjectService.updateProject(data);
       dispatch(editProjectSuccessAction());
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function deleteImageThunk(imageRef) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      await ProjectService.deleteImage(imageRef);
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function updateImageThunk(previousImageRef, newImageFile) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      const imageUrl = await ProjectService.updateImage(
+        previousImageRef,
+        newImageFile
+      );
+      return imageUrl;
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function updateSortingThunk(item1, item2) {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    try {
+      await ProjectService.updateSorting(item1, item2);
+      dispatch(updateSortingSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));
       throw error;

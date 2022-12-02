@@ -263,7 +263,7 @@ function CertificationPage() {
                   </TableCell>
                   <TableCell>{cert.type}</TableCell>
                   <TableCell>
-                    {cert.date.month} {cert.date.year}
+                    {cert.date?.month} {cert.date?.year}
                   </TableCell>
                   <TableCell align="right">
                     <Edit
@@ -346,7 +346,7 @@ function CertificationPage() {
                       id="month"
                       label="Month"
                       name="date.month"
-                      value={formik.values.date.month}
+                      value={formik.values.date?.month}
                       onChange={formik.handleChange}
                       required
                     >
@@ -366,7 +366,7 @@ function CertificationPage() {
                       id="year"
                       label="Year"
                       name="date.year"
-                      value={formik.values.date.year}
+                      value={formik.values.date?.year}
                       onChange={formik.handleChange}
                       required
                     >
@@ -404,7 +404,6 @@ function CertificationPage() {
                         }
                         alt={newImage?.imageFile?.name}
                       />
-                      <span>{newImage?.imageFile?.name}</span>
                     </div>
                   ) : (
                     <sub>No Image Uploaded...</sub>

@@ -6,3 +6,16 @@ export const getYearRange = () => {
   }
   return years.sort((a, b) => b - a);
 };
+
+export const convertStringToArray = (string) => {
+  if (typeof string === "string") {
+    const arr = string.split(",");
+    return arr.map((arrItem) => arrItem.trim());
+  } else return [];
+};
+
+export const convertArrayToString = (array) => {
+  if (Array.isArray(array))
+    return array.reduce((pValue, cValue, cIndex, ar) => `${pValue}, ${cValue}`);
+  else return "";
+};
