@@ -86,7 +86,7 @@ function EducationPage() {
     try {
       setEducationToDelete(null);
       setIsPageLoading(true);
-      await dispatch(deleteEducationThunk(educationToDelete.id));
+      await dispatch(deleteEducationThunk(educationToDelete));
       setIsPageLoading(false);
       getEducationData();
     } catch (error) {

@@ -92,11 +92,11 @@ export function editExperienceThunk(data) {
   };
 }
 
-export function deleteExperienceThunk(id) {
+export function deleteExperienceThunk(experience) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await ExperienceService.deleteExperience(id);
+      await ExperienceService.deleteExperience(experience);
       dispatch(deleteExperienceSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

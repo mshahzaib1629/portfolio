@@ -92,7 +92,7 @@ function ExperiencePage() {
     try {
       setExperienceToDelete(null);
       setIsPageLoading(true);
-      await dispatch(deleteExperienceThunk(experienceToDelete.id));
+      await dispatch(deleteExperienceThunk(experienceToDelete));
       setIsPageLoading(false);
       getExperienceData();
     } catch (error) {

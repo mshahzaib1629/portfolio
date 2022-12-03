@@ -56,9 +56,9 @@ const updateExperience = async (data) => {
   }
 };
 
-const deleteExperience = async (id) => {
+const deleteExperience = async (experience) => {
   try {
-    const docRef = doc(firestore, K.collections.experience.name, id);
+    const docRef = doc(firestore, K.collections.experience.name, experience.id);
     await deleteDoc(docRef);
     // console.log("Document updated with ID: ", docRef.id);
   } catch (error) {

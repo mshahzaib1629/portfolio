@@ -56,9 +56,9 @@ const updateEducation = async (data) => {
   }
 };
 
-const deleteEducation = async (id) => {
+const deleteEducation = async (education) => {
   try {
-    const docRef = doc(firestore, K.collections.education.name, id);
+    const docRef = doc(firestore, K.collections.education.name, education.id);
     await deleteDoc(docRef);
     // console.log("Document updated with ID: ", docRef.id);
   } catch (error) {

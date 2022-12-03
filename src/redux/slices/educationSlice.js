@@ -92,11 +92,11 @@ export function editEducationThunk(data) {
   };
 }
 
-export function deleteEducationThunk(id) {
+export function deleteEducationThunk(education) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await EducationService.deleteEducation(id);
+      await EducationService.deleteEducation(education);
       dispatch(deleteEducationSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

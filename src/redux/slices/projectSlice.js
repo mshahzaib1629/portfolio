@@ -137,11 +137,11 @@ export function updateSortingThunk(item1, item2) {
   };
 }
 
-export function deleteProjectThunk(id) {
+export function deleteProjectThunk(project) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await ProjectService.deleteProject(id);
+      await ProjectService.deleteProject(project);
       dispatch(deleteProjectSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));
