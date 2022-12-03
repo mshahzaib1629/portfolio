@@ -1,12 +1,5 @@
 import { firestore } from "../../utils/firebase-setup";
 import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
-import {
   collection,
   doc,
   addDoc,

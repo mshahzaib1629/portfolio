@@ -289,6 +289,7 @@ function CertificationPage() {
                         <Launch
                           fontSize="small"
                           href={cert.url}
+                          style={{ cursor: "pointer" }}
                           target="_blank"
                           rel="noreferrer"
                         />

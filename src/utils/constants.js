@@ -2,7 +2,7 @@ const K = {
   collections: {
     profile: {
       name: "profile",
-      docAbout: "data",
+      doc: "data",
     },
     experience: {
       name: "experience",
