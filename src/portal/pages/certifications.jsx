@@ -71,7 +71,7 @@ function CertificationPage() {
 
   useEffect(() => {
     const targetCertification = certificationList.filter(
-      (exp) => exp.id === editableCertificationId
+      (cert) => cert.id === editableCertificationId
     )[0];
     if (targetCertification != undefined && targetCertification != null) {
       setShowForm(true);

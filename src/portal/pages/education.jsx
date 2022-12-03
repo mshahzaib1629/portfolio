@@ -65,7 +65,7 @@ function EducationPage() {
 
   useEffect(() => {
     const targetEducation = educationList.filter(
-      (exp) => exp.id === editableEducationId
+      (edu) => edu.id === editableEducationId
     )[0];
     if (targetEducation != undefined && targetEducation != null) {
       setShowForm(true);

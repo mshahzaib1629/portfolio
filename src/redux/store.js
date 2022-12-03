@@ -5,6 +5,7 @@ import certificationReducer from "./slices/certificationSlice";
 import educationReducer from "./slices/educationSlice";
 import projectReducer from "./slices/projectSlice";
 import profileReducer from "./slices/profileSlice";
+import skillSetReducer from "./slices/skillSetSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     education: educationReducer,
     project: projectReducer,
     profile: profileReducer,
+    skillSet: skillSetReducer,
   },
 });
 

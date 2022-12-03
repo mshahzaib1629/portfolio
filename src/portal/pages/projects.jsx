@@ -88,7 +88,7 @@ function ProjectPage() {
 
   useEffect(() => {
     let targetProject = projectList.filter(
-      (exp) => exp.id === editableProjectId
+      (project) => project.id === editableProjectId
     )[0];
 
     if (targetProject != undefined && targetProject != null) {

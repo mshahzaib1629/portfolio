@@ -2,8 +2,7 @@ const K = {
   collections: {
     profile: {
       name: "profile",
-      docAbout: "about",
-      docSocial: "social",
+      docAbout: "data",
     },
     experience: {
       name: "experience",
@@ -16,6 +15,9 @@ const K = {
     },
     certifications: {
       name: "certifications",
+    },
+    skillSets: {
+      name: "skills",
     },
   },
   app: {
