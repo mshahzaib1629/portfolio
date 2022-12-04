@@ -9,8 +9,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import Certifications from "./Certifications/index";
 import Education from "./Education/index";
+import Skills from "./Skills";
 
 const tabs = {
+  Skills: {
+    index: 2,
+    component: <Skills />,
+  },
   Certifications: {
     index: 1,
     component: <Certifications />,
@@ -21,14 +26,37 @@ const tabs = {
   },
 };
 
+const tabsList = [
+  {
+    title: "Education",
+    index: 0,
+    component: <Education />,
+  },
+  {
+    title: "Certifications",
+    index: 1,
+    component: <Certifications />,
+  },
+  {
+    title: "Skill Set",
+    index: 2,
+    component: <Skills />,
+  },
+];
+
 const KnowMore = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [selectedTab, setSelectedTab] = useState(tabs.Education);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const localStyles = useStyles();
 
-  const onTabChange = (tab) => {
-    setSelectedTab(tab);
+  const onTabChange = (tabIndex) => {
+    setSelectedTabIndex(tabIndex);
+  };
+
+  const selectedComponent = () => {
+    const target = tabsList.filter((t) => t.index === selectedTabIndex)[0];
+    return target.component;
   };
 
   const webView = () => {
@@ -36,25 +64,27 @@ const KnowMore = () => {
       <>
         <div className={classes.wrapper}>
           <ul id={classes.tab}>
-            {Object.keys(tabs).map((tab, index) => {
-              return (
-                <li key={index}>
-                  <div
-                    className={
-                      selectedTab.index === tabs[tab].index
-                        ? localStyles.selectedTab
-                        : null
-                    }
-                    onClick={() => onTabChange(tabs[tab])}
-                  >
-                    {tab.toUpperCase()}
-                  </div>
-                </li>
-              );
-            })}
+            {tabsList
+              .sort((a, b) => b.index - a.index)
+              .map((tab, index) => {
+                return (
+                  <li key={index}>
+                    <div
+                      className={
+                        selectedTabIndex === tab.index
+                          ? localStyles.selectedTab
+                          : null
+                      }
+                      onClick={() => onTabChange(tab.index)}
+                    >
+                      {tab.title.toUpperCase()}
+                    </div>
+                  </li>
+                );
+              })}
           </ul>
         </div>
-        <div className={classes.body}>{selectedTab.component}</div>
+        <div className={classes.body}>{selectedComponent()}</div>
       </>
     );
   };
@@ -62,19 +92,31 @@ const KnowMore = () => {
   const mobileView = () => {
     return (
       <>
-        {Object.keys(tabs)
-          .reverse()
+        {tabsList
+          .sort((a, b) => a.index - b.index)
           .map((tab, index) => {
             return (
-              <Accordion key={index} style={{ marginBottom: "10px" }}>
+              <Accordion
+                key={index}
+                style={{ marginBottom: "10px" }}
+                onClick={() => onTabChange(tab.index)}
+              >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon style={{color: theme.palette.text.secondary}}/>}
-                  aria-controls={`${tab}-content`}
-                  id={`${tab}-header`}
+                  expandIcon={
+                    <ExpandMoreIcon
+                      style={{ color: theme.palette.text.secondary }}
+                    />
+                  }
+                  aria-controls={`${tab.index}-content`}
+                  id={`${tab.index}-header`}
                 >
-                  <Typography variant="h6">{tab.toUpperCase()}</Typography>
+                  <Typography variant="h6">
+                    {tab.title.toUpperCase()}
+                  </Typography>
                 </AccordionSummary>
-                <AccordionDetails style={{display: "block"}}>{tabs[tab].component}</AccordionDetails>
+                <AccordionDetails style={{ display: "block" }}>
+                  {tab.component}
+                </AccordionDetails>
               </Accordion>
             );
           })}

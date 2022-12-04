@@ -256,6 +256,42 @@ const certificates = [
   },
 ];
 
+const skills = [
+  {
+    id: 0,
+    categoryTitle: "Tools & Technologies",
+    index: 0,
+    data: [
+      "Node.js",
+      "React.js",
+      "Angular",
+      "Flutter",
+      "Express.js",
+      "MySQL",
+      "PostgeSQL",
+      "MongoDB",
+    ],
+  },
+  {
+    id: 1,
+    categoryTitle: "Programming Languages",
+    index: 1,
+    data: ["Java", "Javascript", "Typescript", "Dart", "SQL", "Python", "JSON"],
+  },
+  {
+    id: 2,
+    categoryTitle: "Professional Skills",
+    index: 1,
+    data: [
+      "Software Development",
+      "Object Oriented Programming (OOP)",
+      "Data Structure and Algorithms (DSA)",
+      "Logic Building",
+      "Software Design / Architecture",
+    ],
+  },
+];
+
 export {
   resumeLink,
   skillsList,
@@ -263,4 +299,5 @@ export {
   experienceList,
   educations,
   certificates,
+  skills,
 };
