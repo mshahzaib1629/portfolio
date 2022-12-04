@@ -43,7 +43,7 @@ const Menu = ({homeIsActive}) => {
             controls.start((i) => ({
                 y: 0,
                 opacity: 1,
-                transition: { delay: i * 0.1 + 0.3 },
+                transition: { delay: i * 0.2},
             }));
         } else {
             controls.start({ opacity: 0, y: -5 });

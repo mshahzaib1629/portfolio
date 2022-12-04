@@ -20,6 +20,7 @@ const Loader = () => {
             textAlign: "center",
             fontFamily: "Edu SA Beginner",
             fontSize: 48,
+            color: "white",
             lineHeight: 1.2,
           }}
         >
