@@ -26,7 +26,11 @@ const getCertificationList = async () => {
       firestore,
       K.collections.certifications.name
     );
-    const q = query(certificationCollectionRef, orderBy("index", "desc"));
+    const q = query(
+      certificationCollectionRef,
+      orderBy("date.year", "desc"),
+      orderBy("date.month.index", "desc")
+    );
     const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {

@@ -1,3 +1,5 @@
+import K from "./constants";
+
 export const getYearRange = () => {
   const years = [];
   const currentYear = new Date().getFullYear();
@@ -18,4 +20,8 @@ export const convertArrayToString = (array) => {
   if (Array.isArray(array))
     return array.reduce((pValue, cValue, cIndex, ar) => `${pValue}, ${cValue}`);
   else return "";
+};
+
+export const getMonthWrtMonthArray = (objIndex) => {
+  return K.app.months.filter((m) => m.index === objIndex)[0];
 };

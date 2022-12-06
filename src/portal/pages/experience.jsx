@@ -30,6 +30,7 @@ import K from "../../utils/constants";
 import { useFormik } from "formik";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import { getYearRange } from "../../utils/common";
+import { getMonthWrtMonthArray } from "../../utils/common";
 function ExperiencePage() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -76,6 +77,18 @@ function ExperiencePage() {
     if (targetExperience != undefined && targetExperience != null) {
       setShowForm(true);
       formik.setValues(targetExperience);
+      const targetStartMonth = getMonthWrtMonthArray(
+        targetExperience?.duration?.startMonth?.index
+      );
+      const targetEndMonth = getMonthWrtMonthArray(
+        targetExperience?.duration?.endMonth?.index
+      );
+      targetStartMonth != undefined
+        ? formik.setFieldValue("duration.startMonth", targetStartMonth)
+        : formik.setFieldValue("duration.startMonth", "");
+      targetEndMonth != undefined
+        ? formik.setFieldValue("duration.endMonth", targetEndMonth)
+        : formik.setFieldValue("duration.endMonth", "");
     }
   }, [editableExperienceId]);
 
@@ -116,17 +129,23 @@ function ExperiencePage() {
   };
 
   const formSubmit = async (values) => {
-    console.log("formik values: ", values);
     const isEditing = editableExperienceId != (null || undefined);
     try {
       setIsPageLoading(true);
       const data = JSON.parse(JSON.stringify(values));
 
+      if (data.duration.startMonth === "") {
+        data["duration"]["startMonth"] = { index: 0 };
+      }
+      if (data.duration.endMonth === "") {
+        data["duration"]["endMonth"] = { index: 0 };
+      }
+
       if (data.duration.isWorkingHere) {
-        data["duration"]["endMonth"] = "";
+        data["duration"]["endMonth"] = { index: 0 };
         data["duration"]["endYear"] = "";
       }
-      console.log("form data: ", data);
+      
       if (isEditing) {
         await dispatch(editExperienceThunk(data));
       } else {
@@ -182,11 +201,12 @@ function ExperiencePage() {
                   <TableCell>{exp.company}</TableCell>
                   <TableCell>{exp.jobTitle}</TableCell>
                   <TableCell>
-                    {exp.duration.startMonth} {exp.duration.startYear}
+                    {exp?.duration?.startMonth?.shortName}{" "}
+                    {exp.duration.startYear}
                   </TableCell>
                   <TableCell>
                     {exp.duration.endMonth && exp.duration.endYear
-                      ? `${exp.duration.endMonth} ${exp.duration.endYear}`
+                      ? `${exp.duration.endMonth?.shortName} ${exp.duration.endYear}`
                       : "cont."}
                   </TableCell>
                   <TableCell>{exp.location}</TableCell>
@@ -259,7 +279,7 @@ function ExperiencePage() {
                   >
                     {K.app.months.map((month, index) => (
                       <MenuItem id={index} key={index} value={month}>
-                        {month}
+                        {month.shortName}
                       </MenuItem>
                     ))}
                   </Select>
@@ -301,7 +321,7 @@ function ExperiencePage() {
                   >
                     {K.app.months.map((month, index) => (
                       <MenuItem id={index} key={index} value={month}>
-                        {month}
+                        {month.shortName}
                       </MenuItem>
                     ))}
                   </Select>

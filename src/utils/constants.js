@@ -22,18 +22,67 @@ const K = {
   },
   app: {
     months: [
-      "Jan",
-      "Feb",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      {
+        index: 1,
+        name: "January",
+        shortName: "Jan",
+      },
+      {
+        index: 2,
+        name: "February",
+        shortName: "Feb",
+      },
+      {
+        index: 3,
+        name: "March",
+        shortName: "March",
+      },
+      {
+        index: 4,
+        name: "April",
+        shortName: "April",
+      },
+      {
+        index: 5,
+        name: "May",
+        shortName: "May",
+      },
+
+      {
+        index: 6,
+        name: "June",
+        shortName: "June",
+      },
+      {
+        index: 7,
+        name: "July",
+        shortName: "July",
+      },
+      {
+        index: 8,
+        name: "August",
+        shortName: "Aug",
+      },
+      {
+        index: 9,
+        name: "September",
+        shortName: "Sep",
+      },
+      {
+        index: 10,
+        name: "October",
+        shortName: "Oct",
+      },
+      {
+        index: 11,
+        name: "November",
+        shortName: "Nov",
+      },
+      {
+        index: 12,
+        name: "December",
+        shortName: "Dec",
+      },
     ],
     certificateTypes: [
       "Bootcamp",

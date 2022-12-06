@@ -32,7 +32,7 @@ import { Button } from "@mui/material";
 import K from "../../utils/constants";
 import { useFormik } from "formik";
 
-import { getYearRange } from "../../utils/common";
+import { getYearRange, getMonthWrtMonthArray } from "../../utils/common";
 
 function CertificationPage() {
   const classes = useStyles();
@@ -76,6 +76,12 @@ function CertificationPage() {
     if (targetCertification != undefined && targetCertification != null) {
       setShowForm(true);
       formik.setValues(targetCertification);
+      const targetMonth = getMonthWrtMonthArray(
+        targetCertification?.date?.month?.index
+      );
+      targetMonth != undefined
+        ? formik.setFieldValue("date.month", targetMonth)
+        : formik.setFieldValue("date.month", "");
     }
   }, [editableCertificationId]);
 
@@ -122,6 +128,9 @@ function CertificationPage() {
       setIsPageLoading(true);
       const data = JSON.parse(JSON.stringify(values));
 
+      if (data?.date?.month === "") {
+        data.date.month = { index: 0 };
+      }
       if (newImage) {
         const { imageUrl, imageRef } = await dispatch(
           updateImageThunk(data["imageRef"], newImage?.imageFile)
@@ -263,7 +272,7 @@ function CertificationPage() {
                   </TableCell>
                   <TableCell>{cert.type}</TableCell>
                   <TableCell>
-                    {cert.date?.month} {cert.date?.year}
+                    {cert.date?.month?.shortName} {cert.date?.year}
                   </TableCell>
                   <TableCell align="right">
                     <Edit
@@ -347,13 +356,13 @@ function CertificationPage() {
                       id="month"
                       label="Month"
                       name="date.month"
-                      value={formik.values.date?.month}
+                      value={formik.values.date.month}
                       onChange={formik.handleChange}
                       required
                     >
                       {K.app.months.map((month, index) => (
                         <MenuItem id={index} key={index} value={month}>
-                          {month}
+                          {month?.shortName}
                         </MenuItem>
                       ))}
                     </Select>
