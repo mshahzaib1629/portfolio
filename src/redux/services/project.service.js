@@ -25,7 +25,11 @@ const getProjectList = async () => {
       firestore,
       K.collections.projects.name
     );
-    const q = query(projectCollectionRef, orderBy("index", "desc"));
+    const q = query(
+      projectCollectionRef,
+      orderBy("year", "desc"),
+      orderBy("index", "desc")
+    );
     const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {

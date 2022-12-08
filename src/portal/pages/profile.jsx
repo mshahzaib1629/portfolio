@@ -456,7 +456,7 @@ function ProfilePage() {
   }
   return (
     <>
-      <BackdropLoading isLoading={isPageLoading} />
+      <BackdropLoading isLoading={isLoading} />
       {snackbar()}
       {showProfileForm()}
     </>

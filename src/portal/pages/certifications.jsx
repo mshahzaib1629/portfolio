@@ -52,6 +52,7 @@ function CertificationPage() {
       type: "",
       imageUrl: "",
       imageRef: "",
+      isFeatured: false,
       date: {
         year: "",
         month: "",
@@ -322,158 +323,164 @@ function CertificationPage() {
         </div>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid container item md={6}>
-              <Grid item md={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="title"
-                  label="Title"
-                  name="title"
-                  value={formik.values.title}
-                  onChange={formik.handleChange}
-                />
-              </Grid>
-              <Grid item md={12}>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="issuedBy"
-                  label="Issued By"
-                  name="issuedBy"
-                  value={formik.values.issuedBy}
-                  onChange={formik.handleChange}
-                />
-              </Grid>
-              <Grid container item md={12} className={classes.pageHead}>
-                <Grid item md={5.8}>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel id="month-label">Month</InputLabel>
-                    <Select
-                      labelId="month-label"
-                      id="month"
-                      label="Month"
-                      name="date.month"
-                      value={formik.values.date.month}
-                      onChange={formik.handleChange}
-                      required
-                    >
-                      {K.app.months.map((month, index) => (
-                        <MenuItem id={index} key={index} value={month}>
-                          {month?.shortName}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item md={5.8}>
-                  <FormControl fullWidth margin="normal">
-                    <InputLabel id="year-label">Year</InputLabel>
-                    <Select
-                      labelId="year-label"
-                      id="year"
-                      label="Year"
-                      name="date.year"
-                      value={formik.values.date?.year}
-                      onChange={formik.handleChange}
-                      required
-                    >
-                      {getYearRange().map((year, index) => (
-                        <MenuItem id={index} key={index} value={year}>
-                          {year}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="title"
+                label="Title"
+                name="title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+              />
             </Grid>
-            <Grid container item md={6}>
-              {/* @TODO: This should be file picker of url image reader */}
-              <Grid item md={12}>
-                <FormControl
-                  margin="normal"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  {newImage || formik.values.imageUrl ? (
-                    <div>
-                      <img
-                        width={70}
-                        height={55}
-                        src={
-                          newImage
-                            ? newImage?.thumbnail
-                            : formik.values.imageUrl
-                        }
-                        alt={newImage?.imageFile?.name}
-                      />
-                    </div>
-                  ) : (
-                    <sub>No Image Uploaded...</sub>
-                  )}
+            <Grid item md={6}>
+              <FormControl
+                margin="normal"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {newImage || formik.values.imageUrl ? (
                   <div>
-                    {newImage != null || formik?.values?.imageUrl ? (
-                      <Button
-                        variant="outlined"
-                        component="label"
-                        onClick={deleteImage}
-                      >
-                        X
-                      </Button>
-                    ) : null}
-                    <Button variant="outlined" component="label">
-                      Upload Image
-                      <input
-                        hidden
-                        id="imageFile"
-                        name="imageFile"
-                        accept="image/*"
-                        type="file"
-                        onChange={handleNewImage}
-                      />
-                    </Button>
+                    <img
+                      width={70}
+                      height={55}
+                      src={
+                        newImage ? newImage?.thumbnail : formik.values.imageUrl
+                      }
+                      alt={newImage?.imageFile?.name}
+                    />
                   </div>
-                </FormControl>
-              </Grid>
-              <Grid item md={12}>
+                ) : (
+                  <sub>No Image Uploaded...</sub>
+                )}
+                <div>
+                  {newImage != null || formik?.values?.imageUrl ? (
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      onClick={deleteImage}
+                    >
+                      X
+                    </Button>
+                  ) : null}
+                  <Button variant="outlined" component="label">
+                    Upload Image
+                    <input
+                      hidden
+                      id="imageFile"
+                      name="imageFile"
+                      accept="image/*"
+                      type="file"
+                      onChange={handleNewImage}
+                    />
+                  </Button>
+                </div>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="issuedBy"
+                label="Issued By"
+                name="issuedBy"
+                value={formik.values.issuedBy}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="type-label">Certificate Type</InputLabel>
+                <Select
+                  labelId="type-label"
+                  id="type"
+                  label="Certificate Type"
+                  name="type"
+                  value={formik.values.type}
+                  onChange={formik.handleChange}
+                  required
+                >
+                  {K.app.certificateTypes.map((certificate, index) => (
+                    <MenuItem id={index} key={index} value={certificate}>
+                      {certificate}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid container item md={6} className={classes.pageHead}>
+              <Grid item md={5.8}>
                 <FormControl fullWidth margin="normal">
-                  <InputLabel id="type-label">Certificate Type</InputLabel>
+                  <InputLabel id="month-label">Month</InputLabel>
                   <Select
-                    labelId="type-label"
-                    id="type"
-                    label="Certificate Type"
-                    name="type"
-                    value={formik.values.type}
+                    labelId="month-label"
+                    id="month"
+                    label="Month"
+                    name="date.month"
+                    value={formik.values.date.month}
                     onChange={formik.handleChange}
                     required
                   >
-                    {K.app.certificateTypes.map((certificate, index) => (
-                      <MenuItem id={index} key={index} value={certificate}>
-                        {certificate}
+                    {K.app.months.map((month, index) => (
+                      <MenuItem id={index} key={index} value={month}>
+                        {month?.shortName}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item md={12}>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  id="url"
-                  label="Certificate URL"
-                  placeholder="https://"
-                  name="url"
-                  value={formik.values.url}
-                  onChange={formik.handleChange}
-                />
+              <Grid item md={5.8}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel id="year-label">Year</InputLabel>
+                  <Select
+                    labelId="year-label"
+                    id="year"
+                    label="Year"
+                    name="date.year"
+                    value={formik.values.date?.year}
+                    onChange={formik.handleChange}
+                    required
+                  >
+                    {getYearRange().map((year, index) => (
+                      <MenuItem id={index} key={index} value={year}>
+                        {year}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                fullWidth
+                id="url"
+                label="Certificate URL"
+                placeholder="https://"
+                name="url"
+                value={formik.values.url}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <FormControlLabel
+                margin="normal"
+                control={
+                  <Checkbox
+                    name="isFeatured"
+                    checked={formik.values.isFeatured}
+                    onChange={formik.handleChange}
+                  />
+                }
+                label="Mark Featured"
+              />
             </Grid>
           </Grid>
 

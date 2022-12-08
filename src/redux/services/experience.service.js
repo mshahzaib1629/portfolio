@@ -6,14 +6,24 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 
 const getExperienceList = async () => {
   try {
-    const querySnapshot = await getDocs(
-      collection(firestore, K.collections.experience.name)
+    const experienceCollectionRef = collection(
+      firestore,
+      K.collections.experience.name
     );
+    const q = query(
+      experienceCollectionRef,
+      orderBy("duration.endYear", "desc"),
+      orderBy("duration.endMonth.index", "desc"),
+      orderBy("duration.isWorkingHere", "desc")
+    );
+    const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {
       data.push({
@@ -22,10 +32,6 @@ const getExperienceList = async () => {
         ...doc.data(),
       });
     });
-    // TODO: IT'S A TEMPORARY SOLUTION. ULTIMATE SOLUTION WILL BE SORTING BY ROWS RE-ORDERING
-    data
-      .sort((a, b) => b.duration.endYear - a.duration.endYear)
-      .sort((a, b) => b.duration.isWorkingHere - a.duration.isWorkingHere);
     return data;
   } catch (error) {
     throw error;
@@ -47,7 +53,7 @@ const addNewExperience = async (data) => {
 const updateExperience = async (data) => {
   try {
     const dataToUpdate = JSON.parse(JSON.stringify(data));
-    delete dataToUpdate['id'];
+    delete dataToUpdate["id"];
     const docRef = doc(firestore, K.collections.experience.name, data?.id);
     await updateDoc(docRef, dataToUpdate);
     // console.log("document updated with ID: ", docRef.id);

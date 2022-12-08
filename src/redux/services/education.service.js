@@ -6,14 +6,23 @@ import {
   getDocs,
   updateDoc,
   deleteDoc,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 
 const getEducationList = async () => {
   try {
-    const querySnapshot = await getDocs(
-      collection(firestore, K.collections.education.name)
+    const educationColleftionRef = collection(
+      firestore,
+      K.collections.education.name
     );
+    const q = query(
+      educationColleftionRef,
+      orderBy("duration.endYear", "desc"),
+      orderBy("duration.isStudying", "desc")
+    );
+    const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {
       data.push({
@@ -22,10 +31,6 @@ const getEducationList = async () => {
         ...doc.data(),
       });
     });
-    // TODO: IT'S A TEMPORARY SOLUTION. ULTIMATE SOLUTION WILL BE SORTING BY ROWS RE-ORDERING
-    data
-      .sort((a, b) => b.duration.endYear - a.duration.endYear)
-      .sort((a, b) => b.duration.isStudying - a.duration.isStudying);
     return data;
   } catch (error) {
     throw error;
