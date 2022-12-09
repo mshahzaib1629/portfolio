@@ -30,6 +30,7 @@ import {
   deleteImageThunk,
   updateImageThunk,
   setEditableProjectAction,
+  fetchFeaturedProjectThunk,
 } from "../../redux/slices/projectSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -61,6 +62,7 @@ function ProjectPage() {
   const formik = useFormik({
     initialValues: {
       title: "",
+      projectType: "",
       workedAt: "",
       isFeatured: false,
       overview: "",
@@ -71,7 +73,6 @@ function ProjectPage() {
       imageRef: "",
       links: {
         code: "",
-        docs: "",
         url: "",
       },
     },
@@ -289,7 +290,12 @@ function ProjectPage() {
                   onDrop={handleDrop}
                 >
                   <TableCell style={{ cursor: "pointer" }}>=</TableCell>
-                  <TableCell>{project.title}</TableCell>
+                  <TableCell>
+                    {project.title}{" "}
+                    {project.isFeatured && (
+                      <span className={classes.featured}>Featured</span>
+                    )}
+                  </TableCell>
                   <TableCell>{project.workedAt}</TableCell>
                   <TableCell style={{ width: "40%" }}>
                     {convertArrayToString(project.technologies)}
@@ -481,6 +487,17 @@ function ProjectPage() {
               <TextField
                 margin="normal"
                 fullWidth
+                id="project-type"
+                label="Project Type"
+                name="projectType"
+                value={formik.values.projectType}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                fullWidth
                 id="links-url"
                 label="Project Url"
                 name="links.url"
@@ -499,17 +516,7 @@ function ProjectPage() {
                 onChange={formik.handleChange}
               />
             </Grid>
-            <Grid item md={6}>
-              <TextField
-                margin="normal"
-                fullWidth
-                id="links-docs"
-                label="Documentation Url"
-                name="links.docs"
-                value={formik.values.links.docs}
-                onChange={formik.handleChange}
-              />
-            </Grid>
+
             <Grid item md={6}>
               <FormControlLabel
                 margin="normal"
@@ -586,6 +593,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+  featured: {
+    fontSize: 10,
+    color: "green",
+    padding: "0.2em 0.3em",
+    borderRadius: "6px",
+    borderStyle: "solid",
+    borderWidth: "1px",
   },
 }));
 

@@ -26,6 +26,7 @@ import {
   deleteImageThunk,
   updateImageThunk,
   setEditableCertificationAction,
+  fetchFeaturedCertificationThunk,
 } from "../../redux/slices/certificationSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -267,7 +268,12 @@ function CertificationPage() {
                   onDrop={handleDrop}
                 >
                   <TableCell style={{ cursor: "pointer" }}>=</TableCell>
-                  <TableCell style={{ width: "30%" }}>{cert.title}</TableCell>
+                  <TableCell style={{ width: "30%" }}>
+                    {cert.title}{" "}
+                    {cert.isFeatured && (
+                      <span className={classes.featured}>Featured</span>
+                    )}
+                  </TableCell>
                   <TableCell style={{ width: "25%" }}>
                     {cert.issuedBy}
                   </TableCell>
@@ -526,6 +532,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+  featured: {
+    fontSize: 10,
+    color: "green",
+    padding: "0.2em 0.3em",
+    borderRadius: "6px",
+    borderStyle: "solid",
+    borderWidth: "1px",
   },
 }));
 

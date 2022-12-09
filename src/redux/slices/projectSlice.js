@@ -70,6 +70,20 @@ export function fetchProjectThunk() {
   };
 }
 
+export function fetchFeaturedProjectThunk() {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    let response;
+    try {
+      response = await ProjectService.getFeaturedProjectList();
+      dispatch(getProjectListSuccessAction(response));
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
 export function addNewProjectThunk(data) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());

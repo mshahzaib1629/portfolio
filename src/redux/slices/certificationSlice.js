@@ -70,6 +70,20 @@ export function fetchCertificationThunk() {
   };
 }
 
+export function fetchFeaturedCertificationThunk() {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    let response;
+    try {
+      response = await CertificationService.getFeaturedCertificationList();
+      dispatch(getCertificationListSuccessAction(response));
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
 export function addNewCertificationThunk(data) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
@@ -128,10 +142,7 @@ export function updateSortingThunk(item1, item2) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await CertificationService.updateSorting(
-        item1,
-        item2
-      );
+      await CertificationService.updateSorting(item1, item2);
       dispatch(updateSortingSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

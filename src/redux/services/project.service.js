@@ -15,6 +15,7 @@ import {
   deleteDoc,
   query,
   orderBy,
+  where,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
@@ -29,6 +30,33 @@ const getProjectList = async () => {
       projectCollectionRef,
       orderBy("year", "desc"),
       orderBy("index", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        index: data.length,
+        ...doc.data(),
+      });
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getFeaturedProjectList = async () => {
+  try {
+    const projectCollectionRef = collection(
+      firestore,
+      K.collections.projects.name
+    );
+    const q = query(
+      projectCollectionRef,
+      orderBy("year", "desc"),
+      orderBy("index", "desc"),
+      where("isFeatured", "==", true)
     );
     const querySnapshot = await getDocs(q);
     let data = [];
@@ -127,6 +155,7 @@ const deleteProject = async (project) => {
 };
 
 const ProjectService = {
+  getFeaturedProjectList,
   getProjectList,
   addNewProject,
   deleteImage,

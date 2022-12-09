@@ -16,6 +16,7 @@ import {
   runTransaction,
   query,
   orderBy,
+  where,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
@@ -30,6 +31,33 @@ const getCertificationList = async () => {
       certificationCollectionRef,
       orderBy("date.year", "desc"),
       orderBy("date.month.index", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        index: data.length,
+        ...doc.data(),
+      });
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getFeaturedCertificationList = async () => {
+  try {
+    const certificationCollectionRef = collection(
+      firestore,
+      K.collections.certifications.name
+    );
+    const q = query(
+      certificationCollectionRef,
+      orderBy("date.year", "desc"),
+      orderBy("date.month.index", "desc"),
+      where("isFeatured", "==", true)
     );
     const querySnapshot = await getDocs(q);
     let data = [];
@@ -136,6 +164,7 @@ const deleteCertification = async (cert) => {
 
 const CertificationService = {
   getCertificationList,
+  getFeaturedCertificationList,
   addNewCertification,
   deleteImage,
   updateImage,
