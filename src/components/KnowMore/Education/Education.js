@@ -6,51 +6,48 @@ import {
   Link,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { educations } from "../../../data";
 import classes from "./Education.module.css";
+import { useSelector } from "react-redux";
 
 function Education() {
   const theme = useTheme();
   const localStyle = useStyles();
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [loadedEducations, setLoadedEducations] = useState([]);
-  useEffect(() => {
-    setLoadedEducations(educations.sort((a, b) => b.id - a.id));
-  }, []);
+
+  const { educationList, isLoading } = useSelector((state) => state.education);
 
   const webView = () => (
     <div className={localStyle.body}>
       <div className={classes.content}>
         <ul className={classes.timeline}>
-          {loadedEducations.map((education) => (
+          {educationList.map((edu) => (
             <li
-              key={education.id}
+              key={edu.id}
               className={classes.event}
-              data-date={`${education.duration.start} - ${education.duration.end}`}
+              data-date={`${edu.duration?.startYear} - ${
+                edu.duration?.isStudying ? "cont." : edu.duration?.endYear
+              }`}
             >
               <Typography
                 variant="h5"
                 style={{ color: theme.palette.text.secondary }}
               >
-                {education.degreeTitle} <br />
+                {edu.degreeTitle} <br />
                 <Link
-                  href={
-                    education.links.website ||
-                    education.links.facebook ||
-                    education.links.instagram
-                  }
-                  style={{cursor: "pointer", textDecoration: "none" }}
+                  href={edu.siteUrl}
+                  style={{ cursor: "pointer", textDecoration: "none" }}
                   color="primary"
                   target={"_blank"}
                 >
-                  {education.school}
+                  {edu.school}
                 </Link>
               </Typography>
               <Typography
                 variant="h6"
                 style={{ color: theme.palette.text.secondary }}
               >
-                {education.location}
+                {edu.location}
               </Typography>
               <br />
             </li>
@@ -62,35 +59,33 @@ function Education() {
 
   const mobileView = () => (
     <ul style={{ listStyle: "none" }}>
-      {loadedEducations.map((education) => (
-        <li key={education.id}>
+      {educationList.map((edu) => (
+        <li key={edu.id}>
           <Typography
             variant="subtitle2"
             style={{ color: theme.palette.text.secondary }}
-          >{`${education.duration.start} - ${education.duration.end}`}</Typography>
+          >{`${edu.duration.startYear} - ${
+            edu.duration?.isStudying ? "cont." : edu.duration?.endYear
+          }`}</Typography>
           <Typography
             variant="h5"
             style={{ color: theme.palette.text.secondary }}
           >
-            {education.degreeTitle} <br />
+            {edu.degreeTitle} <br />
             <Link
-              href={
-                education.links.website ||
-                education.links.facebook ||
-                education.links.instagram
-              }
-              style={{cursor: "pointer", textDecoration: "none" }}
+              href={edu.siteUrl}
+              style={{ cursor: "pointer", textDecoration: "none" }}
               color="primary"
               target={"_blank"}
             >
-              {education.school}
+              {edu.school}
             </Link>
           </Typography>
           <Typography
             variant="h6"
             style={{ color: theme.palette.text.secondary }}
           >
-            {education.location}
+            {edu.location}
           </Typography>
           <br />
         </li>

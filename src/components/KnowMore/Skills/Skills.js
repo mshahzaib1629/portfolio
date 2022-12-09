@@ -12,20 +12,19 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useSelector } from "react-redux";
 
 function Skills() {
   const theme = useTheme();
   const localStyle = useStyles();
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [expandedCardIndex, setExpandedCardIndex] = useState(0);
-  const [loadedSkills, setLoadedSkillss] = useState([]);
-  useEffect(() => {
-    setLoadedSkillss(skills.sort((a, b) => a.id - b.id));
-  }, []);
+
+  const { skillSetList, isLoading } = useSelector((state) => state.skillSet);
 
   const webView = () => (
     <ul style={{ listStyle: "none" }}>
-      {loadedSkills.map((skill, index) => {
+      {skillSetList.map((skill, index) => {
         return (
           <Accordion
             key={skill.id}
@@ -46,7 +45,7 @@ function Skills() {
                 variant="h6"
                 color={index === expandedCardIndex ? "primary" : ""}
               >
-                {skill.categoryTitle}
+                {skill.skillSetTitle}
               </Typography>
             </AccordionSummary>
             <AccordionDetails style={{ display: "block", minHeight: "14.5em" }}>
@@ -69,7 +68,7 @@ function Skills() {
 
   const mobileView = () => (
     <ul style={{ listStyle: "none" }}>
-      {loadedSkills.map((skill) => {
+      {skillSetList.map((skill) => {
         return (
           <li key={skill.id}>
             <Typography
@@ -77,7 +76,7 @@ function Skills() {
               color="primary"
               style={{ marginBottom: "5px" }}
             >
-              {skill.categoryTitle}
+              {skill.skillSetTitle}
               <br />
             </Typography>
             <Typography
@@ -101,7 +100,13 @@ function Skills() {
       })}
     </ul>
   );
-  return isSmallMobile ? mobileView() : webView();
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : isSmallMobile ? (
+    mobileView()
+  ) : (
+    webView()
+  );
 }
 
 const useStyles = makeStyles((theme) => ({

@@ -10,38 +10,23 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Card from "./Card";
 import { certificates } from "../../../data";
+import { useSelector } from "react-redux";
 
 function Certifications() {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
-  const [loadedCertificates, setLoadedCertificates] = useState([]);
-  const [pageNo, setPageNo] = useState(0);
 
-  function loadCertificates() {
-    const pageSize = window.matchMedia("(max-width: 700px)").matches ? 3 : 6;
-    const startIndex = pageNo * pageSize;
-    const endIndex = startIndex + pageSize;
-    let newCertificates = certificates
-      .sort((a, b) => b.id - a.id)
-      .filter((value, index) => {
-        return index >= startIndex && index < endIndex;
-      });
-    setLoadedCertificates((prevCertificates) => [
-      ...prevCertificates,
-      ...newCertificates,
-    ]);
-    setPageNo((prevPageNo) => prevPageNo + 1);
-  }
+  const { certificationList, isLoading } = useSelector(
+    (state) => state.certification
+  );
 
-  useEffect(() => {
-    loadCertificates();
-  }, []);
-
-  return (
+  return isLoading ? (
+    <p>Loading...</p>
+  ) : (
     <>
       <Grid container spacing={4} className={classes.galleryContainer}>
-        {loadedCertificates.map((item, k) => (
+        {certificationList.map((item, k) => (
           <Grid
             item
             xs={12}
@@ -55,28 +40,25 @@ function Certifications() {
               id={item.id}
               title={item.title}
               issuedBy={item.issuedBy}
-              nature={item.nature}
+              type={item.type}
               date={item.date}
-              onClick={() => {}}
-              image={item.image}
+              imageUrl={item.imageUrl}
               url={item.url}
             />
           </Grid>
         ))}
       </Grid>
-      {loadedCertificates.length < certificates.length && (
-        <Box display="flex" justifyContent="center" mt={2}>
-          <Button
-            className={classes.loadBtn}
-            onClick={loadCertificates}
-            variant="contained"
-            color="primary"
-            projectList
-          >
-            {t("project_load_btn")}
-          </Button>
-        </Box>
-      )}
+
+      <Box display="flex" justifyContent="center" mt={2}>
+        <Button
+          className={classes.loadBtn}
+          onClick={() => {}}
+          variant="contained"
+          color="primary"
+        >
+          {t("project_load_btn")}
+        </Button>
+      </Box>
     </>
   );
 }

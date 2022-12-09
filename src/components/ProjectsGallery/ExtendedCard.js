@@ -13,27 +13,16 @@ import { motion } from "framer-motion";
 const ExtendedCard = ({
   id,
   title,
-  colorGradients,
-  frontImages,
+  imageUrl,
   overview,
   technologies,
   handleClose,
   ...rest
 }) => {
-  const classes = useStyles({ colorGradients });
-  const [displayInBackground, setDisplayInBackground] = useState(false);
-
-  useEffect(() => {
-    if (
-      (!colorGradients.color1 && !colorGradients.color2) ||
-      frontImages.length == 0
-    ) {
-      setDisplayInBackground(true);
-    }
-  }, []);
+  const classes = useStyles();
 
   const displayPrimaryImage = () =>
-    frontImages.length > 0 ? frontImages[0] : "images/empty-project-image1.jpg";
+    imageUrl ? imageUrl : "images/empty-project-image1.jpg";
 
   return (
     <div className={classes.wrapper}>
@@ -49,18 +38,9 @@ const ExtendedCard = ({
               component={motion.div}
               layoutId={`img-container-${id}`}
               className={classes.media}
-              image={displayInBackground ? displayPrimaryImage() : null}
+              image={displayPrimaryImage()}
               title={title}
-            >
-              {!displayInBackground && (
-                <motion.img
-                  layoutId={`front-img-${id}`}
-                  className={classes.frontImage}
-                  src={frontImages[0]}
-                  alt={title}
-                />
-              )}
-            </CardMedia>
+            ></CardMedia>
             <CardContent>
               <Typography
                 variant="h5"
@@ -151,8 +131,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     overflow: "hidden",
     backgroundColor: "red",
-    backgroundImage: (props) =>
-      `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`,
   },
   frontImage: {
     marginTop: "20px",
