@@ -84,30 +84,22 @@ const AllCertifications = () => {
       <Table size="medium">
         <TableHead>
           <TableRow>
-            <TableCell>Year</TableCell>
+            <TableCell>Date</TableCell>
             <TableCell>Title</TableCell>
-            <TableCell>Links</TableCell>
+            <TableCell>Link</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {certificationList?.map((project) => (
-            <TableRow key={project.id} id={project.id}>
-              <TableCell>{project.year}</TableCell>
-              <TableCell>{project.title}</TableCell>
+          {certificationList?.map((certificate) => (
+            <TableRow key={certificate.id} id={certificate.id}>
               <TableCell>
-                {project.links?.url && (
-                  <a href={project.links?.url} target="_blank" rel="noreferrer">
+                {certificate?.date?.year}
+              </TableCell>
+              <TableCell>{certificate.title}</TableCell>
+              <TableCell>
+                {certificate.url && (
+                  <a href={certificate.url} target="_blank" rel="noreferrer">
                     <Launch fontSize="small" />
-                  </a>
-                )}
-                &nbsp; &nbsp;
-                {project.links?.code && (
-                  <a
-                    href={project.links?.code}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <GitHubIcon fontSize="small" />
                   </a>
                 )}
               </TableCell>
