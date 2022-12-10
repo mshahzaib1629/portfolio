@@ -41,6 +41,7 @@ import {
   convertArrayToString,
   convertStringToArray,
 } from "../../utils/common";
+import FeaturedTag from "../../components/FeaturedTag";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -291,10 +292,7 @@ function ProjectPage() {
                 >
                   <TableCell style={{ cursor: "pointer" }}>=</TableCell>
                   <TableCell>
-                    {project.title}{" "}
-                    {project.isFeatured && (
-                      <span className={classes.featured}>Featured</span>
-                    )}
+                    {project.title} {project.isFeatured && <FeaturedTag />}
                   </TableCell>
                   <TableCell>{project.workedAt}</TableCell>
                   <TableCell style={{ width: "40%" }}>
@@ -593,14 +591,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-  },
-  featured: {
-    fontSize: 10,
-    color: "green",
-    padding: "0.2em 0.3em",
-    borderRadius: "6px",
-    borderStyle: "solid",
-    borderWidth: "1px",
   },
 }));
 

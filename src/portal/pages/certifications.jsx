@@ -34,6 +34,7 @@ import K from "../../utils/constants";
 import { useFormik } from "formik";
 
 import { getYearRange, getMonthWrtMonthArray } from "../../utils/common";
+import FeaturedTag from "../../components/FeaturedTag";
 
 function CertificationPage() {
   const classes = useStyles();
@@ -269,10 +270,7 @@ function CertificationPage() {
                 >
                   <TableCell style={{ cursor: "pointer" }}>=</TableCell>
                   <TableCell style={{ width: "30%" }}>
-                    {cert.title}{" "}
-                    {cert.isFeatured && (
-                      <span className={classes.featured}>Featured</span>
-                    )}
+                    {cert.title} {cert.isFeatured && <FeaturedTag />}
                   </TableCell>
                   <TableCell style={{ width: "25%" }}>
                     {cert.issuedBy}
@@ -532,14 +530,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-  },
-  featured: {
-    fontSize: 10,
-    color: "green",
-    padding: "0.2em 0.3em",
-    borderRadius: "6px",
-    borderStyle: "solid",
-    borderWidth: "1px",
   },
 }));
 

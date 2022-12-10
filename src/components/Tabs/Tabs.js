@@ -66,7 +66,11 @@ const StyledTabs = (props) => {
           </Typography>
         </Box>
         <Box mb={4}>
-          <Typography variant="body1" color="textPrimary">
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            style={{ textAlign: "justify" }}
+          >
             {exp.overview}
           </Typography>
         </Box>
@@ -93,7 +97,8 @@ const StyledTabs = (props) => {
             variant="subtitle2"
             style={{ color: theme.palette.text.secondary }}
           >
-            {exp.duration.startMonth.shortName} {exp.duration.startYear} - {endDate}
+            {exp.duration.startMonth.shortName} {exp.duration.startYear} -{" "}
+            {endDate}
           </Typography>
           <Typography
             variant="h5"
@@ -125,7 +130,11 @@ const StyledTabs = (props) => {
           </Typography>
         </Box>
         <Box mb={4}>
-          <Typography variant="body1" color="textPrimary">
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            style={{ textAlign: "justify" }}
+          >
             {exp.overview}
           </Typography>
         </Box>
@@ -148,7 +157,8 @@ const StyledTabs = (props) => {
         onChange={handleChange}
         className={classes.tabs}
         classes={{ indicator: classes.indicator }}
-        centered
+        variant="scrollable"
+        // centered
       >
         {props.experienceData.map((elem) => (
           <Tab label={elem.company} key={elem.id} />

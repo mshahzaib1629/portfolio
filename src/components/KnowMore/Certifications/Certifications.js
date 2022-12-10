@@ -4,12 +4,13 @@ import Card from "./Card";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFeaturedCertificationThunk } from "../../../redux/slices/certificationSlice";
 import TryAgain from "../../TryAgain";
+import { useNavigate } from "react-router";
 
 function Certifications() {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { certificationList, isLoading } = useSelector(
     (state) => state.certification
@@ -53,11 +54,13 @@ function Certifications() {
         <Box display="flex" justifyContent="center" mt={2}>
           <Button
             className={classes.loadBtn}
-            onClick={() => {}}
+            onClick={() => {
+              navigate("/certificates");
+            }}
             variant="contained"
             color="primary"
           >
-            {t("project_load_btn")}
+            View All
           </Button>
         </Box>
       </>

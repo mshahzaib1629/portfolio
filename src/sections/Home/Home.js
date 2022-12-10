@@ -76,7 +76,9 @@ const Home = () => {
 
   async function getPortfolioData() {
     try {
-      await getProfileData();
+      if (profile == null) {
+        await getProfileData();
+      }
       await getExperienceData();
       await getProjectsData();
       await getEducationData();

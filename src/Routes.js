@@ -6,6 +6,8 @@ const Navbar = lazy(() => import("./components/Navbar"));
 const Social = lazy(() => import("./components/Social"));
 const Footer = lazy(() => import("./components/Footer"));
 const Loader = lazy(() => import("./components/Loader"));
+const AllProjects = lazy(() => import("./pages/AllProjects"));
+const AllCertifications = lazy(() => import("./pages/AllCertifications"));
 
 const AppRoutes = () => {
   const theme = useTheme();
@@ -17,6 +19,8 @@ const AppRoutes = () => {
       {!isMobile && <Social />}
       <Routes>
         <Route exact path="/" element={<MainHome />} />
+        <Route path="/projects" element={<AllProjects />} />
+        <Route path="/certificates" element={<AllCertifications />} />
       </Routes>
       <Footer />
     </>

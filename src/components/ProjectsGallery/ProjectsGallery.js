@@ -11,12 +11,14 @@ import {
 import Card from "./Card";
 import ExtendedCard from "./ExtendedCard";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const ProjectsGallery = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState(null);
   const theme = useTheme();
+  const navigate = useNavigate();
   const getSelected = (id) => props.projectsData.find((elem) => elem.id === id);
 
   return (
@@ -63,11 +65,11 @@ const ProjectsGallery = (props) => {
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           className={classes.loadBtn}
-          onClick={()=>{}}
+          onClick={() => {navigate('/projects')}}
           variant="contained"
           color="primary"
         >
-          {t("project_load_btn")}
+          View All
         </Button>
       </Box>
     </>
