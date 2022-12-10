@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   makeStyles,
   Tabs,
@@ -10,15 +10,15 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { Language, Facebook, LinkedIn } from "@material-ui/icons";
-import { experienceList } from "../../data";
 import IconBtn from "../../components/IconBtn";
 import { useTranslation } from "react-i18next";
 
-const StyledTabs = () => {
+const StyledTabs = (props) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles({ isMobile });
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -33,29 +33,44 @@ const StyledTabs = () => {
     );
   };
 
-  const webViewPanel = (exp) => {
+  const webViewPanel = (exp, index) => {
+    let endDate = exp?.duration?.isWorkingHere
+      ? "cont."
+      : `${exp.duration.endMonth.shortName} ${exp.duration.endYear}`;
     return (
-      <TabPanel value={value} index={exp.id} key={exp.id}>
+      <TabPanel value={value} index={index} key={index}>
         <Box mb={4}>
-          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+          <Typography
+            variant="h5"
+            style={{ color: theme.palette.text.secondary }}
+          >
             {exp.jobTitle} @{" "}
             <Link
               href={
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
-              style={{cursor: "pointer", textDecoration: "none" }}
+              style={{ cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="h6" style={{ color: theme.palette.text.secondary }} fontSize="14">
-            {exp.location} &nbsp; | &nbsp; {exp.duration.start} - {exp.duration.end}
+          <Typography
+            variant="h6"
+            style={{ color: theme.palette.text.secondary }}
+            fontSize="14"
+          >
+            {exp.location} &nbsp; | &nbsp; {exp.duration.startMonth.shortName}{" "}
+            {exp.duration.startYear} - {endDate}
           </Typography>
         </Box>
         <Box mb={4}>
-          <Typography variant="body1" color="textPrimary">
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            style={{ textAlign: "justify" }}
+          >
             {exp.overview}
           </Typography>
         </Box>
@@ -71,32 +86,55 @@ const StyledTabs = () => {
     );
   };
 
-  const mobileViewPanel = (exp) => {
+  const mobileViewPanel = (exp, index) => {
+    let endDate = exp?.duration?.isWorkingHere
+      ? "cont."
+      : `${exp.duration.endMonth.shortName} ${exp.duration.endYear}`;
     return (
-      <TabPanel value={value} index={exp.id} key={exp.id}>
+      <TabPanel value={value} index={index} key={index}>
         <Box mb={4}>
-        <Typography
+          <Typography
             variant="subtitle2"
             style={{ color: theme.palette.text.secondary }}
-          >{exp.duration.start} - {exp.duration.end}</Typography>
-          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>{exp.jobTitle}</Typography>
-          <Typography variant="h5" style={{ color: theme.palette.text.secondary }}>
+          >
+            {exp.duration.startMonth.shortName} {exp.duration.startYear} -{" "}
+            {endDate}
+          </Typography>
+          <Typography
+            variant="h5"
+            style={{ color: theme.palette.text.secondary }}
+          >
+            {exp.jobTitle}
+          </Typography>
+          <Typography
+            variant="h5"
+            style={{ color: theme.palette.text.secondary }}
+          >
             @{" "}
             <Link
               href={
                 exp.links.website || exp.links.facebook || exp.links.instagram
               }
               color="primary"
-              style={{cursor: "pointer", textDecoration: "none" }}
+              style={{ cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
             >
               {exp.company}
             </Link>
           </Typography>
-          <Typography variant="h6" style={{ color: theme.palette.text.secondary }}>{exp.location}</Typography>
+          <Typography
+            variant="h6"
+            style={{ color: theme.palette.text.secondary }}
+          >
+            {exp.location}
+          </Typography>
         </Box>
         <Box mb={4}>
-          <Typography variant="body1" color="textPrimary">
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            style={{ textAlign: "justify" }}
+          >
             {exp.overview}
           </Typography>
         </Box>
@@ -119,14 +157,15 @@ const StyledTabs = () => {
         onChange={handleChange}
         className={classes.tabs}
         classes={{ indicator: classes.indicator }}
-        centered
+        variant="scrollable"
+        // centered
       >
-        {experienceList.map((elem) => (
+        {props.experienceData.map((elem) => (
           <Tab label={elem.company} key={elem.id} />
         ))}
       </Tabs>
-      {experienceList.map((elem) =>
-        isMobile ? mobileViewPanel(elem) : webViewPanel(elem)
+      {props.experienceData?.map((elem, index) =>
+        isMobile ? mobileViewPanel(elem, index) : webViewPanel(elem, index)
       )}
     </div>
   );

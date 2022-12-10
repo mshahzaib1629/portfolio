@@ -2,10 +2,10 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 import AvatarImg from "../../assets/images/avatar.jpg";
 
-const Avatar = () => {
+const Avatar = (props) => {
   const classes = useStyles();
   return (
-      <img src="images/avatar.jpeg" alt="Shahzaib" className={classes.avatarImg} />
+      <img src={props.profilePicture} alt="Shahzaib" className={classes.avatarImg} />
   );
 };
 

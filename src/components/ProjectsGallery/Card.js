@@ -50,13 +50,6 @@ const Card = ({
     controls.start("initial");
   };
   controls.start("initial");
-  const [displayInBackground, setDisplayInBackground] = useState(false);
-
-  useEffect(() => {
-    if ((!colorGradients.color1 && !colorGradients.color2) || !frontImage) {
-      setDisplayInBackground(true);
-    }
-  }, []);
 
   const displayImage = () =>
     frontImage ? frontImage : "images/empty-project-image1.jpg";
@@ -77,17 +70,9 @@ const Card = ({
           component={motion.div}
           layoutId={`img-container-${id}`}
           className={classes.media}
-          image={displayInBackground ? displayImage() : null}
+          image={displayImage()}
           title={title}
         >
-          {!displayInBackground && (
-            <motion.img
-              layoutId={`front-img-${id}`}
-              className={classes.frontImage}
-              src={displayImage()}
-              alt={title}
-            />
-          )}
         </CardMedia>
         <CardContent
           style={{
@@ -179,8 +164,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "flex-start",
     overflow: "hidden",
     backgroundColor: "red",
-    backgroundImage: (props) =>
-      `linear-gradient(to bottom right, ${props.colorGradients.color1}, ${props.colorGradients.color2})`,
   },
   frontImage: {
     marginTop: "20px",

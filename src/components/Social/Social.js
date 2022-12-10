@@ -5,11 +5,13 @@ import { LinkedIn, Instagram, GitHub, Email } from "@material-ui/icons";
 import IconBtn from "../IconBtn";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import loaderContext from "../../contexts/loaderContext";
+import { useSelector } from "react-redux";
 
 const Social = ({ mobile }) => {
   const classes = useStyles();
   const { isLoading } = useContext(loaderContext);
   const controls = useAnimation();
+  const { profile } = useSelector((state) => state.profile);
 
   useEffect(() => {
     if (!isLoading) {
@@ -28,15 +30,15 @@ const Social = ({ mobile }) => {
   const socialMediaList = [
     {
       icon: GitHub,
-      link: "https://github.com/mshahzaib1629",
+      link: profile?.social?.github,
     },
     {
       icon: LinkedIn,
-      link: "https://www.linkedin.com/in/mshahzaib1629/",
+      link: profile?.social?.linkedIn,
     },
     {
       icon: Email,
-      link: "mailto:mshahzaib1629@gmail.com",
+      link: "mailto:" + profile?.social?.email,
     },
   ];
   if (mobile) {
@@ -54,7 +56,7 @@ const Social = ({ mobile }) => {
       <motion.div className={classes.wrapper}>
         {socialMediaList.map((social, index) => (
           <motion.div
-          key={index}
+            key={index}
             animate={controls}
             custom={0}
             className={classes.socialIcon}
@@ -77,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "5px",
     "&:hover": {
       marginBottom: "10px",
-    }
+    },
   },
   wrapper: {
     display: "flex",
