@@ -15,6 +15,7 @@ import {
 import { fetchEducationThunk } from "../../redux/slices/educationSlice";
 import { fetchFeaturedCertificationThunk } from "../../redux/slices/certificationSlice";
 import { fetchSkillSetThunk } from "../../redux/slices/skillSetSlice";
+import TryAgain from "../../components/TryAgain";
 
 const Home = () => {
   const classes = useStyles();
@@ -102,88 +103,95 @@ const Home = () => {
     }
   }, [appLoading, controls]);
 
+  const buildView = () => (
+    <div>
+      <Typography
+        component={motion.div}
+        animate={controls}
+        custom={0}
+        color="primary"
+        variant="h5"
+        style={{ marginBottom: "0px" }}
+      >
+        {t("home_welcome")}
+        <motion.div
+          style={{ display: "inline-block" }}
+          animate={{ rotate: [50, 90, 50] }}
+          transition={{ repeat: Infinity, duration: 1.4, repeatDelay: 0.7 }}
+        >
+          👋
+        </motion.div>
+        , {t("home_i")}
+      </Typography>
+      <Typography
+        component={motion.div}
+        animate={controls}
+        custom={0}
+        color="text"
+        variant="h5"
+        className={classes.nameHeading}
+      >
+        {profile?.name}
+      </Typography>
+
+      <Typography
+        component={motion.p}
+        animate={controls}
+        custom={2}
+        variant="h2"
+        color="primary"
+        className={classes.subTitle}
+      >
+        {profile?.headline}
+      </Typography>
+      <Typography
+        component={motion.p}
+        animate={controls}
+        custom={3}
+        variant="body2"
+        color="initial"
+        style={{ marginBottom: "0" }}
+      >
+        {profile?.shortIntro}
+      </Typography>
+      <Typography
+        component={motion.p}
+        animate={controls}
+        custom={4}
+        variant="body1"
+        color="initial"
+        style={{ marginBottom: "30px" }}
+      >
+        Based in {profile?.location}
+      </Typography>
+      <motion.div animate={controls} custom={5}>
+        <Button
+          component={Link}
+          spy
+          smooth
+          offset={0}
+          duration={500}
+          to="contact"
+          variant="outlined"
+          color="primary"
+          size="large"
+        >
+          {t("home_contact_btn")}
+        </Button>
+      </motion.div>
+    </div>
+  );
+
+  const buildContent = () =>
+    profile == null ? (
+      <TryAgain message="Something went wrong!" callback={getProfileData} />
+    ) : (
+      buildView()
+    );
+
   return (
     <HomeContainer id="home">
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <div>
-          <Typography
-            component={motion.div}
-            animate={controls}
-            custom={0}
-            color="primary"
-            variant="h5"
-            style={{ marginBottom: "0px" }}
-          >
-            {t("home_welcome")}
-            <motion.div
-              style={{ display: "inline-block" }}
-              animate={{ rotate: [50, 90, 50] }}
-              transition={{ repeat: Infinity, duration: 1.4, repeatDelay: 0.7 }}
-            >
-              👋
-            </motion.div>
-            , {t("home_i")}
-          </Typography>
-          <Typography
-            component={motion.div}
-            animate={controls}
-            custom={0}
-            color="text"
-            variant="h5"
-            className={classes.nameHeading}
-          >
-            {profile?.name}
-          </Typography>
-
-          <Typography
-            component={motion.p}
-            animate={controls}
-            custom={2}
-            variant="h2"
-            color="primary"
-            className={classes.subTitle}
-          >
-            {profile?.headline}
-          </Typography>
-          <Typography
-            component={motion.p}
-            animate={controls}
-            custom={3}
-            variant="body2"
-            color="initial"
-            style={{ marginBottom: "0" }}
-          >
-            {profile?.shortIntro}
-          </Typography>
-          <Typography
-            component={motion.p}
-            animate={controls}
-            custom={4}
-            variant="body1"
-            color="initial"
-            style={{ marginBottom: "30px" }}
-          >
-            Based in {profile?.location}
-          </Typography>
-          <motion.div animate={controls} custom={5}>
-            <Button
-              component={Link}
-              spy
-              smooth
-              offset={0}
-              duration={500}
-              to="contact"
-              variant="outlined"
-              color="primary"
-              size="large"
-            >
-              {t("home_contact_btn")}
-            </Button>
-          </motion.div>
-        </div>
-      )}
+      {isLoading ? <p>Loading...</p> : buildContent()}
     </HomeContainer>
   );
 };

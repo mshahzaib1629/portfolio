@@ -7,15 +7,25 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import classes from "./Education.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchEducationThunk } from "../../../redux/slices/educationSlice";
+import TryAgain from "../../TryAgain";
 
 function Education() {
   const theme = useTheme();
   const localStyle = useStyles();
+  const dispatch = useDispatch();
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const [loadedEducations, setLoadedEducations] = useState([]);
 
   const { educationList, isLoading } = useSelector((state) => state.education);
+
+  async function getEducationData() {
+    try {
+      await dispatch(fetchEducationThunk());
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
 
   const webView = () => (
     <div className={localStyle.body}>
@@ -92,7 +102,20 @@ function Education() {
       ))}
     </ul>
   );
-  return isSmallMobile ? mobileView() : webView();
+
+  const buildView = () => (isSmallMobile ? mobileView() : webView());
+
+  const buildContent = () =>
+    educationList.length == 0 ? (
+      <TryAgain
+        message="Unable to fetch education list!"
+        callback={getEducationData}
+      />
+    ) : (
+      buildView()
+    );
+
+  return isLoading ? <p>Loading...</p> : buildContent();
 }
 
 const useStyles = makeStyles((theme) => ({
