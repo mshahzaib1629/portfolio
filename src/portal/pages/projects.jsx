@@ -144,14 +144,14 @@ function ProjectPage() {
   const formSubmit = async (values) => {
     const isEditing = editableProjectId != (null || undefined);
     try {
-      if (values.imageUrl === "" && !newImage && values.isFeatured) {
-        setSnackAlert({
-          severity: "error",
-          title: "Error",
-          message: "Image required!",
-        });
-        return;
-      }
+      // if (values.imageUrl === "" && !newImage && values.isFeatured) {
+      //   setSnackAlert({
+      //     severity: "error",
+      //     title: "Error",
+      //     message: "Image required!",
+      //   });
+      //   return;
+      // }
       setIsPageLoading(true);
       const data = JSON.parse(JSON.stringify(values));
       data["technologies"] = convertStringToArray(data["technologies"]);
