@@ -3,7 +3,6 @@ import {
   useMediaQuery,
   useTheme,
   Typography,
-  Link,
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { skills } from "../../../data";
@@ -12,20 +11,29 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSkillSetThunk } from "../../../redux/slices/skillSetSlice";
+import TryAgain from "../../TryAgain";
 
 function Skills() {
   const theme = useTheme();
   const localStyle = useStyles();
   const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [expandedCardIndex, setExpandedCardIndex] = useState(0);
-  const [loadedSkills, setLoadedSkillss] = useState([]);
-  useEffect(() => {
-    setLoadedSkillss(skills.sort((a, b) => a.id - b.id));
-  }, []);
+  const dispatch = useDispatch();
+  const { skillSetList, isLoading } = useSelector((state) => state.skillSet);
+
+  async function getSkillSetData() {
+    try {
+      await dispatch(fetchSkillSetThunk());
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
 
   const webView = () => (
     <ul style={{ listStyle: "none" }}>
-      {loadedSkills.map((skill, index) => {
+      {skillSetList.map((skill, index) => {
         return (
           <Accordion
             key={skill.id}
@@ -46,7 +54,7 @@ function Skills() {
                 variant="h6"
                 color={index === expandedCardIndex ? "primary" : ""}
               >
-                {skill.categoryTitle}
+                {skill.skillSetTitle}
               </Typography>
             </AccordionSummary>
             <AccordionDetails style={{ display: "block", minHeight: "14.5em" }}>
@@ -69,7 +77,7 @@ function Skills() {
 
   const mobileView = () => (
     <ul style={{ listStyle: "none" }}>
-      {loadedSkills.map((skill) => {
+      {skillSetList.map((skill) => {
         return (
           <li key={skill.id}>
             <Typography
@@ -77,7 +85,7 @@ function Skills() {
               color="primary"
               style={{ marginBottom: "5px" }}
             >
-              {skill.categoryTitle}
+              {skill.skillSetTitle}
               <br />
             </Typography>
             <Typography
@@ -101,7 +109,18 @@ function Skills() {
       })}
     </ul>
   );
-  return isSmallMobile ? mobileView() : webView();
+
+  const buildContent = () => {
+    return skillSetList.length == 0 ? (
+      <TryAgain message="Unable to fetch skills!" callback={getSkillSetData} />
+    ) : isSmallMobile ? (
+      mobileView()
+    ) : (
+      webView()
+    );
+  };
+
+  return isLoading ? <p>Loading...</p> : buildContent();
 }
 
 const useStyles = makeStyles((theme) => ({

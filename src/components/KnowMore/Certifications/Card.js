@@ -31,17 +31,7 @@ const titleVariants = {
   },
 };
 
-const Card = ({
-  id,
-  title,
-  issuedBy,
-  nature,
-  date,
-  image,
-  url,
-  onClick,
-  ...rest
-}) => {
+const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
   const classes = useStyles();
   const controls = useAnimation();
   const handleMouseEnterControls = () => {
@@ -53,98 +43,103 @@ const Card = ({
   controls.start("initial");
 
   const displayImage = () =>
-    image ? image : "images/empty-certificate.jpg";
+    imageUrl ? imageUrl : "images/empty-certificate.jpg";
 
   return (
-    <a href={url} target="_blank" rel="noreferrer" style={{textDecoration: "none"}}>
-        <MuiCard
-      className={classes.root}
-      elevation={10}
-      component={motion.div}
-      layoutId={id}
-      onMouseEnter={handleMouseEnterControls}
-      onMouseLeave={handleMouseLeaveControls}
-      onClick={() => onClick()}
-      {...rest}
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      style={{ textDecoration: "none" }}
     >
-      <div>
-        <CardMedia
-          component={motion.div}
-          layoutId={`img-container-${id}`}
-          className={classes.media}
-          image={displayImage()}
-          title={title}
-        />
-        <CardContent
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant="h5"
-            className={classes.title}
-            component={motion.h5}
-            layoutId={`title-${id}`}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="h6"
-            className={classes.issuedBy}
-            component={motion.h5}
-            layoutId={`issuedBy-${id}`}
-            style={{ flexGrow: 2 }}
-          >
-            {issuedBy}
-          </Typography>
-          <Typography
-            variant="body2"
-            className={classes.footer}
-            component={motion.h5}
-            layoutId={`footer-${id}`}
-            color="primary"
-          >
-            <span className={classes.nature}>{nature}</span>  &nbsp; {date}
-          </Typography>
-        </CardContent>
-      </div>
-      <motion.div
-        transition={{ delay: 0.15 }}
-        variants={hoverVariants}
-        animate={controls}
-        className={classes.hover}
+      <MuiCard
+        className={classes.root}
+        elevation={10}
+        component={motion.div}
+        layoutId={id}
+        onMouseEnter={handleMouseEnterControls}
+        onMouseLeave={handleMouseLeaveControls}
+        {...rest}
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          justofyContent="center"
-          transition={{ delay: 0.3 }}
-          component={motion.div}
-          variants={titleVariants}
-          animate={controls}
-        >
-          <Box mr={1}>
-            <Typography variant="h4">View Certificate </Typography>
-          </Box>
-          <Icon
+        <div>
+          <CardMedia
             component={motion.div}
-            transition={{
-              delay: 0.3,
-              repeat: Infinity,
-              duration: 1,
-              repeatType: "reverse",
+            layoutId={`img-container-${id}`}
+            className={classes.media}
+            image={displayImage()}
+            title={title}
+          />
+          <CardContent
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              justifyContent: "space-between",
             }}
-            variants={{ hover: { y: 7 }, intial: { y: -2 } }}
-            animate="hover"
           >
-            <ArrowForward />
-          </Icon>
-        </Box>
-      </motion.div>
-    </MuiCard>
+            <Typography
+              variant="h5"
+              className={classes.title}
+              component={motion.h5}
+              layoutId={`title-${id}`}
+            >
+              {title}
+            </Typography>
+            <Typography
+              variant="h6"
+              className={classes.issuedBy}
+              component={motion.h5}
+              layoutId={`issuedBy-${id}`}
+              style={{ flexGrow: 2 }}
+            >
+              {issuedBy}
+            </Typography>
+            <Typography
+              variant="body2"
+              className={classes.footer}
+              component={motion.h5}
+              layoutId={`footer-${id}`}
+              color="primary"
+            >
+              <span className={classes.type}>{type}</span> &nbsp;{" "}
+              {date.month.shortName} {date.year}
+            </Typography>
+          </CardContent>
+        </div>
+        <motion.div
+          transition={{ delay: 0.15 }}
+          variants={hoverVariants}
+          animate={controls}
+          className={classes.hover}
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            justofyContent="center"
+            transition={{ delay: 0.3 }}
+            component={motion.div}
+            variants={titleVariants}
+            animate={controls}
+          >
+            <Box mr={1}>
+              <Typography variant="h4">View Certificate </Typography>
+            </Box>
+            <Icon
+              component={motion.div}
+              transition={{
+                delay: 0.3,
+                repeat: Infinity,
+                duration: 1,
+                repeatType: "reverse",
+              }}
+              variants={{ hover: { y: 7 }, intial: { y: -2 } }}
+              animate="hover"
+            >
+              <ArrowForward />
+            </Icon>
+          </Box>
+        </motion.div>
+      </MuiCard>
     </a>
   );
 };
@@ -189,12 +184,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
     color: theme.palette.primary.contrastText,
     position: "absolute",
-    bottom: "14px"
+    bottom: "14px",
   },
-  nature: {
+  type: {
     padding: "3px 8px",
     background: "rgba(0,0,0,0.4)",
-    borderRadius: "10px"
+    borderRadius: "10px",
   },
   hover: {
     position: "absolute",
