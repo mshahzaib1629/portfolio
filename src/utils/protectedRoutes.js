@@ -10,6 +10,7 @@ import CertificationPage from "../portal/pages/certifications";
 import ExperiencePage from "../portal/pages/experience";
 import ProjectPage from "../portal/pages/projects";
 import SkillSetPage from "../portal/pages/skillSet";
+// TODO: ADD LAZY LOADING IN THESE
 
 export const protectedRoutes = [
   {

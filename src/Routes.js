@@ -1,13 +1,15 @@
 import React, { lazy } from "react";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import { Routes, Route } from "react-router-dom";
+
+import AllProjects from "./pages/AllProjects";
 const MainHome = lazy(() => import("./pages/MainHome"));
 const Navbar = lazy(() => import("./components/Navbar"));
 const Social = lazy(() => import("./components/Social"));
 const Footer = lazy(() => import("./components/Footer"));
 const Loader = lazy(() => import("./components/Loader"));
-const AllProjects = lazy(() => import("./pages/AllProjects"));
-const AllCertifications = lazy(() => import("./pages/AllCertifications"));
+const AllCertifications = import("./pages/AllCertifications");
+// TODO: make AllCertifcations as casual import after testing dff b/w projects & certifications loading
 
 const AppRoutes = () => {
   const theme = useTheme();

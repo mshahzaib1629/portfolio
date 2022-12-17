@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import AppRoutes from "./Routes";
 import ThemeContext from "./contexts/themeContext";
 import LoaderContext from "./contexts/loaderContext";
+// TODO: Add Lazy Loading on Layout
 import Layout from "./portal/layout";
 import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
