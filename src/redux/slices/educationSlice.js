@@ -39,6 +39,10 @@ const slice = createSlice({
     deleteEducationSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetEducationAction: (state, action) => {
+      state.editableEducationId = null;
+      state.educationList = [];
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   setEditableEducationAction,
   editEducationSuccessAction,
   deleteEducationSuccessAction,
+  resetEducationAction,
 } = slice.actions;
 
 export function fetchEducationThunk() {

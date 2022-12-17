@@ -39,6 +39,10 @@ const slice = createSlice({
     deleteExperienceSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetExperienceAction: (state, action) => {
+      state.editableExperienceId = null;
+      state.experienceList = [];
+    },
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   setEditableExperienceAction,
   editExperienceSuccessAction,
   deleteExperienceSuccessAction,
+  resetExperienceAction,
 } = slice.actions;
 
 export function fetchExperienceThunk() {

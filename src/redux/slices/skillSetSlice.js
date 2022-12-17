@@ -42,6 +42,10 @@ const slice = createSlice({
     deleteSkillSetSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetSkillSetAction: (state, action) => {
+      state.editableSkillSetId = null;
+      state.skillSetList = [];
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   editSkillSetSuccessAction,
   updateSortingSuccessAction,
   deleteSkillSetSuccessAction,
+  resetSkillSetAction,
 } = slice.actions;
 
 export function fetchSkillSetThunk() {
@@ -100,10 +105,7 @@ export function updateSortingThunk(item1, item2) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     try {
-      await SkillSetService.updateSorting(
-        item1,
-        item2
-      );
+      await SkillSetService.updateSorting(item1, item2);
       dispatch(updateSortingSuccessAction());
     } catch (error) {
       dispatch(requestFailedAction(error));

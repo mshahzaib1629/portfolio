@@ -27,6 +27,9 @@ const slice = createSlice({
     editProfileSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetProfileAction: (state, action) => {
+      state.profile = null;
+    },
   },
 });
 
@@ -35,6 +38,7 @@ export const {
   requestFailedAction,
   getProfileSuccessAction,
   editProfileSuccessAction,
+  resetProfileAction,
 } = slice.actions;
 
 export function fetchProfileThunk() {

@@ -42,6 +42,10 @@ const slice = createSlice({
     deleteCertificationSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetCertificationAction: (state, action) => {
+      state.editableCertificationId = null;
+      state.certificationList = [];
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   editCertificationSuccessAction,
   updateSortingSuccessAction,
   deleteCertificationSuccessAction,
+  resetCertificationAction,
 } = slice.actions;
 
 export function fetchCertificationThunk() {
