@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Box, Button, Container, makeStyles, TextField, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
-import emailjs from "emailjs-com";
 import * as Yup from "yup";
 import { AnimatePresence, motion } from "framer-motion";
 import Check from "../../assets/images/Check";
 import { useTranslation} from "react-i18next"
+import sendMail from "../../utils/send_mail";
 
 const MessageBox = () => {
     const classes = useStyles();
@@ -14,7 +14,7 @@ const MessageBox = () => {
     const {t} = useTranslation()
     const SendEmail = (object) => {
         setSending(true);
-        emailjs.send("service_nva6v0x", "template_47fdyh7", object, "user_qT3we7KxrmdHKOFJe28hB").then(
+        sendMail(object).then(
             (result) => {
                 setSendEmailSuccess(true);
                 setSending(false);
@@ -101,8 +101,7 @@ const MessageBox = () => {
                                     fullWidth
                                     variant="contained"
                                     color="primary"
-                                    // disabled={sending}
-                                    disabled={true}
+                                    disabled={sending}
                                 >
                                     {t('contact_btn')}
                                 </Button>
@@ -138,7 +137,7 @@ const MessageBox = () => {
                             transition={{delay:1.5, duration:1}}
                             variant="body2"
                         >
-                            Your message has been successfully sent, i'll reply as soon as possible.
+                            Your message has been successfully sent, I will reply you as soon as possible.
                         </Typography>
                     </Box>
                 )}

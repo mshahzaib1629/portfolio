@@ -105,7 +105,9 @@ const AllProjects = () => {
                     />
                   </a>
                 )}
-                &nbsp; &nbsp;
+               {project.links?.url && project.links?.code && (
+                  <>&nbsp; &nbsp;</>
+                )}
                 {project.links?.code && (
                   <a
                     href={project.links?.code}
@@ -170,7 +172,9 @@ const AllProjects = () => {
                     />
                   </a>
                 )}
-                &nbsp; &nbsp;
+                {project.links?.url && project.links?.code && (
+                  <>&nbsp; &nbsp;</>
+                )}
                 {project.links?.code && (
                   <a
                     href={project.links?.code}
