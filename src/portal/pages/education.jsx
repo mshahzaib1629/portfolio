@@ -51,6 +51,12 @@ function EducationPage() {
         isStudying: false,
       },
       siteUrl: "",
+      includeProject: false,
+      project: {
+        niche: "",
+        title: "",
+        description: "",
+      },
     },
     onSubmit: (values) => formSubmit(values),
   });
@@ -311,6 +317,61 @@ function EducationPage() {
                 onChange={formik.handleChange}
               />
             </Grid>
+            <Grid item md={6}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="includeProject"
+                    checked={formik.values.includeProject}
+                    onChange={formik.handleChange}
+                  />
+                }
+                label="Include Project"
+              />
+            </Grid>
+            {formik.values.includeProject && (
+              <>
+                <Grid item md={6}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="project-niche"
+                    label="Project Niche"
+                    placeholder="Research, FYP etc."
+                    name="project.niche"
+                    value={formik.values.project?.niche}
+                    onChange={formik.handleChange}
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="project-title"
+                    label="Project Title"
+                    name="project.title"
+                    value={formik.values.project?.title}
+                    onChange={formik.handleChange}
+                  />
+                </Grid>
+                <Grid item md={12}>
+                  <TextField
+                    margin="normal"
+                    required
+                    multiline
+                    fullWidth
+                    rows={4}
+                    id="project-description"
+                    label="Project Description"
+                    name="project.description"
+                    value={formik.values.project?.description}
+                    onChange={formik.handleChange}
+                  />
+                </Grid>
+              </>
+            )}
           </Grid>
 
           <div className={classes.formFooter}>
