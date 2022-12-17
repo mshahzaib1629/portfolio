@@ -358,7 +358,6 @@ function ProjectPage() {
                 onChange={formik.handleChange}
               />
             </Grid>
-            {/* @TODO: This should be file picker of url image reader */}
             <Grid item md={6}>
               <FormControl
                 margin="normal"

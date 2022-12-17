@@ -1,16 +1,19 @@
+import { lazy } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import WorkIcon from "@mui/icons-material/Work";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import StarsIcon from "@mui/icons-material/Stars";
 import PublicIcon from "@mui/icons-material/Public";
-import ProfilePage from "../portal/pages/profile";
-import EducationPage from "../portal/pages/education";
-import CertificationPage from "../portal/pages/certifications";
-import ExperiencePage from "../portal/pages/experience";
-import ProjectPage from "../portal/pages/projects";
-import SkillSetPage from "../portal/pages/skillSet";
-// TODO: ADD LAZY LOADING IN THESE
+
+const ProfilePage = lazy(() => import("../portal/pages/profile"));
+const EducationPage = lazy(() => import("../portal/pages/education"));
+const CertificationPage = lazy(() => import("../portal/pages/certifications"));
+const ExperiencePage = lazy(() => import("../portal/pages/experience"));
+const ProjectPage = lazy(() => import("../portal/pages/projects"));
+const SkillSetPage = lazy(() => import("../portal/pages/skillSet"));
+
+
 
 export const protectedRoutes = [
   {
