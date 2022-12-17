@@ -18,7 +18,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems } from "./drawerItems";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { protectedRoutes } from "../utils/routes";
+import { protectedRoutes } from "../utils/protectedRoutes";
 import Avatar from "@mui/material/Avatar";
 import Paper from '@mui/material/Paper';
 import Menu from "@mui/material/Menu";
@@ -303,7 +303,7 @@ function DashboardContent() {
                 />
               </Routes>
             </Paper>
-            <Copyright sx={{ pt: 4 }} />
+            {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
         </Box>
       </Box>

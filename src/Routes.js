@@ -1,13 +1,15 @@
 import React, { lazy } from "react";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import { Routes, Route } from "react-router-dom";
+
+import AllProjects from "./pages/AllProjects";
+import AllCertifications from "./pages/AllCertifications";
+
 const MainHome = lazy(() => import("./pages/MainHome"));
 const Navbar = lazy(() => import("./components/Navbar"));
 const Social = lazy(() => import("./components/Social"));
 const Footer = lazy(() => import("./components/Footer"));
 const Loader = lazy(() => import("./components/Loader"));
-const AllProjects = lazy(() => import("./pages/AllProjects"));
-const AllCertifications = lazy(() => import("./pages/AllCertifications"));
 
 const AppRoutes = () => {
   const theme = useTheme();

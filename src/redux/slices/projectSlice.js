@@ -42,6 +42,10 @@ const slice = createSlice({
     deleteProjectSuccessAction: (state, action) => {
       state.isLoading = false;
     },
+    resetProjectAction: (state, action) => {
+      state.editableProjectId = null;
+      state.projectList = [];
+    },
   },
 });
 
@@ -54,6 +58,7 @@ export const {
   editProjectSuccessAction,
   updateSortingSuccessAction,
   deleteProjectSuccessAction,
+  resetProjectAction
 } = slice.actions;
 
 export function fetchProjectThunk() {

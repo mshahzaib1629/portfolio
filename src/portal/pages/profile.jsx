@@ -22,6 +22,7 @@ import { useFormik } from "formik";
 import MuiAlert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Snackbar from "@mui/material/Snackbar";
+import moment from "moment";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -125,6 +126,7 @@ function ProfilePage() {
         );
         data["resumeUrl"] = resumeUrl;
         data["resumeRef"] = resumeRef;
+        data["resumeUploadedOn"] = new Date();
       } else if (data.resumeUrl === "" && data.resumeRef != "") {
         await dispatch(deleteResumeThunk(data.resumeRef));
         data["resumeRef"] = "";
@@ -316,8 +318,10 @@ function ProfilePage() {
                         >
                           <Launch fontSize="small" />
                         </a>
+                        &nbsp;
+                        <sub>( uploaded on {moment(formik.values.resumeUploadedOn).format('ll')} )</sub>
                       </>
-                    )}
+                    )}{" "}
                   </div>
                 ) : (
                   <sub>No Resume Uploaded...</sub>

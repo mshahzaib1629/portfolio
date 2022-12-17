@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { darkTheme, lightTheme } from "./assets/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,10 +8,10 @@ import { useLocation } from "react-router-dom";
 import AppRoutes from "./Routes";
 import ThemeContext from "./contexts/themeContext";
 import LoaderContext from "./contexts/loaderContext";
-import Layout from "./portal/layout";
 import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+const Layout = lazy(() => import("./portal/layout"));
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);

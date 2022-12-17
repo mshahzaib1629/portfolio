@@ -21,6 +21,12 @@ import parseErrorCode from "../../utils/parse-error-code";
 import Snackbar from "@mui/material/Snackbar";
 import { useSelector, useDispatch } from "react-redux";
 import { loginThunk } from "../../redux/slices/authSlice";
+import { resetProfileAction } from "../../redux/slices/profileSlice";
+import { resetEducationAction } from "../../redux/slices/educationSlice";
+import { resetCertificationAction } from "../../redux/slices/certificationSlice";
+import { resetExperienceAction } from "../../redux/slices/experienceSlice";
+import { resetProjectAction } from "../../redux/slices/projectSlice";
+import { resetSkillSetAction } from "../../redux/slices/skillSetSlice";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -61,6 +67,14 @@ export default function LoginPage() {
       const email = data.get("email");
       const password = data.get("password");
       await dispatch(loginThunk(email, password));
+      
+      dispatch(resetProfileAction());
+      dispatch(resetEducationAction());
+      dispatch(resetCertificationAction());
+      dispatch(resetExperienceAction());
+      dispatch(resetProjectAction());
+      dispatch(resetSkillSetAction());
+
       navigate("/", { replace: true });
     } catch (error) {
       const errorMessage = parseErrorCode(error.code);
