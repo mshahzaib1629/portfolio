@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import Card from "./Card";
 import ExtendedCard from "./ExtendedCard";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -65,11 +66,14 @@ const ProjectsGallery = (props) => {
       <Box display="flex" justifyContent="center" mt={2}>
         <Button
           className={classes.loadBtn}
-          onClick={() => {navigate('/projects')}}
-          variant="contained"
+          onClick={() => {
+            navigate("/projects");
+          }}
+          variant="outlined"
           color="primary"
         >
-          View All
+          View All &nbsp;
+          <ArrowForwardIosIcon  fontSize="small"/>
         </Button>
       </Box>
     </>
@@ -87,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loadBtn: {
     width: "200px",
+    fontSize: "20px",
   },
 }));
 

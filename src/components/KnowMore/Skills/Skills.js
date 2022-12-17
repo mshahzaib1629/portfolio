@@ -14,6 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSkillSetThunk } from "../../../redux/slices/skillSetSlice";
 import TryAgain from "../../TryAgain";
+import { convertArrayToString } from "../../../utils/common";
 
 function Skills() {
   const theme = useTheme();
@@ -92,16 +93,7 @@ function Skills() {
               variant="subtitle1"
               style={{ color: theme.palette.text.secondary }}
             >
-              {skill.data.map((skillData, index) => (
-                <>
-                  {skillData}{" "}
-                  {index != skill.data.length - 1 ? (
-                    <>&nbsp;&nbsp; ○ &nbsp;&nbsp;</>
-                  ) : (
-                    ""
-                  )}
-                </>
-              ))}
+              {convertArrayToString(skill.data)}
             </Typography>
             <br />
           </li>

@@ -10,7 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCertificationThunk } from "../../redux/slices/certificationSlice";
 import TryAgain from "../../components/TryAgain";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import { convertArrayToString } from "../../utils/common";
 import { useState, useEffect } from "react";
 import { Launch } from "@material-ui/icons";
@@ -47,28 +48,64 @@ const AllCertifications = () => {
       <Table size="medium">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>issuedBy</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Link</TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Date
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Title
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Issued By
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Type
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Link
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
             <TableRow key={certificate.id} id={certificate.id}>
               <TableCell>
-                {certificate?.date?.month.shortName} {certificate?.date?.year}
+                <Typography variant="subtitle1" className={classes.yearCell}>
+                  {certificate?.date?.month.shortName} {certificate?.date?.year}
+                </Typography>
               </TableCell>
               <TableCell style={{ width: "40%" }}>
-                {certificate.title} {certificate.isFeatured && <FeaturedTag />}
+                <Typography variant="subtitle1" className={classes.tableCell}>
+                  {certificate.title} &nbsp;
+                  {certificate.isFeatured && <FeaturedTag />}
+                </Typography>
               </TableCell>
-              <TableCell>{certificate.issuedBy}</TableCell>
-              <TableCell>{certificate.type}</TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" className={classes.tableCell}>
+                  {certificate.issuedBy}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" className={classes.tableCell}>
+                  {certificate.type}
+                </Typography>
+              </TableCell>
               <TableCell>
                 {certificate.url && (
                   <a href={certificate.url} target="_blank" rel="noreferrer">
-                    <Launch fontSize="small" />
+                    <Launch
+                      style={{ color: theme.palette.text.secondary }}
+                      fontSize="small"
+                    />
                   </a>
                 )}
               </TableCell>
@@ -84,22 +121,43 @@ const AllCertifications = () => {
       <Table size="medium">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Title</TableCell>
-            <TableCell>Link</TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Date
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Title
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="h6" className={classes.tableHead}>
+                Link
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
             <TableRow key={certificate.id} id={certificate.id}>
               <TableCell>
-                {certificate?.date?.year}
+                <Typography variant="subtitle1" className={classes.yearCell}>
+                  {certificate?.date?.year}
+                </Typography>
               </TableCell>
-              <TableCell>{certificate.title}</TableCell>
+              <TableCell>
+                <Typography variant="subtitle1" className={classes.tableCell}>
+                  {certificate.title}
+                </Typography>
+              </TableCell>
               <TableCell>
                 {certificate.url && (
                   <a href={certificate.url} target="_blank" rel="noreferrer">
-                    <Launch fontSize="small" />
+                    <Launch
+                      style={{ color: theme.palette.text.secondary }}
+                      fontSize="small"
+                    />
                   </a>
                 )}
               </TableCell>
@@ -117,7 +175,7 @@ const AllCertifications = () => {
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
       >
         <ArrowBackIcon
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", color: theme.palette.text.secondary }}
           onClick={() => navigate("/")}
         />
         <Typography variant="h4" color="initial" className={classes.title}>
@@ -131,8 +189,18 @@ const AllCertifications = () => {
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    color: theme.palette.text.secondary,
     margin: theme.spacing(0, 4),
     whiteSpace: "nowrap",
+  },
+  tableHead: {
+    color: theme.palette.text.secondary,
+  },
+  yearCell: {
+    color: theme.palette.primary.main,
+  },
+  tableCell: {
+    color: theme.palette.text.secondary,
   },
 }));
 

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchFeaturedCertificationThunk } from "../../../redux/slices/certificationSlice";
 import TryAgain from "../../TryAgain";
 import { useNavigate } from "react-router";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function Certifications() {
   const classes = useStyles();
@@ -57,10 +58,10 @@ function Certifications() {
             onClick={() => {
               navigate("/certificates");
             }}
-            variant="contained"
+            variant="outlined"
             color="primary"
           >
-            View All
+            View All &nbsp; <ArrowForwardIosIcon />
           </Button>
         </Box>
       </>
@@ -91,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
   loadBtn: {
     width: "200px",
+    fontSize: "20px"
   },
 }));
 
