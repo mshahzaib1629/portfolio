@@ -1,6 +1,6 @@
 import React from "react";
 
 export default React.createContext({
-    isLoading: true,
+    isLoading: false,
     setIsLoading: () => {},
 });

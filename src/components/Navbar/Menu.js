@@ -47,16 +47,12 @@ const Menu = ({ homeIsActive }) => {
   });
 
   useEffect(() => {
-    if (!isLoading) {
-      controls.start((i) => ({
-        y: 0,
-        opacity: 1,
-        transition: { delay: i * 0.2 },
-      }));
-    } else {
-      controls.start({ opacity: 0, y: -5 });
-    }
-  }, [isLoading, controls]);
+    controls.start((i) => ({
+      y: 0,
+      opacity: 1,
+      transition: { delay: i * 0.2 },
+    }));
+  }, [controls]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
