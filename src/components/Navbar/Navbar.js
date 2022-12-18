@@ -31,20 +31,16 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (!isLoading) {
-      controls.start({
-        y: 0,
-        transition: {
-          delay: 0.05,
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-        },
-      });
-    } else {
-      controls.start({ y: -100 });
-    }
-  }, [isLoading, controls]);
+    controls.start({
+      y: 0,
+      transition: {
+        delay: 0.05,
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      },
+    });
+  }, [controls]);
 
   return (
     <motion.div animate={controls}>
@@ -75,12 +71,14 @@ const Navbar = () => {
           )}
         </Toolbar>
       </AppBar>
-      
- {       isMobile && <MobileMenu
+
+      {isMobile && (
+        <MobileMenu
           open={mobileNavIsOpen}
           onClose={() => setMobileNavIsOpen(false)}
           onOpen={() => setMobileNavIsOpen(true)}
-        />}
+        />
+      )}
     </motion.div>
   );
 };

@@ -14,18 +14,14 @@ const Social = ({ mobile }) => {
   const { profile } = useSelector((state) => state.profile);
 
   useEffect(() => {
-    if (!isLoading) {
-      controls.start((i) => ({
-        opacity: 1,
-        y: 0,
-        transition: {
-          delay: 1.8 + i * 0.1,
-        },
-      }));
-    } else {
-      controls.start({ opacity: 0, y: 0 });
-    }
-  }, [isLoading, controls]);
+    controls.start((i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: 1.8 + i * 0.1,
+      },
+    }));
+  }, [controls]);
 
   const socialMediaList = [
     {

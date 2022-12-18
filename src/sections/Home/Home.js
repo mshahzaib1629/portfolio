@@ -94,16 +94,12 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (!appLoading) {
-      controls.start((i) => ({
-        y: 0,
-        opacity: 1,
-        transition: { delay: i * 0.1 + 1.2 },
-      }));
-    } else {
-      controls.start({ opacity: 0, y: 5 });
-    }
-  }, [appLoading, controls]);
+    controls.start((i) => ({
+      y: 0,
+      opacity: 1,
+      transition: { delay: i * 0.1 + 1.2 },
+    }));
+  }, [controls]);
 
   const buildView = () => (
     <div>
