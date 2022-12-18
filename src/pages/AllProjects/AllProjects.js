@@ -11,6 +11,11 @@ import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjectThunk } from "../../redux/slices/projectSlice";
 import TryAgain from "../../components/TryAgain";
+import Collapse from "@mui/material/Collapse";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Typography } from "@material-ui/core";
 import { convertArrayToString } from "../../utils/common";
 import { useState, useEffect } from "react";
@@ -41,11 +46,85 @@ const AllProjects = () => {
     getProjectData();
   }, []);
 
+  function WebViewRow(props) {
+    const { project } = props;
+    const [open, setOpen] = React.useState(false);
+
+    return (
+      <React.Fragment>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" } }} style={{ color: theme.palette.text.secondary }}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              style={{ color: project.extendedOverview ? theme.palette.text.secondary : theme.palette.action.disabled }}
+              onClick={() => setOpen(!open)}
+              disabled={!project.extendedOverview}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell>
+            <Typography variant="subtitle1" className={classes.yearCell}>
+              {project.year}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            <Typography variant="subtitle1" className={classes.tableCell}>
+              {project.title} &nbsp; {project.isFeatured && <FeaturedTag />}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            <Typography variant="subtitle1" className={classes.tableCell}>
+              {project.workedAt}
+            </Typography>
+          </TableCell>
+          <TableCell style={{ width: "40%" }}>
+            <Typography variant="subtitle1" className={classes.tableCell}>
+              {convertArrayToString(project.technologies)}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            {project.links?.url && (
+              <a href={project.links?.url} target="_blank" rel="noreferrer">
+                <Launch
+                  style={{ color: theme.palette.text.secondary }}
+                  fontSize="small"
+                />
+              </a>
+            )}
+            {project.links?.url && project.links?.code && <>&nbsp; &nbsp;</>}
+            {project.links?.code && (
+              <a href={project.links?.code} target="_blank" rel="noreferrer">
+                <GitHubIcon
+                  style={{ color: theme.palette.text.secondary }}
+                  fontSize="small"
+                />
+              </a>
+            )}
+          </TableCell>
+        </TableRow>
+        <TableRow style={{ color: theme.palette.text.secondary }}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+              <Typography variant="body2" gutterBottom component="div" style={{fontSize: "16px"}}>
+                  {project.extendedOverview}
+                </Typography>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    );
+  }
+
   function webView() {
     return (
       <Table size="medium">
         <TableHead>
           <TableRow>
+            <TableCell></TableCell>
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
                 Year
@@ -75,53 +154,7 @@ const AllProjects = () => {
         </TableHead>
         <TableBody>
           {projectList?.map((project) => (
-            <TableRow key={project.id} id={project.id}>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.yearCell}>
-                  {project.year}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {project.title} &nbsp; {project.isFeatured && <FeaturedTag />}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {project.workedAt}
-                </Typography>
-              </TableCell>
-              <TableCell style={{ width: "40%" }}>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {convertArrayToString(project.technologies)}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {project.links?.url && (
-                  <a href={project.links?.url} target="_blank" rel="noreferrer">
-                    <Launch
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-               {project.links?.url && project.links?.code && (
-                  <>&nbsp; &nbsp;</>
-                )}
-                {project.links?.code && (
-                  <a
-                    href={project.links?.code}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <GitHubIcon
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-              </TableCell>
-            </TableRow>
+            <WebViewRow project={project} />
           ))}
         </TableBody>
       </Table>
