@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   makeStyles,
   Card as MuiCard,
+  useMediaQuery,
+  useTheme,
   CardContent,
   CardMedia,
   Typography,
@@ -32,7 +34,9 @@ const titleVariants = {
 };
 
 const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const classes = useStyles({ isMobile });
   const controls = useAnimation();
   const handleMouseEnterControls = () => {
     controls.start("hover");
@@ -151,7 +155,10 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: (props) =>
+      props.isMobile
+        ? theme.palette.background.default
+        : theme.palette.background.paper,
   },
 
   media: {
