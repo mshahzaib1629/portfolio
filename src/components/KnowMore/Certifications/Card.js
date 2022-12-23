@@ -80,6 +80,7 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
             <Typography
               variant="h5"
               className={classes.title}
+              noWrap={true}
               component={motion.h5}
               layoutId={`title-${id}`}
             >
@@ -150,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.paper,
   },
 
   media: {
