@@ -85,6 +85,7 @@ const Card = ({
           <Typography
             variant="h5"
             className={classes.title}
+            noWrap={true}
             component={motion.h5}
             layoutId={`title-${id}`}
           >
@@ -153,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.background.paper,
   },
 
   media: {
@@ -179,12 +180,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
   },
   overview: {
-    fontSize: "14px",
+    fontSize: "15px",
     marginBottom: theme.spacing(1),
     color: theme.palette.primary.contrastText,
   },
   technologies: {
-    fontSize: "15px",
+    fontSize: "14px",
     color: theme.palette.primary.contrastText,
   },
   hover: {
