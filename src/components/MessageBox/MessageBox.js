@@ -115,7 +115,8 @@ const MessageBox = () => {
                         component={motion.div}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.9 }}
+                        // transition={{ delay: 0.9 }}
+                        transition={{ delay: 0.3 }}
                         style={{
                             position: "absolute",
                             top: 0,
