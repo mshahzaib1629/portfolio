@@ -20,6 +20,7 @@ import BackdropLoading from "../../components/BackdropLoading";
 import FeaturedTag from "../../components/FeaturedTag";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 const AllCertifications = () => {
   const theme = useTheme();
@@ -77,7 +78,20 @@ const AllCertifications = () => {
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
-            <TableRow key={certificate.id} id={certificate.id}>
+            <TableRow
+              key={certificate.id}
+              id={certificate.id}
+              component={motion.div}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: 0.3,
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {certificate?.date?.month.shortName} {certificate?.date?.year}
@@ -140,7 +154,20 @@ const AllCertifications = () => {
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
-            <TableRow key={certificate.id} id={certificate.id}>
+            <TableRow
+              key={certificate.id}
+              id={certificate.id}
+              component={motion.div}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: 0.3,
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {certificate?.date?.year}
