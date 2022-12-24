@@ -88,7 +88,7 @@ const AllProjects = () => {
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                delay: 0.2,
+                delay: 0.1,
                 type: "just",
                 stiffness: 100,
                 damping: 20,
@@ -178,7 +178,7 @@ const AllProjects = () => {
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                delay: 0.2,
+                delay: 0.1,
                 type: "just",
                 stiffness: 100,
                 damping: 20,
