@@ -8,7 +8,10 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCertificationThunk } from "../../redux/slices/certificationSlice";
+import {
+  fetchCertificationThunk,
+  resetCertificationAction,
+} from "../../redux/slices/certificationSlice";
 import TryAgain from "../../components/TryAgain";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -20,6 +23,7 @@ import BackdropLoading from "../../components/BackdropLoading";
 import FeaturedTag from "../../components/FeaturedTag";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 const AllCertifications = () => {
   const theme = useTheme();
@@ -31,8 +35,10 @@ const AllCertifications = () => {
   const { certificationList, isLoading } = useSelector(
     (state) => state.certification
   );
+
   async function getCertificationData() {
     try {
+      dispatch(resetCertificationAction());
       await dispatch(fetchCertificationThunk());
     } catch (error) {
       console.log("error: ", error);
@@ -77,7 +83,20 @@ const AllCertifications = () => {
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
-            <TableRow key={certificate.id} id={certificate.id}>
+            <TableRow
+              key={certificate.id}
+              id={certificate.id}
+              component={motion.div}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1,
+                type: "just",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {certificate?.date?.month.shortName} {certificate?.date?.year}
@@ -123,7 +142,7 @@ const AllCertifications = () => {
           <TableRow>
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
-                Date
+                Year
               </Typography>
             </TableCell>
             <TableCell>
@@ -140,7 +159,20 @@ const AllCertifications = () => {
         </TableHead>
         <TableBody>
           {certificationList?.map((certificate) => (
-            <TableRow key={certificate.id} id={certificate.id}>
+            <TableRow
+              key={certificate.id}
+              id={certificate.id}
+              component={motion.div}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1,
+                type: "just",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {certificate?.date?.year}

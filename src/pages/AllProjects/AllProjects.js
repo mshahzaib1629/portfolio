@@ -9,7 +9,10 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProjectThunk } from "../../redux/slices/projectSlice";
+import {
+  fetchProjectThunk,
+  resetProjectAction,
+} from "../../redux/slices/projectSlice";
 import TryAgain from "../../components/TryAgain";
 import { Typography } from "@material-ui/core";
 import { convertArrayToString } from "../../utils/common";
@@ -20,6 +23,7 @@ import BackdropLoading from "../../components/BackdropLoading";
 import FeaturedTag from "../../components/FeaturedTag";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 const AllProjects = () => {
   const theme = useTheme();
@@ -29,8 +33,10 @@ const AllProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projectList, isLoading } = useSelector((state) => state.project);
+
   async function getProjectData() {
     try {
+      dispatch(resetProjectAction());
       await dispatch(fetchProjectThunk());
     } catch (error) {
       console.log("error: ", error);
@@ -75,7 +81,20 @@ const AllProjects = () => {
         </TableHead>
         <TableBody>
           {projectList?.map((project) => (
-            <TableRow key={project.id} id={project.id}>
+            <TableRow
+              key={project.id}
+              id={project.id}
+              component={motion.div}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1,
+                type: "just",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {project.year}
@@ -105,7 +124,7 @@ const AllProjects = () => {
                     />
                   </a>
                 )}
-               {project.links?.url && project.links?.code && (
+                {project.links?.url && project.links?.code && (
                   <>&nbsp; &nbsp;</>
                 )}
                 {project.links?.code && (
@@ -152,7 +171,20 @@ const AllProjects = () => {
         </TableHead>
         <TableBody>
           {projectList?.map((project) => (
-            <TableRow key={project.id} id={project.id}>
+            <TableRow
+              key={project.id}
+              id={project.id}
+              component={motion.div}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1,
+                type: "just",
+                stiffness: 100,
+                damping: 20,
+                when: "beforeChildren",
+              }}
+            >
               <TableCell>
                 <Typography variant="subtitle1" className={classes.yearCell}>
                   {project.year}

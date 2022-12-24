@@ -33,7 +33,7 @@ const SectionContainer = ({ children, maxWidth, full, reverse, title, padding, .
                     animate={titleControls}
                     initial="hidden"
                     transition={{
-                        delay: 0.3,
+                        delay: 0.1,
                         type: "spring",
                         stiffness: 100,
                         damping: 20,
@@ -56,7 +56,7 @@ const SectionContainer = ({ children, maxWidth, full, reverse, title, padding, .
                 animate={contentControls}
                 initial="hidden"
                 transition={{
-                    delay: 0.5,
+                    delay: 0.2,
                     type: "spring",
                     stiffness: 100,
                     damping: 20,
