@@ -155,10 +155,7 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: (props) =>
-      props.isMobile
-        ? theme.palette.background.default
-        : theme.palette.background.paper,
+    backgroundColor: theme.palette.primary.main,
   },
 
   media: {
