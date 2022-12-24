@@ -14,7 +14,8 @@ const Background3d = () => {
                 y: 0,
                 opacity: 1,
                 transition: {
-                    delay: 3,
+                    // delay: 3,
+                    delay: 1,
                     type: "spring",
                     stiffness: 260,
                     damping: 20,

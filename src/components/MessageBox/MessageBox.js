@@ -115,7 +115,7 @@ const MessageBox = () => {
                         component={motion.div}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 0.9 }}
+                        transition={{ delay: 0.3 }}
                         style={{
                             position: "absolute",
                             top: 0,
@@ -134,7 +134,7 @@ const MessageBox = () => {
                             component={motion.h4}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{delay:1.5, duration:1}}
+                            transition={{delay:0.3, duration:1}}
                             variant="body2"
                         >
                             Your message has been sent successfully, I will reply you as soon as possible.
