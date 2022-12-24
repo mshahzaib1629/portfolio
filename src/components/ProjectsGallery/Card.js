@@ -154,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.primary.main,
   },
 
   media: {

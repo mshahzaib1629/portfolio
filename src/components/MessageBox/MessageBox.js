@@ -137,7 +137,7 @@ const MessageBox = () => {
                             transition={{delay:1.5, duration:1}}
                             variant="body2"
                         >
-                            Your message has been successfully sent, I will reply you as soon as possible.
+                            Your message has been sent successfully, I will reply you as soon as possible.
                         </Typography>
                     </Box>
                 )}
