@@ -8,7 +8,10 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCertificationThunk } from "../../redux/slices/certificationSlice";
+import {
+  fetchCertificationThunk,
+  resetCertificationAction,
+} from "../../redux/slices/certificationSlice";
 import TryAgain from "../../components/TryAgain";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -32,8 +35,10 @@ const AllCertifications = () => {
   const { certificationList, isLoading } = useSelector(
     (state) => state.certification
   );
+
   async function getCertificationData() {
     try {
+      dispatch(resetCertificationAction());
       await dispatch(fetchCertificationThunk());
     } catch (error) {
       console.log("error: ", error);
@@ -85,8 +90,8 @@ const AllCertifications = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.3,
-                type: "spring",
+                delay: 0.2,
+                type: "just",
                 stiffness: 100,
                 damping: 20,
                 when: "beforeChildren",
@@ -137,7 +142,7 @@ const AllCertifications = () => {
           <TableRow>
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
-                Date
+                Year
               </Typography>
             </TableCell>
             <TableCell>
@@ -161,8 +166,8 @@ const AllCertifications = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.3,
-                type: "spring",
+                delay: 0.2,
+                type: "just",
                 stiffness: 100,
                 damping: 20,
                 when: "beforeChildren",

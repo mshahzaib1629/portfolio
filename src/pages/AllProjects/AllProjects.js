@@ -9,7 +9,10 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProjectThunk } from "../../redux/slices/projectSlice";
+import {
+  fetchProjectThunk,
+  resetProjectAction,
+} from "../../redux/slices/projectSlice";
 import TryAgain from "../../components/TryAgain";
 import { Typography } from "@material-ui/core";
 import { convertArrayToString } from "../../utils/common";
@@ -30,8 +33,10 @@ const AllProjects = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projectList, isLoading } = useSelector((state) => state.project);
+
   async function getProjectData() {
     try {
+      dispatch(resetProjectAction());
       await dispatch(fetchProjectThunk());
     } catch (error) {
       console.log("error: ", error);
@@ -83,7 +88,7 @@ const AllProjects = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.3,
+                delay: 0.2,
                 type: "just",
                 stiffness: 100,
                 damping: 20,
@@ -173,7 +178,7 @@ const AllProjects = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.3,
+                delay: 0.2,
                 type: "just",
                 stiffness: 100,
                 damping: 20,
