@@ -74,7 +74,7 @@ const AllProjects = () => {
             </TableCell>
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
-                Worked At
+                Built At
               </Typography>
             </TableCell>
             <TableCell>
