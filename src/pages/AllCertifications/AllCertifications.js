@@ -53,7 +53,17 @@ const AllCertifications = () => {
     return (
       <Table size="medium">
         <TableHead>
-          <TableRow>
+          <TableRow
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.08,
+              type: "just",
+              stiffness: 100,
+              damping: 20,
+              when: "beforeChildren",
+            }}
+          >
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
                 Date
@@ -200,6 +210,10 @@ const AllCertifications = () => {
     );
   }
 
+  function buildContent() {
+    return !isLoading ? (isMobile ? mobileView() : webView()) : null;
+  }
+
   return (
     <FullPageContainer>
       <BackdropLoading isLoading={isLoading} />
@@ -214,7 +228,14 @@ const AllCertifications = () => {
           All Certificates
         </Typography>
       </div>
-      {isMobile ? mobileView() : webView()}
+      {!isLoading && certificationList.length === 0 ? (
+        <TryAgain
+          message="Unable to fetch certificates!"
+          callback={getCertificationData}
+        />
+      ) : (
+        buildContent()
+      )}
     </FullPageContainer>
   );
 };
