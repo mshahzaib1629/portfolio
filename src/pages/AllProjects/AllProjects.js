@@ -51,7 +51,17 @@ const AllProjects = () => {
     return (
       <Table size="medium">
         <TableHead>
-          <TableRow>
+          <TableRow
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.08,
+              type: "just",
+              stiffness: 100,
+              damping: 20,
+              when: "beforeChildren",
+            }}
+          >
             <TableCell>
               <Typography variant="h6" className={classes.tableHead}>
                 Year
@@ -227,6 +237,10 @@ const AllProjects = () => {
     );
   }
 
+  function buildContent() {
+    return !isLoading ? (isMobile ? mobileView() : webView()) : null;
+  }
+
   return (
     <FullPageContainer>
       <BackdropLoading isLoading={isLoading} />
@@ -241,7 +255,14 @@ const AllProjects = () => {
           All Projects
         </Typography>
       </div>
-      {isMobile ? mobileView() : webView()}
+      {!isLoading && projectList.length === 0 ? (
+        <TryAgain
+          message="Unable to fetch projects!"
+          callback={getProjectData}
+        />
+      ) : (
+        buildContent()
+      )}
     </FullPageContainer>
   );
 };
