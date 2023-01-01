@@ -15,7 +15,7 @@ import { Button } from "@mui/material";
 const Footer = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
 
   return (
@@ -24,7 +24,7 @@ const Footer = () => {
       <Box className={classes.footer}>
         {isMobile && <Social mobile />}
         <Typography variant="body2" color="initial">
-          © 2022 Shahzaib Minhas, Inc
+          © {new Date().getFullYear()} Shahzaib Minhas, Inc
           <br />
           {/* Designed by{" "}
           <a
