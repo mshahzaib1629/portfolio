@@ -133,7 +133,7 @@ const StyledTabs = (props) => {
           <Typography
             variant="body1"
             color="textPrimary"
-            // style={{ textAlign: "justify" }}
+            style={{ textAlign: "justify" }}
           >
             {exp.overview}
           </Typography>
