@@ -18,7 +18,11 @@ function ExpandableRow(props) {
   const theme = useTheme();
   const classes = useStyles(theme);
   const { project } = props;
-  const [open, setOpen] = React.useState(false);
+  const [openInfo, setOpenInfo] = React.useState(false);
+
+  const toggleOpenInfo = () => {
+    if (project.extendedOverview || project.overview) setOpenInfo(!openInfo);
+  };
 
   return (
     <React.Fragment>
@@ -54,7 +58,7 @@ function ExpandableRow(props) {
                   cursor: "pointer",
                 }}
                 fontSize="small"
-                onClick={() => setOpen(!open)}
+                onClick={toggleOpenInfo}
               ></InfoOutlinedIcon>
             )}
           </Typography>
@@ -94,7 +98,7 @@ function ExpandableRow(props) {
           style={{ paddingBottom: 0, paddingTop: 0, width: "100%" }}
           colSpan={24}
         >
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
                 {project.extendedOverview
@@ -115,7 +119,11 @@ function MobileExpandableRow(props) {
   const theme = useTheme();
   const classes = useStyles(theme);
   const { project } = props;
-  const [open, setOpen] = React.useState(false);
+  const [openInfo, setOpenInfo] = React.useState(false);
+
+  const toggleOpenInfo = () => {
+    if (project.extendedOverview || project.overview) setOpenInfo(!openInfo);
+  };
 
   return (
     <React.Fragment>
@@ -133,12 +141,12 @@ function MobileExpandableRow(props) {
           when: "beforeChildren",
         }}
       >
-        <TableCell onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
+        <TableCell onClick={toggleOpenInfo} style={{ cursor: "pointer" }}>
           <Typography variant="subtitle1" className={classes.yearCell}>
             {project.year}
           </Typography>
         </TableCell>
-        <TableCell onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
+        <TableCell onClick={toggleOpenInfo} style={{ cursor: "pointer" }}>
           <Typography variant="subtitle1" className={classes.tableCell}>
             {project.title}
           </Typography>
@@ -168,7 +176,7 @@ function MobileExpandableRow(props) {
           style={{ paddingBottom: 0, paddingTop: 0, width: "100%" }}
           colSpan={24}
         >
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
                 {project.extendedOverview
