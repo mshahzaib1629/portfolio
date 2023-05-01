@@ -20,10 +20,13 @@ import { useState, useEffect } from "react";
 import { Launch } from "@material-ui/icons";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import BackdropLoading from "../../components/BackdropLoading";
-import FeaturedTag from "../../components/FeaturedTag";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  ExpandableRow,
+  MobileExpandableRow,
+} from "../../components/ExpandableRow/ExpandableRow";
 
 const AllProjects = () => {
   const theme = useTheme();
@@ -49,7 +52,7 @@ const AllProjects = () => {
 
   function webView() {
     return (
-      <Table size="medium">
+      <Table size="medium" aria-label="collapsible table">
         <TableHead>
           <TableRow
             initial={{ opacity: 0, y: -5 }}
@@ -91,66 +94,7 @@ const AllProjects = () => {
         </TableHead>
         <TableBody>
           {projectList?.map((project) => (
-            <TableRow
-              key={project.id}
-              id={project.id}
-              component={motion.div}
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.1,
-                type: "just",
-                stiffness: 100,
-                damping: 20,
-                when: "beforeChildren",
-              }}
-            >
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.yearCell}>
-                  {project.year}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {project.title} &nbsp; {project.isFeatured && <FeaturedTag />}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {project.workedAt}
-                </Typography>
-              </TableCell>
-              <TableCell style={{ width: "40%" }}>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {convertArrayToString(project.technologies)}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {project.links?.url && (
-                  <a href={project.links?.url} target="_blank" rel="noreferrer">
-                    <Launch
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-                {project.links?.url && project.links?.code && (
-                  <>&nbsp; &nbsp;</>
-                )}
-                {project.links?.code && (
-                  <a
-                    href={project.links?.code}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <GitHubIcon
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-              </TableCell>
-            </TableRow>
+            <ExpandableRow project={project} theme={theme} classes={classes} />
           ))}
         </TableBody>
       </Table>
@@ -181,56 +125,7 @@ const AllProjects = () => {
         </TableHead>
         <TableBody>
           {projectList?.map((project) => (
-            <TableRow
-              key={project.id}
-              id={project.id}
-              component={motion.div}
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.1,
-                type: "just",
-                stiffness: 100,
-                damping: 20,
-                when: "beforeChildren",
-              }}
-            >
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.yearCell}>
-                  {project.year}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography variant="subtitle1" className={classes.tableCell}>
-                  {project.title}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                {project.links?.url && (
-                  <a href={project.links?.url} target="_blank" rel="noreferrer">
-                    <Launch
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-                {project.links?.url && project.links?.code && (
-                  <>&nbsp; &nbsp;</>
-                )}
-                {project.links?.code && (
-                  <a
-                    href={project.links?.code}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <GitHubIcon
-                      style={{ color: theme.palette.text.secondary }}
-                      fontSize="small"
-                    />
-                  </a>
-                )}
-              </TableCell>
-            </TableRow>
+            <MobileExpandableRow project={project} />
           ))}
         </TableBody>
       </Table>
