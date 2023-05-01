@@ -133,26 +133,14 @@ function MobileExpandableRow(props) {
           when: "beforeChildren",
         }}
       >
-        <TableCell>
+        <TableCell onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
           <Typography variant="subtitle1" className={classes.yearCell}>
             {project.year}
           </Typography>
         </TableCell>
-        <TableCell>
+        <TableCell onClick={() => setOpen(!open)} style={{ cursor: "pointer" }}>
           <Typography variant="subtitle1" className={classes.tableCell}>
-            {project.title}&nbsp;{" "}
-            {(project.extendedOverview || project.overview) && (
-              <InfoOutlinedIcon
-                style={{
-                  color: project.isFeatured
-                    ? theme.palette.primary.main
-                    : theme.palette.text.secondary,
-                  cursor: "pointer",
-                }}
-                fontSize="small"
-                onClick={() => setOpen(!open)}
-              ></InfoOutlinedIcon>
-            )}
+            {project.title}
           </Typography>
         </TableCell>
         <TableCell>
@@ -214,7 +202,7 @@ const useStyles = makeStyles((theme) => ({
   },
   extendedCell: {
     color: theme.palette.text.secondary,
-    textAlign: "justify"
+    textAlign: "justify",
   },
 }));
 
