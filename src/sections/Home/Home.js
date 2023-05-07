@@ -16,10 +16,11 @@ import { fetchEducationThunk } from "../../redux/slices/educationSlice";
 import { fetchFeaturedCertificationThunk } from "../../redux/slices/certificationSlice";
 import { fetchSkillSetThunk } from "../../redux/slices/skillSetSlice";
 import TryAgain from "../../components/TryAgain";
+import Typewriter from "typewriter-effect";
 
 const Home = () => {
   const classes = useStyles();
-  const { appLoading } = useContext(loaderContext);
+
   const controls = useAnimation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -140,7 +141,14 @@ const Home = () => {
         color="primary"
         className={classes.subTitle}
       >
-        {profile?.headline}
+        <Typewriter
+          options={{
+            strings: profile?.headline?.split(", "),
+            autoStart: true,
+            loop: true,
+            deleteSpeed: 80,
+          }}
+        />
       </Typography>
       <Typography
         component={motion.p}
