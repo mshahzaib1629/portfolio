@@ -145,8 +145,9 @@ const Home = () => {
           options={{
             strings: profile?.headline?.split(", "),
             autoStart: true,
+            delay: 40,
             loop: true,
-            deleteSpeed: 80,
+            deleteSpeed: 45,
           }}
         />
       </Typography>
