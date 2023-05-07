@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense, lazy } from "react";
+import { useState, useEffect, Suspense, lazy, useCallback } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { darkTheme, lightTheme } from "./assets/theme";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,6 +11,8 @@ import LoaderContext from "./contexts/loaderContext";
 import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { loadFull } from "tsparticles";
+import Particle from "./utils/particles";
 const Layout = lazy(() => import("./portal/layout"));
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
   const location = useLocation();
   let [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  function initializeFireAuthListener () {
+  function initializeFireAuthListener() {
     onAuthStateChanged(getAuth(), (user) => {
       if (user) {
         setIsAuthenticated(true);
@@ -42,11 +44,26 @@ function App() {
 
   const renderPage = () => {
     console.log(location.pathname);
-    let elementPage = <AppRoutes />;
+    let elementPage = (
+      <>
+        {/* <Particle
+          particlesInit={particlesInit}
+          particlesLoaded={particlesLoaded}
+        /> */}
+        <AppRoutes />
+      </>
+    );
     if (isAuthenticated) elementPage = <Layout />;
     else if (location.pathname === "/login") elementPage = <LoginPage />;
     return elementPage;
   };
+
+  const particlesInit = useCallback(async (engine) => {
+    await loadFull(engine);
+  }, []);
+
+  const particlesLoaded = useCallback(async (container) => {}, []);
+
   return (
     <Suspense fallback={<div></div>}>
       <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
