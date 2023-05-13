@@ -25,8 +25,8 @@ import {
   updateSortingThunk,
   deleteImageThunk,
   updateImageThunk,
+  changePageSizeAction,
   setEditableCertificationAction,
-  fetchFeaturedCertificationThunk,
 } from "../../redux/slices/certificationSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -39,13 +39,20 @@ import FeaturedTag from "../../components/FeaturedTag";
 function CertificationPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { certificationList, isLoading, editableCertificationId } = useSelector(
-    (state) => state.certification
-  );
+  const {
+    certificationList,
+    isLoading,
+    editableCertificationId,
+    page,
+    pageSize,
+    totalCertificates,
+  } = useSelector((state) => state.certification);
   const [showForm, setShowForm] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [certificationToDelete, setCertificationToDelete] = useState(null);
   const [newImage, setNewImage] = useState(null);
+
+  const pageSizeOptions = [10, 15, 25];
 
   const formik = useFormik({
     initialValues: {
@@ -90,6 +97,7 @@ function CertificationPage() {
 
   useEffect(() => {
     resetForm();
+    dispatch(changePageSizeAction(pageSizeOptions[0]));
     if (certificationList.length === 0) getCertificationData();
   }, []);
 
@@ -247,76 +255,115 @@ function CertificationPage() {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <Table size="medium">
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell style={{ width: "30%" }}>Title</TableCell>
-                <TableCell style={{ width: "25%" }}>Issued By</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell align="right">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {certificationList?.map((cert) => (
-                <TableRow
-                  key={cert.id}
-                  id={cert.id}
-                  draggable
-                  onDragOver={(ev) => ev.preventDefault()}
-                  onDragStart={handleDrag}
-                  onDrop={handleDrop}
-                >
-                  <TableCell style={{ cursor: "pointer" }}>=</TableCell>
-                  <TableCell style={{ width: "30%" }}>
-                    {cert.title} {cert.isFeatured && <FeaturedTag />}
-                  </TableCell>
-                  <TableCell style={{ width: "25%" }}>
-                    {cert.issuedBy}
-                  </TableCell>
-                  <TableCell>{cert.type}</TableCell>
-                  <TableCell>
-                    {cert.date?.month?.shortName} {cert.date?.year}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Edit
-                      fontSize="small"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => onEdit(cert.id)}
-                    />
-                    {"  "}
-                    <Delete
-                      style={{ cursor: "pointer" }}
-                      fontSize="small"
-                      onClick={() => setCertificationToDelete(cert)}
-                    />
-                    {"  "}
-                    {cert.url ? (
-                      <a
-                        key={cert.id}
-                        href={cert.url}
+          <>
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell style={{ width: "30%" }}>Title</TableCell>
+                  <TableCell style={{ width: "25%" }}>Issued By</TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {certificationList?.map((cert) => (
+                  <TableRow
+                    key={cert.id}
+                    id={cert.id}
+                    draggable
+                    onDragOver={(ev) => ev.preventDefault()}
+                    onDragStart={handleDrag}
+                    onDrop={handleDrop}
+                  >
+                    <TableCell style={{ cursor: "pointer" }}>=</TableCell>
+                    <TableCell style={{ width: "30%" }}>
+                      {cert.title} {cert.isFeatured && <FeaturedTag />}
+                    </TableCell>
+                    <TableCell style={{ width: "25%" }}>
+                      {cert.issuedBy}
+                    </TableCell>
+                    <TableCell>{cert.type}</TableCell>
+                    <TableCell>
+                      {cert.date?.month?.shortName} {cert.date?.year}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Edit
+                        fontSize="small"
                         style={{ cursor: "pointer" }}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <Launch
-                          fontSize="small"
+                        onClick={() => onEdit(cert.id)}
+                      />
+                      {"  "}
+                      <Delete
+                        style={{ cursor: "pointer" }}
+                        fontSize="small"
+                        onClick={() => setCertificationToDelete(cert)}
+                      />
+                      {"  "}
+                      {cert.url ? (
+                        <a
+                          key={cert.id}
                           href={cert.url}
                           style={{ cursor: "pointer" }}
                           target="_blank"
                           rel="noreferrer"
-                        />
-                      </a>
-                    ) : null}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                        >
+                          <Launch
+                            fontSize="small"
+                            href={cert.url}
+                            style={{ cursor: "pointer" }}
+                            target="_blank"
+                            rel="noreferrer"
+                          />
+                        </a>
+                      ) : null}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className={classes.paginationWeb}>
+              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                <InputLabel id="demo-select-small-label">Page Size</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={pageSize}
+                  label="Page Size"
+                  onChange={handlePageSizeChange}
+                >
+                  {pageSizeOptions.map((op) => (
+                    <MenuItem value={op}>{op}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button
+                onClick={() => handlePageChange("prev")}
+                disabled={page === 0}
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={() => handlePageChange("next")}
+                disabled={(page + 1) * pageSize >= totalCertificates}
+              >
+                Next
+              </Button>
+            </div>
+          </>
         )}
       </Container>
     );
+  }
+
+  function handlePageSizeChange(event) {
+    dispatch(changePageSizeAction(event.target.value));
+    getCertificationData();
+  }
+
+  function handlePageChange(pageDirection) {
+    dispatch(fetchCertificationThunk(pageDirection));
   }
 
   function showCertificationForm() {
@@ -530,6 +577,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+  paginationWeb: {
+    display: "flex",
+    justifyContent: "flex-end",
+    marginTop: "25px",
+    gap: "10px",
   },
 }));
 

@@ -16,21 +16,66 @@ import {
   query,
   orderBy,
   where,
+  startAfter,
+  limit,
+  startAt,
+  getCountFromServer,
+  getDoc,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
-const getProjectList = async () => {
+const getProjectList = async (
+  cursorIdsStored,
+  pageSize,
+  pageDirection,
+  page
+) => {
   try {
     const projectCollectionRef = collection(
       firestore,
       K.collections.projects.name
     );
-    const q = query(
-      projectCollectionRef,
+
+    const basicConstraints = [
       orderBy("year", "desc"),
-      orderBy("index", "desc")
-    );
+      orderBy("index", "desc"),
+    ];
+
+    const constraints = [...basicConstraints];
+
+    const cursorIds = { ...cursorIdsStored };
+    let cursorId = null;
+    if (pageDirection === "next") {
+      page = page + 1;
+      const { lastCursorId } = cursorIds[page - 1];
+      cursorId = lastCursorId;
+    } else if (pageDirection === "prev") {
+      page = page - 1;
+      const { firstCursorId } = cursorIds[page];
+      cursorId = firstCursorId;
+    } else if (cursorIds[page]) {
+      const { firstCursorId } = cursorIds[page];
+      if (firstCursorId) cursorId = firstCursorId;
+    }
+
+    if (cursorId) {
+      const cursorDocRef = doc(
+        firestore,
+        K.collections.projects.name,
+        cursorId
+      );
+      const cursor = await getDoc(query(cursorDocRef));
+      if (pageDirection === "next") {
+        constraints.push(startAfter(cursor));
+      } else {
+        constraints.push(startAt(cursor));
+      }
+    }
+
+    constraints.push(limit(pageSize));
+
+    const q = query(projectCollectionRef, ...constraints);
     const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {
@@ -40,7 +85,19 @@ const getProjectList = async () => {
         ...doc.data(),
       });
     });
-    return data;
+
+    const countFromServerRes = await getCountFromServer(
+      query(projectCollectionRef, ...basicConstraints)
+    );
+
+    const { count: totalCount } = countFromServerRes["_data"];
+
+    cursorIds[page] = {
+      firstCursorId: querySnapshot.docs[0].id,
+      lastCursorId: querySnapshot.docs[querySnapshot.docs.length - 1].id,
+    };
+
+    return { data, cursorIds, page, totalCount };
   } catch (error) {
     throw error;
   }
