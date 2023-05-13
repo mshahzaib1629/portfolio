@@ -65,6 +65,10 @@ const slice = createSlice({
     },
     changePageSizeAction: (state, action) => {
       state.pageSize = action.payload;
+      state.page = 0;
+      state.cursors = {};
+      state.totalProjects = 0;
+      state.projectList = [];
     },
   },
 });

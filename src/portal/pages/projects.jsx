@@ -30,7 +30,7 @@ import {
   deleteImageThunk,
   updateImageThunk,
   setEditableProjectAction,
-  fetchFeaturedProjectThunk,
+  changePageSizeAction,
 } from "../../redux/slices/projectSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -50,15 +50,22 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function ProjectPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { projectList, isLoading, editableProjectId } = useSelector(
-    (state) => state.project
-  );
+  const {
+    projectList,
+    isLoading,
+    editableProjectId,
+    page,
+    pageSize,
+    totalProjects,
+  } = useSelector((state) => state.project);
   const [showForm, setShowForm] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [newImage, setNewImage] = useState(null);
   const [snackAlert, setSnackAlert] = useState(null);
   const [dragId, setDragId] = useState(null);
+
+  const pageSizeOptions = [10, 15, 25];
 
   const formik = useFormik({
     initialValues: {
@@ -106,6 +113,7 @@ function ProjectPage() {
 
   useEffect(() => {
     resetForm();
+    dispatch(changePageSizeAction(pageSizeOptions[0]));
     if (projectList.length === 0) getProjectData();
   }, []);
 
@@ -269,73 +277,112 @@ function ProjectPage() {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <Table size="medium">
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell style={{ width: "30%" }}>Title</TableCell>
-                <TableCell style={{ width: "25%" }}>Worked At</TableCell>
-                <TableCell>Technologies</TableCell>
-                <TableCell>Year</TableCell>
-                <TableCell align="right">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {projectList?.map((project) => (
-                <TableRow
-                  key={project.id}
-                  id={project.id}
-                  draggable
-                  onDragOver={(ev) => ev.preventDefault()}
-                  onDragStart={handleDrag}
-                  onDrop={handleDrop}
-                >
-                  <TableCell style={{ cursor: "pointer" }}>=</TableCell>
-                  <TableCell>
-                    {project.title} {project.isFeatured && <FeaturedTag />}
-                  </TableCell>
-                  <TableCell>{project.workedAt}</TableCell>
-                  <TableCell style={{ width: "40%" }}>
-                    {convertArrayToString(project.technologies)}
-                  </TableCell>
-                  <TableCell>{project.year}</TableCell>
-                  <TableCell align="right">
-                    <Edit
-                      fontSize="small"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => onEdit(project.id)}
-                    />
-                    {"  "}
-                    <Delete
-                      style={{ cursor: "pointer" }}
-                      fontSize="small"
-                      onClick={() => setProjectToDelete(project)}
-                    />
-                    {"  "}
-                    {project.url ? (
-                      <a
-                        key={project.id}
-                        href={project.url}
+          <>
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell style={{ width: "30%" }}>Title</TableCell>
+                  <TableCell style={{ width: "25%" }}>Worked At</TableCell>
+                  <TableCell>Technologies</TableCell>
+                  <TableCell>Year</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {projectList?.map((project) => (
+                  <TableRow
+                    key={project.id}
+                    id={project.id}
+                    draggable
+                    onDragOver={(ev) => ev.preventDefault()}
+                    onDragStart={handleDrag}
+                    onDrop={handleDrop}
+                  >
+                    <TableCell style={{ cursor: "pointer" }}>=</TableCell>
+                    <TableCell>
+                      {project.title} {project.isFeatured && <FeaturedTag />}
+                    </TableCell>
+                    <TableCell>{project.workedAt}</TableCell>
+                    <TableCell style={{ width: "40%" }}>
+                      {convertArrayToString(project.technologies)}
+                    </TableCell>
+                    <TableCell>{project.year}</TableCell>
+                    <TableCell align="right">
+                      <Edit
+                        fontSize="small"
                         style={{ cursor: "pointer" }}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <Launch
-                          fontSize="small"
+                        onClick={() => onEdit(project.id)}
+                      />
+                      {"  "}
+                      <Delete
+                        style={{ cursor: "pointer" }}
+                        fontSize="small"
+                        onClick={() => setProjectToDelete(project)}
+                      />
+                      {"  "}
+                      {project.url ? (
+                        <a
+                          key={project.id}
                           href={project.url}
+                          style={{ cursor: "pointer" }}
                           target="_blank"
                           rel="noreferrer"
-                        />
-                      </a>
-                    ) : null}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                        >
+                          <Launch
+                            fontSize="small"
+                            href={project.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          />
+                        </a>
+                      ) : null}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div className={classes.paginationWeb}>
+              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                <InputLabel id="demo-select-small-label">Page Size</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={pageSize}
+                  label="Page Size"
+                  onChange={handlePageSizeChange}
+                >
+                  {pageSizeOptions.map((op) => (
+                    <MenuItem value={op}>{op}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button
+                onClick={() => handlePageChange("prev")}
+                disabled={page === 0}
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={() => handlePageChange("next")}
+                disabled={(page + 1) * pageSize >= totalProjects}
+              >
+                Next
+              </Button>
+            </div>
+          </>
         )}
       </Container>
     );
+  }
+
+  function handlePageSizeChange(event) {
+    dispatch(changePageSizeAction(event.target.value));
+    getProjectData();
+  }
+
+  function handlePageChange(pageDirection) {
+    dispatch(fetchProjectThunk(pageDirection));
   }
 
   function showProjectForm() {
@@ -590,6 +637,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
+  },
+  paginationWeb: {
+    display: "flex",
+    justifyContent: "flex-end",
+    marginTop: "25px",
+    gap: "10px",
   },
 }));
 
