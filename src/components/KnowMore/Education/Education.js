@@ -43,7 +43,7 @@ function Education() {
           >
             {edu.degreeTitle} @{" "}
             <Link
-              href={edu.siteUrl}
+              href={edu.siteUrl?.length > 0 ? edu.siteUrl : null}
               color="primary"
               style={{ cursor: "pointer", textDecoration: "none" }}
               target={"_blank"}
@@ -128,7 +128,7 @@ function Education() {
           >
             {edu.degreeTitle} <br />
             <Link
-              href={edu.siteUrl}
+              href={edu.siteUrl?.length > 0 ? edu.siteUrl : null}
               style={{ cursor: "pointer", textDecoration: "none" }}
               color="primary"
               target={"_blank"}

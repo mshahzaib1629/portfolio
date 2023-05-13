@@ -37,6 +37,7 @@ const StyledTabs = (props) => {
     let endDate = exp?.duration?.isWorkingHere
       ? "cont."
       : `${exp.duration.endMonth.shortName} ${exp.duration.endYear}`;
+
     return (
       <TabPanel value={value} index={index} key={index}>
         <Box mb={4}>
@@ -47,7 +48,9 @@ const StyledTabs = (props) => {
             {exp.jobTitle} @{" "}
             <Link
               href={
-                exp.links.website || exp.links.facebook || exp.links.instagram
+                exp.links.websiteUrl ||
+                exp.links.facebook ||
+                exp.links.instagram
               }
               color="primary"
               style={{ cursor: "pointer", textDecoration: "none" }}
@@ -113,7 +116,9 @@ const StyledTabs = (props) => {
             @{" "}
             <Link
               href={
-                exp.links.website || exp.links.facebook || exp.links.instagram
+                exp.links.websiteUrl ||
+                exp.links.facebook ||
+                exp.links.instagram
               }
               color="primary"
               style={{ cursor: "pointer", textDecoration: "none" }}
