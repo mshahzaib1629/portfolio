@@ -58,6 +58,10 @@ const AllCertifications = () => {
     getCertificationData();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
   function webView() {
     return (
       <>
