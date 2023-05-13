@@ -16,21 +16,42 @@ import {
   query,
   orderBy,
   where,
+  startAfter,
+  limit,
+  startAt,
+  getCountFromServer,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
-const getProjectList = async () => {
+const getProjectList = async (cursorsStored, pageSize, pageDirection, page) => {
   try {
     const projectCollectionRef = collection(
       firestore,
       K.collections.projects.name
     );
-    const q = query(
-      projectCollectionRef,
+
+    const basicConstraints = [
       orderBy("year", "desc"),
-      orderBy("index", "desc")
-    );
+      orderBy("index", "desc"),
+    ];
+
+    const constraints = [...basicConstraints];
+
+    const cursors = { ...cursorsStored };
+    if (pageDirection === "next") {
+      page = page + 1;
+      const { lastCursor } = cursors[page - 1];
+      constraints.push(startAfter(lastCursor));
+    } else if (pageDirection === "prev") {
+      page = page - 1;
+      const { firstCursor } = cursors[page];
+      if (firstCursor) constraints.push(startAt(firstCursor));
+    }
+
+    constraints.push(limit(pageSize));
+
+    const q = query(projectCollectionRef, ...constraints);
     const querySnapshot = await getDocs(q);
     let data = [];
     querySnapshot.forEach((doc) => {
@@ -40,7 +61,19 @@ const getProjectList = async () => {
         ...doc.data(),
       });
     });
-    return data;
+
+    const countFromServerRes = await getCountFromServer(
+      query(projectCollectionRef, ...basicConstraints)
+    );
+
+    const { count: totalCount } = countFromServerRes["_data"];
+
+    cursors[page] = {
+      firstCursor: querySnapshot.docs[0],
+      lastCursor: querySnapshot.docs[querySnapshot.docs.length - 1],
+    };
+
+    return { data, cursors, page, totalCount };
   } catch (error) {
     throw error;
   }
