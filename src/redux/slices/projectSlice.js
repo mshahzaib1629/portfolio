@@ -8,7 +8,7 @@ const initialState = {
   isLoading: false,
   totalProjects: 0,
   page: 0,
-  cursors: {},
+  cursorIds: {},
   pageSize: 10,
   error: null,
 };
@@ -26,10 +26,10 @@ const slice = createSlice({
       state.isLoading = false;
     },
     getProjectListSuccessAction: (state, action) => {
-      const { data, cursors, page, totalCount } = action.payload;
+      const { data, cursorIds, page, totalCount } = action.payload;
       state.projectList = [];
       state.projectList = data;
-      state.cursors = cursors;
+      state.cursorIds = cursorIds;
 
       state.page = page;
       state.totalProjects = totalCount;
@@ -61,12 +61,12 @@ const slice = createSlice({
       state.projectList = [];
       state.totalProjects = 0;
       state.page = 0;
-      state.cursors = {};
+      state.cursorIds = {};
     },
     changePageSizeAction: (state, action) => {
       state.pageSize = action.payload;
       state.page = 0;
-      state.cursors = {};
+      state.cursorIds = {};
       state.totalProjects = 0;
       state.projectList = [];
     },
@@ -92,10 +92,10 @@ export function fetchProjectThunk(pageDirection) {
     dispatch(requestStartedAction());
     let response;
     try {
-      const { cursors, page, pageSize } = getState().project;
+      const { cursorIds, page, pageSize } = getState().project;
 
       response = await ProjectService.getProjectList(
-        cursors,
+        cursorIds,
         pageSize,
         pageDirection,
         page

@@ -20,11 +20,17 @@ import {
   limit,
   startAt,
   getCountFromServer,
+  getDoc,
 } from "firebase/firestore";
 import K from "../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
 
-const getProjectList = async (cursorsStored, pageSize, pageDirection, page) => {
+const getProjectList = async (
+  cursorIdsStored,
+  pageSize,
+  pageDirection,
+  page
+) => {
   try {
     const projectCollectionRef = collection(
       firestore,
@@ -38,18 +44,33 @@ const getProjectList = async (cursorsStored, pageSize, pageDirection, page) => {
 
     const constraints = [...basicConstraints];
 
-    const cursors = { ...cursorsStored };
+    const cursorIds = { ...cursorIdsStored };
+    let cursorId = null;
     if (pageDirection === "next") {
       page = page + 1;
-      const { lastCursor } = cursors[page - 1];
-      constraints.push(startAfter(lastCursor));
+      const { lastCursorId } = cursorIds[page - 1];
+      cursorId = lastCursorId;
     } else if (pageDirection === "prev") {
       page = page - 1;
-      const { firstCursor } = cursors[page];
-      if (firstCursor) constraints.push(startAt(firstCursor));
-    } else if (cursors[page]) {
-      const { firstCursor } = cursors[page];
-      if (firstCursor) constraints.push(startAt(firstCursor));
+      const { firstCursorId } = cursorIds[page];
+      cursorId = firstCursorId;
+    } else if (cursorIds[page]) {
+      const { firstCursorId } = cursorIds[page];
+      if (firstCursorId) cursorId = firstCursorId;
+    }
+
+    if (cursorId) {
+      const cursorDocRef = doc(
+        firestore,
+        K.collections.projects.name,
+        cursorId
+      );
+      const cursor = await getDoc(query(cursorDocRef));
+      if (pageDirection === "next") {
+        constraints.push(startAfter(cursor));
+      } else {
+        constraints.push(startAt(cursor));
+      }
     }
 
     constraints.push(limit(pageSize));
@@ -71,12 +92,12 @@ const getProjectList = async (cursorsStored, pageSize, pageDirection, page) => {
 
     const { count: totalCount } = countFromServerRes["_data"];
 
-    cursors[page] = {
-      firstCursor: querySnapshot.docs[0],
-      lastCursor: querySnapshot.docs[querySnapshot.docs.length - 1],
+    cursorIds[page] = {
+      firstCursorId: querySnapshot.docs[0].id,
+      lastCursorId: querySnapshot.docs[querySnapshot.docs.length - 1].id,
     };
 
-    return { data, cursors, page, totalCount };
+    return { data, cursorIds, page, totalCount };
   } catch (error) {
     throw error;
   }

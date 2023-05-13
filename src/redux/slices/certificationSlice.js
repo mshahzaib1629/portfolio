@@ -8,7 +8,7 @@ const initialState = {
   isLoading: false,
   totalCertificates: 0,
   page: 0,
-  cursors: {},
+  cursorIds: {},
   pageSize: 10,
   error: null,
 };
@@ -26,10 +26,10 @@ const slice = createSlice({
       state.isLoading = false;
     },
     getCertificationListSuccessAction: (state, action) => {
-      const { data, cursors, page, totalCount } = action.payload;
+      const { data, cursorIds, page, totalCount } = action.payload;
       state.certificationList = [];
       state.certificationList = data;
-      state.cursors = cursors;
+      state.cursorIds = cursorIds;
 
       state.page = page;
       state.totalCertificates = totalCount;
@@ -61,12 +61,12 @@ const slice = createSlice({
       state.certificationList = [];
       state.totalCertificates = 0;
       state.page = 0;
-      state.cursors = {};
+      state.cursorIds = {};
     },
     changePageSizeAction: (state, action) => {
       state.pageSize = action.payload;
       state.page = 0;
-      state.cursors = {};
+      state.cursorIds = {};
       state.totalCertificates = 0;
       state.certificationList = [];
     },
@@ -92,10 +92,10 @@ export function fetchCertificationThunk(pageDirection) {
     dispatch(requestStartedAction());
     let response;
     try {
-      const { cursors, page, pageSize } = getState().certification;
+      const { cursorIds, page, pageSize } = getState().certification;
 
       response = await CertificationService.getCertificationList(
-        cursors,
+        cursorIds,
         pageSize,
         pageDirection,
         page
