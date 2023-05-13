@@ -6,6 +6,10 @@ const initialState = {
   certificationList: [],
   editableCertificationId: null,
   isLoading: false,
+  totalCertificates: 0,
+  page: 0,
+  cursors: {},
+  pageSize: 10,
   error: null,
 };
 
@@ -22,6 +26,16 @@ const slice = createSlice({
       state.isLoading = false;
     },
     getCertificationListSuccessAction: (state, action) => {
+      const { data, cursors, page, totalCount } = action.payload;
+      state.certificationList = [];
+      state.certificationList = data;
+      state.cursors = cursors;
+
+      state.page = page;
+      state.totalCertificates = totalCount;
+      state.isLoading = false;
+    },
+    getFeaturedCertificationListSuccessAction: (state, action) => {
       state.certificationList = [];
       state.certificationList = action.payload;
       state.isLoading = false;
@@ -45,6 +59,16 @@ const slice = createSlice({
     resetCertificationAction: (state, action) => {
       state.editableCertificationId = null;
       state.certificationList = [];
+      state.totalCertificates = 0;
+      state.page = 0;
+      state.cursors = {};
+    },
+    changePageSizeAction: (state, action) => {
+      state.pageSize = action.payload;
+      state.page = 0;
+      state.cursors = {};
+      state.totalCertificates = 0;
+      state.certificationList = [];
     },
   },
 });
@@ -53,20 +77,29 @@ export const {
   requestStartedAction,
   requestFailedAction,
   getCertificationListSuccessAction,
+  getFeaturedCertificationListSuccessAction,
   addNewCertificationSuccessAction,
   setEditableCertificationAction,
   editCertificationSuccessAction,
   updateSortingSuccessAction,
   deleteCertificationSuccessAction,
   resetCertificationAction,
+  changePageSizeAction,
 } = slice.actions;
 
-export function fetchCertificationThunk() {
+export function fetchCertificationThunk(pageDirection) {
   return async (dispatch, getState) => {
     dispatch(requestStartedAction());
     let response;
     try {
-      response = await CertificationService.getCertificationList();
+      const { cursors, page, pageSize } = getState().certification;
+
+      response = await CertificationService.getCertificationList(
+        cursors,
+        pageSize,
+        pageDirection,
+        page
+      );
       dispatch(getCertificationListSuccessAction(response));
     } catch (error) {
       dispatch(requestFailedAction(error));
@@ -81,7 +114,7 @@ export function fetchFeaturedCertificationThunk() {
     let response;
     try {
       response = await CertificationService.getFeaturedCertificationList();
-      dispatch(getCertificationListSuccessAction(response));
+      dispatch(getFeaturedCertificationListSuccessAction(response));
     } catch (error) {
       dispatch(requestFailedAction(error));
       throw error;

@@ -47,6 +47,9 @@ const getProjectList = async (cursorsStored, pageSize, pageDirection, page) => {
       page = page - 1;
       const { firstCursor } = cursors[page];
       if (firstCursor) constraints.push(startAt(firstCursor));
+    } else if (cursors[page]) {
+      const { firstCursor } = cursors[page];
+      if (firstCursor) constraints.push(startAt(firstCursor));
     }
 
     constraints.push(limit(pageSize));
