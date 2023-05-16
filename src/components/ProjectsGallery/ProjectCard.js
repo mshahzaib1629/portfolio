@@ -9,17 +9,116 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkIcon from "@material-ui/icons/Link";
+import { useTheme } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const ProjectCard = ({ projects }) => {
+  const theme = useTheme();
+  const classes = useStyles();
+
+  const displayImage = (frontImage) =>
+    frontImage ? frontImage : "images/empty-project-image1.jpg";
+
+  const displayImageGrid = (project) => (
+    <Grid item xs={3}>
+      <CardMedia
+        className={classes.media}
+        layoutId={`img-container-${project.id}`}
+        image={displayImage(project.imageUrl)}
+        title={project.title}
+      />
+    </Grid>
+  );
+
+  const displayContentGrid = (project) => (
+    <Grid item xs={9}>
+      <Card className={classes.content}>
+        <div className={classes.projectDetails}>
+          <div>
+            <Typography
+              variant="h5"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              {project.title}{" "}
+              {project.projectType && (
+                <>
+                  {"  "} -{" "}
+                  <span
+                    style={{ color: theme.palette.text.secondary }}
+                    variant="h5"
+                  >
+                    {project.projectType}
+                  </span>
+                </>
+              )}
+            </Typography>
+            {project.workedAt && project.workedAt != "-" && (
+              <Typography
+                variant="h5"
+                style={{ color: theme.palette.text.secondary }}
+              >
+                @{" "}
+                <span style={{ color: theme.palette.primary.main }}>
+                  {project.workedAt}
+                </span>
+              </Typography>
+            )}
+          </div>
+          <div className={classes.icons}>
+            <IconButton aria-label="project-link">
+              <LinkIcon style={{ color: theme.palette.text.secondary }} />
+            </IconButton>
+            <IconButton aria-label="github-link">
+              <GitHubIcon style={{ color: theme.palette.text.secondary }} />
+            </IconButton>
+          </div>
+        </div>
+        <Typography variant="body2" color="textSecondary" align="justify">
+          {project.extendedOverview}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          align="right"
+          className={classes.technologies}
+        >
+          {project.technologies.map((tech) => (
+            <>&nbsp;&nbsp;{tech}</>
+          ))}
+        </Typography>
+      </Card>
+    </Grid>
+  );
+  return (
+    <Grid container spacing={3}>
+      {projects.map((project, index) => {
+        console.log("project: ", project);
+        return (
+          <Grid item xs={12} key={index}>
+            <Grid container className={classes.root}>
+              {displayContentGrid(project)}
+              {displayImageGrid(project)}
+            </Grid>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
+};
+
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
     display: "flex",
     justifyContent: "space-between",
+    margin: "15px 10px",
   },
   media: {
     width: "100%",
     height: "300px", // Add a height that works for you
     boxSizing: "border-box",
+    padding: "10px",
+    borderRadius: "8px",
+    margin: "2px 10px",
   },
   content: {
     width: "100%",
@@ -28,6 +127,8 @@ const useStyles = makeStyles({
     height: "100%",
     justifyContent: "space-between",
     boxSizing: "border-box",
+    borderRadius: "8px",
+    padding: "30px 30px",
   },
   projectDetails: {
     display: "flex",
@@ -40,72 +141,5 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-end",
   },
-});
-
-const ProjectCard = ({ projects }) => {
-  const classes = useStyles();
-  return (
-    <Grid container spacing={3}>
-      {projects.map((project, index) => {
-        console.log("project: ", project);
-        return (
-          <Grid item xs={12} key={index}>
-            <Grid container className={classes.root}>
-              <Grid item xs={9}>
-                <Card className={classes.content}>
-                  <CardActionArea>
-                    <div className={classes.projectDetails}>
-                      <div>
-                        <Typography variant="h5" component="h2">
-                          {project.title}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {project.workedAt}
-                        </Typography>
-                      </div>
-                      <div className={classes.icons}>
-                        <IconButton aria-label="project-link">
-                          <LinkIcon />
-                        </IconButton>
-                        <IconButton aria-label="github-link">
-                          <GitHubIcon />
-                        </IconButton>
-                      </div>
-                    </div>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      align="justify"
-                    >
-                      {project.overview}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      align="right"
-                      className={classes.technologies}
-                    >
-                      {project.technologies}
-                    </Typography>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-              <Grid item xs={3}>
-                <CardMedia
-                  className={classes.media}
-                  layoutId={`img-container-${project.id}`}
-                  image={
-                    "https://www.carscoops.com/wp-content/uploads/2023/02/2022-Mercedes-CLS-1024x576.jpg"
-                  }
-                  title={project.title}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        );
-      })}
-    </Grid>
-  );
-};
-
+}));
 export default ProjectCard;
