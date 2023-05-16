@@ -13,6 +13,7 @@ import ExtendedCard from "./ExtendedCard";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import ProjectCard from "./ProjectCard";
 
 const ProjectsGallery = (props) => {
   const classes = useStyles();
@@ -25,7 +26,7 @@ const ProjectsGallery = (props) => {
   return (
     <>
       <AnimateSharedLayout type="crossfade">
-        <Grid container spacing={4} className={classes.galleryContainer}>
+        {/* <Grid container spacing={4} className={classes.galleryContainer}>
           {props.projectsData.map((item, k) => (
             <Grid
               item
@@ -47,7 +48,8 @@ const ProjectsGallery = (props) => {
               />
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+        <ProjectCard projects={props.projectsData} />
         <AnimatePresence>
           {selectedId && (
             <ExtendedCard
@@ -73,7 +75,7 @@ const ProjectsGallery = (props) => {
           color="primary"
         >
           View All &nbsp;
-          <ArrowForwardIosIcon  fontSize="small"/>
+          <ArrowForwardIosIcon fontSize="small" />
         </Button>
       </Box>
     </>
