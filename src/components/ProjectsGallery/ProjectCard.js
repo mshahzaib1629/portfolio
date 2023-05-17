@@ -19,7 +19,7 @@ const ProjectCard = ({ projects }) => {
     frontImage ? frontImage : "images/empty-project-image1.jpg";
 
   const displayImageGrid = (project) => (
-    <Grid item xs={3}>
+    <Grid item xs={4}>
       <CardMedia
         className={classes.media}
         layoutId={`img-container-${project.id}`}
@@ -30,7 +30,7 @@ const ProjectCard = ({ projects }) => {
   );
 
   const displayContentGrid = (project) => (
-    <Grid item xs={9}>
+    <Grid item xs={8}>
       <Card className={classes.content}>
         <div className={classes.projectDetails}>
           <div>
@@ -76,13 +76,20 @@ const ProjectCard = ({ projects }) => {
           {project.extendedOverview}
         </Typography>
         <Typography
-          variant="body2"
+          variant="subtitle1"
           color="textSecondary"
           align="right"
           className={classes.technologies}
         >
-          {project.technologies.map((tech) => (
-            <>&nbsp;&nbsp;{tech}</>
+          {project.technologies.map((tech, index) => (
+            <span>
+              {tech}{" "}
+              {index != project.technologies.length - 1 ? (
+                <>&nbsp;○ &nbsp;</>
+              ) : (
+                ""
+              )}
+            </span>
           ))}
         </Typography>
       </Card>
