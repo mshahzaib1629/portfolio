@@ -26,30 +26,12 @@ const ProjectsGallery = (props) => {
   return (
     <>
       <AnimateSharedLayout type="crossfade">
-        {/* <Grid container spacing={4} className={classes.galleryContainer}>
-          {props.projectsData.map((item, k) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={item.id}
-              classes={{ item: classes.item }}
-            >
-              <Card
-                id={item.id}
-                title={item.title}
-                overview={item.overview}
-                frontImage={item.imageUrl}
-                technologies={item.technologies}
-                onClick={() => setSelectedId(item.id)}
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-              />
-            </Grid>
+        <Grid container spacing={3}>
+          {props.projectsData.map((project, index) => (
+            <ProjectCard project={project} index={index} />
           ))}
-        </Grid> */}
-        <ProjectCard projects={props.projectsData} />
+        </Grid>
+
         <AnimatePresence>
           {selectedId && (
             <ExtendedCard
