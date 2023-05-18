@@ -191,9 +191,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     borderRadius: "8px",
     margin: "2px 10px",
-    transition: "transform 0.7s ease",
+    transition: "transform 0.5s ease",
     "&:hover": {
       transform: "scale(1.04)",
+      // transform: "translateY(-5px)",
     },
   },
   content: {
@@ -205,9 +206,10 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     borderRadius: "8px",
     padding: "30px 30px",
-    transition: "transform 0.7s ease",
+    transition: "transform 0.5s ease",
     "&:hover": {
-      transform: "scale(1.04)",
+      // transform: "scale(1.04)",
+      transform: "translateY(-5px)",
     },
   },
   projectDetails: {
@@ -225,7 +227,7 @@ const useStyles = makeStyles((theme) => ({
     transition: "color 0.2s ease",
     "&:hover": {
       color: theme.palette.primary.main,
-      cursor: "pointer"
+      cursor: "pointer",
     },
   },
 }));
