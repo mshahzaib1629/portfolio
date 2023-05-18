@@ -9,6 +9,7 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkIcon from "@material-ui/icons/Link";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import { getPaletteFromImage } from "react-palette";
+import { Launch } from "@material-ui/icons";
 
 const ProjectCard = ({ project, index }) => {
   const theme = useTheme();
@@ -64,12 +65,22 @@ const ProjectCard = ({ project, index }) => {
             )}
           </div>
           <div className={classes.icons}>
-            <IconButton aria-label="project-link">
-              <LinkIcon style={{ color: theme.palette.text.secondary }} />
-            </IconButton>
-            <IconButton aria-label="github-link">
-              <GitHubIcon style={{ color: theme.palette.text.secondary }} />
-            </IconButton>
+            {project.links?.url && (
+              <IconButton
+                aria-label="project-link"
+                onClick={() => window.open(project.links?.url, "_blank")}
+              >
+                <Launch style={{ color: theme.palette.text.secondary }} />
+              </IconButton>
+            )}
+            {project.links.code && (
+              <IconButton
+                aria-label="github-link"
+                onClick={() => window.open(project.links?.code, "_blank")}
+              >
+                <GitHubIcon style={{ color: theme.palette.text.secondary }} />
+              </IconButton>
+            )}
           </div>
         </div>
         <Typography variant="body2" color="textSecondary" align="justify">
@@ -120,12 +131,22 @@ const ProjectCard = ({ project, index }) => {
             )}
           </div>
           <div className={classes.icons}>
-            <IconButton aria-label="project-link">
-              <LinkIcon style={{ color: theme.palette.text.secondary }} />
-            </IconButton>
-            <IconButton aria-label="github-link">
-              <GitHubIcon style={{ color: theme.palette.text.secondary }} />
-            </IconButton>
+            {project.links?.url && (
+              <IconButton
+                aria-label="project-link"
+                onClick={() => window.open(project.links?.url, "_blank")}
+              >
+                <Launch style={{ color: theme.palette.text.secondary }} />
+              </IconButton>
+            )}
+            {project.links.code && (
+              <IconButton
+                aria-label="github-link"
+                onClick={() => window.open(project.links?.code, "_blank")}
+              >
+                <GitHubIcon style={{ color: theme.palette.text.secondary }} />
+              </IconButton>
+            )}
           </div>
         </div>
         <br />
