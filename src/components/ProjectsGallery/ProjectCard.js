@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -6,17 +6,26 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import LinkIcon from "@material-ui/icons/Link";
 import { useMediaQuery, useTheme } from "@material-ui/core";
-import { getPaletteFromImage } from "react-palette";
 import { Launch } from "@material-ui/icons";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+import Collapse from "@material-ui/core/Collapse";
 
 const ProjectCard = ({ project, index }) => {
   const theme = useTheme();
   const classes = useStyles();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [expanded, setExpanded] = useState(false);
+
   const displayImage = (frontImage) =>
     frontImage ? frontImage : "images/empty-project-image1.jpg";
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const displayImageGrid = () => (
     <Grid item xs={4}>
@@ -109,7 +118,7 @@ const ProjectCard = ({ project, index }) => {
 
   const displayMobileCard = () => (
     <Grid item sx={12}>
-      <Card className={classes.content} elevation={2}>
+      <Card className={classes.mobileContent} elevation={2}>
         <div className={classes.projectDetails}>
           <div>
             <Typography
@@ -159,16 +168,30 @@ const ProjectCard = ({ project, index }) => {
           align="right"
           className={classes.technologies}
         >
-          {project.technologies.map((tech, index) => (
-            <span>
-              <span>{tech} </span>
-              {index != project.technologies.length - 1 ? (
-                <>&nbsp;○ &nbsp;</>
-              ) : (
-                ""
-              )}
-            </span>
-          ))}
+          <span
+            className={classes.techItem}
+            onClick={handleExpandClick}
+            style={{ color: theme.palette.primary.main, cursor: "pointer" }}
+          >
+            Technologies{" "}
+            {expanded ? (
+              <KeyboardArrowUpIcon
+                style={{ fontSize: "1rem", marginLeft: "0.2rem" }}
+              />
+            ) :(
+              <KeyboardArrowDownIcon
+                style={{ fontSize: "1rem", marginLeft: "0.2rem" }}
+              />
+            ) }
+          </span>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            {project.technologies.map((tech, index) => (
+              <span key={index}>
+                <span>{tech}</span>
+                {index !== project.technologies.length - 1 ? ", " : ""}
+              </span>
+            ))}
+          </Collapse>
         </Typography>
       </Card>
     </Grid>
@@ -232,6 +255,16 @@ const useStyles = makeStyles((theme) => ({
       // transform: "scale(1.04)",
       transform: "translateY(-5px)",
     },
+  },
+  mobileContent: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "space-between",
+    boxSizing: "border-box",
+    borderRadius: "8px",
+    padding: "30px 30px",
   },
   projectDetails: {
     display: "flex",
