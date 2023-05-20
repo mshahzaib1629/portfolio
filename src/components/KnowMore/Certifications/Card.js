@@ -58,59 +58,58 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
     >
       <MuiCard
         className={classes.root}
-        elevation={10}
+        elevation={2}
         component={motion.div}
         layoutId={id}
         onMouseEnter={handleMouseEnterControls}
         onMouseLeave={handleMouseLeaveControls}
         {...rest}
       >
-        <div>
-          <CardMedia
-            component={motion.div}
-            layoutId={`img-container-${id}`}
-            className={classes.media}
-            image={displayImage()}
-            title={title}
-          />
-          <CardContent
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              justifyContent: "space-between",
-            }}
+        <CardMedia
+          component={motion.div}
+          layoutId={`img-container-${id}`}
+          className={classes.media}
+          image={displayImage()}
+          title={title}
+        />
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            variant="h5"
+            className={classes.title}
+            // noWrap={true}
+            component={motion.h5}
+            layoutId={`title-${id}`}
           >
-            <Typography
-              variant="h5"
-              className={classes.title}
-              noWrap={true}
-              component={motion.h5}
-              layoutId={`title-${id}`}
-            >
-              {title}
-            </Typography>
-            <Typography
-              variant="h6"
-              className={classes.issuedBy}
-              component={motion.h5}
-              layoutId={`issuedBy-${id}`}
-              style={{ flexGrow: 2 }}
-            >
-              {issuedBy}
-            </Typography>
-            <Typography
-              variant="body2"
-              className={classes.footer}
-              component={motion.h5}
-              layoutId={`footer-${id}`}
-              color="primary"
-            >
-              <span className={classes.type}>{type}</span> &nbsp;{" "}
-              {date.month.shortName} {date.year}
-            </Typography>
-          </CardContent>
-        </div>
+            {title}
+          </Typography>
+          <Typography
+            variant="h6"
+            className={classes.issuedBy}
+            component={motion.h5}
+            layoutId={`issuedBy-${id}`}
+            style={{ flexGrow: 2 }}
+          >
+            {issuedBy}
+          </Typography>
+          <Typography
+            variant="body2"
+            className={classes.footer}
+            component={motion.h5}
+            layoutId={`footer-${id}`}
+            color="primary"
+          >
+            <span className={classes.type}>{type}</span> &nbsp; &nbsp;{" "}
+            {date.month.shortName} {date.year}
+          </Typography>
+        </CardContent>
+
         <motion.div
           transition={{ delay: 0.15 }}
           variants={hoverVariants}
@@ -152,14 +151,16 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
-    height: 350,
+    height: 430,
+    borderRadius: "8px",
     overflow: "hidden",
     cursor: "pointer",
-    backgroundColor: theme.palette.primary.main,
+    // backgroundColor: "transparent !important",
   },
 
   media: {
-    height: 200,
+    height: 220,
+    // borderRadius: "8px",
     width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -181,20 +182,20 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
   },
   issuedBy: {
-    fontSize: "16px",
+    fontSize: "18px",
     marginBottom: theme.spacing(1),
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.main,
   },
   footer: {
     fontSize: "14px",
     color: theme.palette.primary.contrastText,
     position: "absolute",
-    bottom: "14px",
+    bottom: "20px",
   },
   type: {
-    padding: "3px 8px",
-    background: "rgba(0,0,0,0.4)",
-    borderRadius: "10px",
+    padding: "3px 10px",
+    background: theme.palette.primary.main,
+    borderRadius: "8px",
   },
   hover: {
     position: "absolute",
