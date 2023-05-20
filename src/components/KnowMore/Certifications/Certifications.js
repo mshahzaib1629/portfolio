@@ -50,30 +50,25 @@ function Certifications() {
               >
                 <Card
                   id={item.id}
+                  index={k}
                   title={item.title}
                   issuedBy={item.issuedBy}
                   type={item.type}
                   date={item.date}
                   imageUrl={item.imageUrl}
                   url={item.url}
+                  isLast={false}
                 />
               </Grid>
             ))}
+            <Grid item xs={12} sm={6} md={6} lg={4}>
+              <Card
+                id="view-all"
+                isLast={true} // Set isLast prop to true for the "View All" card
+              />
+            </Grid>
           </Grid>
         </div>
-
-        <Box display="flex" justifyContent="center" mt={2}>
-          <Button
-            className={classes.loadBtn}
-            onClick={() => {
-              navigate("/certificates");
-            }}
-            variant="outlined"
-            color="primary"
-          >
-            View All &nbsp; <ArrowForwardIosIcon />
-          </Button>
-        </Box>
       </>
     );
   };
@@ -109,10 +104,6 @@ const useStyles = makeStyles((theme) => ({
     overflowX: "scroll",
     "-webkit-overflow-scrolling": "touch",
     scrollSnapType: "x mandatory",
-  },
-  loadBtn: {
-    width: "200px",
-    fontSize: "20px",
   },
 }));
 

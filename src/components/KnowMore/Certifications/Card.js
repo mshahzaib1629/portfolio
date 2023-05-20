@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import { ArrowForward } from "@material-ui/icons";
 import { motion, useAnimation } from "framer-motion";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useNavigate } from "react-router";
 
 const hoverVariants = {
   hover: {
@@ -33,8 +35,19 @@ const titleVariants = {
   },
 };
 
-const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
+const Card = ({
+  id,
+  title,
+  issuedBy,
+  type,
+  date,
+  imageUrl,
+  url,
+  isLast,
+  ...rest
+}) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles({ isMobile });
   const controls = useAnimation();
@@ -49,13 +62,33 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
   const displayImage = () =>
     imageUrl ? imageUrl : "images/empty-certificate.jpg";
 
-  return (
+  const viewAllCard = () => (
+    <MuiCard
+      className={classes.viewAllCard}
+      elevation={2}
+      onClick={() => navigate("/certificates")}
+    >
+      <CardContent>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Box mr={1}>
+            <Typography variant="h4">View All </Typography>
+          </Box>
+          <Icon>
+            <ArrowForwardIosIcon />
+          </Icon>
+        </Box>
+      </CardContent>
+    </MuiCard>
+  );
+
+  const certificateCard = () => (
     <a
       href={url}
       target="_blank"
       rel="noreferrer"
       style={{ textDecoration: "none" }}
     >
+      {" "}
       <MuiCard
         className={classes.root}
         elevation={2}
@@ -83,7 +116,6 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
           <Typography
             variant="h5"
             className={classes.title}
-            // noWrap={true}
             component={motion.h5}
             layoutId={`title-${id}`}
           >
@@ -111,7 +143,7 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
         </CardContent>
 
         <motion.div
-          transition={{ delay: 0.15 }}
+          transition={{ delay: 0.001 }}
           variants={hoverVariants}
           animate={controls}
           className={classes.hover}
@@ -119,8 +151,8 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
           <Box
             display="flex"
             alignItems="center"
-            justofyContent="center"
-            transition={{ delay: 0.3 }}
+            justifyContent="center"
+            transition={{ delay: 0.001 }}
             component={motion.div}
             variants={titleVariants}
             animate={controls}
@@ -131,12 +163,12 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
             <Icon
               component={motion.div}
               transition={{
-                delay: 0.3,
+                delay: 0.001,
                 repeat: Infinity,
                 duration: 1,
                 repeatType: "reverse",
               }}
-              variants={{ hover: { y: 7 }, intial: { y: -2 } }}
+              variants={{ hover: { y: 7 }, initial: { y: -2 } }}
               animate="hover"
             >
               <ArrowForward />
@@ -146,6 +178,7 @@ const Card = ({ id, title, issuedBy, type, date, imageUrl, url, ...rest }) => {
       </MuiCard>
     </a>
   );
+  return !isLast ? certificateCard() : viewAllCard();
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -155,25 +188,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "8px",
     overflow: "hidden",
     cursor: "pointer",
-    // backgroundColor: "transparent !important",
+    transition: "transform 0.5s ease",
+    "&:hover": {
+      transform: "translateY(-5px)",
+    },
   },
-
   media: {
     height: 220,
-    // borderRadius: "8px",
     width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "flex-start",
     overflow: "hidden",
-    backgroundColor: "red",
-  },
-  frontImage: {
-    marginTop: "20px",
-    objectFit: "fill",
-    objectPosition: "center top",
-    width: "90%",
-    boxShadow: theme.shadows[8],
   },
   title: {
     fontSize: "18px",
@@ -206,6 +232,22 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  },
+  viewAllCard: {
+    height: 430,
+    width: 300,
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "transform 0.5s ease",
+    "&:hover": {
+      transform: "translateY(-5px)",
+    },
+  },
+  viewAllText: {
+    color: theme.palette.primary.contrastText,
   },
 }));
 
