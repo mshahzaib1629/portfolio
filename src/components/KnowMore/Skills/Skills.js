@@ -77,7 +77,7 @@ function Skills() {
   );
 
   const mobileView = () => (
-    <ul style={{ listStyle: "none" }}>
+    <ul style={{ listStyle: "none", paddingInline: "12px" }}>
       {skillSetList.map((skill) => {
         return (
           <li key={skill.id}>

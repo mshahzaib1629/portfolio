@@ -211,6 +211,7 @@ const Card = ({
             flexDirection: "column",
             height: "100%",
             justifyContent: "space-between",
+            paddingInline: "5px"
           }}
         >
           <Typography
@@ -262,8 +263,7 @@ const useStyles = (isMobile) =>
     },
     title: {
       fontSize: "18px",
-      fontWeight: 700,
-      marginBottom: theme.spacing(1),
+      fontWeight: 550,
       color: theme.palette.text.secondary,
       display: "-webkit-box",
       "-webkit-line-clamp": 3,
