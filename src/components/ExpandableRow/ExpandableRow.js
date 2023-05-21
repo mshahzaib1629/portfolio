@@ -52,7 +52,7 @@ function ExpandableRow(props) {
             {(project.extendedOverview || project.overview) && (
               <InfoOutlinedIcon
                 style={{
-                  color: project.isFeatured
+                  color: openInfo
                     ? theme.palette.primary.main
                     : theme.palette.text.secondary,
                   cursor: "pointer",
@@ -104,8 +104,6 @@ function ExpandableRow(props) {
                 {project.extendedOverview
                   ? project.extendedOverview
                   : project.overview}
-                &nbsp;&nbsp;
-                {project.isFeatured && <FeaturedTag />}
               </Typography>
             </Box>
           </Collapse>
