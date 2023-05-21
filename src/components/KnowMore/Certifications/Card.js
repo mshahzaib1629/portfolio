@@ -206,6 +206,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: theme.spacing(1),
     color: theme.palette.primary.contrastText,
+    display: "-webkit-box",
+    "-webkit-line-clamp": 3,
+    "-webkit-box-orient": "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   issuedBy: {
     fontSize: "18px",

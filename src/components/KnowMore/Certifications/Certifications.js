@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 8px", // Adjust the margin as needed
   },
   scrollContainer: {
-    overflowX: "scroll",
+    // overflowX: "scroll",
     "-webkit-overflow-scrolling": "touch",
     scrollSnapType: "x mandatory",
   },
