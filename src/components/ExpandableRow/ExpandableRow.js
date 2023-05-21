@@ -180,8 +180,6 @@ function MobileExpandableRow(props) {
                 {project.extendedOverview
                   ? project.extendedOverview
                   : project.overview}
-                &nbsp;&nbsp;
-                {project.isFeatured && <FeaturedTag />}
               </Typography>
             </Box>
           </Collapse>
