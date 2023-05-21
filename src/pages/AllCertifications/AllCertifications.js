@@ -129,8 +129,7 @@ const AllCertifications = () => {
                 </TableCell>
                 <TableCell style={{ width: "40%" }}>
                   <Typography variant="subtitle1" className={classes.tableCell}>
-                    {certificate.title} &nbsp;
-                    {certificate.isFeatured && <FeaturedTag />}
+                    {certificate.title}
                   </Typography>
                 </TableCell>
                 <TableCell>
