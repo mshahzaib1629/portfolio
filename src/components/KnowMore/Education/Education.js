@@ -113,7 +113,7 @@ function Education() {
   );
 
   const mobileView = () => (
-    <ul style={{ listStyle: "none" }}>
+    <ul style={{ listStyle: "none", paddingInline: "12px" }}>
       {educationList.map((edu) => (
         <li key={edu.id}>
           <Typography
