@@ -49,7 +49,7 @@ const Card = ({
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const classes = useStyles({ isMobile });
+  const classes = useStyles(isMobile)();
   const controls = useAnimation();
   const handleMouseEnterControls = () => {
     controls.start("hover");
@@ -178,82 +178,142 @@ const Card = ({
       </MuiCard>
     </a>
   );
-  return !isLast ? certificateCard() : viewAllCard();
+
+  const webView = () => (!isLast ? certificateCard() : viewAllCard());
+
+  const mobileView = () => (
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      style={{ textDecoration: "none" }}
+    >
+      {" "}
+      <MuiCard
+        className={classes.root}
+        elevation={0}
+        component={motion.div}
+        layoutId={id}
+        onMouseEnter={handleMouseEnterControls}
+        onMouseLeave={handleMouseLeaveControls}
+        {...rest}
+      >
+        <CardMedia
+          component={motion.div}
+          layoutId={`img-container-${id}`}
+          className={classes.media}
+          image={displayImage()}
+          title={title}
+        />
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            variant="h5"
+            className={classes.title}
+            component={motion.h5}
+            layoutId={`title-${id}`}
+          >
+            {title}
+          </Typography>
+          <Typography
+            variant="h6"
+            className={classes.issuedBy}
+            component={motion.h5}
+            layoutId={`issuedBy-${id}`}
+            style={{ flexGrow: 2 }}
+          >
+            {issuedBy}
+          </Typography>
+        </CardContent>
+      </MuiCard>
+    </a>
+  );
+
+  return isMobile ? mobileView() : webView();
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: "relative",
-    height: 430,
-    borderRadius: "8px",
-    overflow: "hidden",
-    cursor: "pointer",
-    transition: "transform 0.5s ease",
-    "&:hover": {
-      transform: "translateY(-5px)",
+const useStyles = (isMobile) =>
+  makeStyles((theme) => ({
+    root: {
+      position: "relative",
+      height: isMobile ? "100%" : 430,
+      borderRadius: "8px",
+      overflow: "hidden",
+      cursor: "pointer",
+      transition: "transform 0.5s ease",
+      "&:hover": {
+        transform: "translateY(-5px)",
+      },
     },
-  },
-  media: {
-    height: 220,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    overflow: "hidden",
-  },
-  title: {
-    fontSize: "18px",
-    fontWeight: 700,
-    marginBottom: theme.spacing(1),
-    color: theme.palette.primary.contrastText,
-    display: "-webkit-box",
-    "-webkit-line-clamp": 3,
-    "-webkit-box-orient": "vertical",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  issuedBy: {
-    fontSize: "18px",
-    marginBottom: theme.spacing(1),
-    color: theme.palette.primary.main,
-  },
-  footer: {
-    fontSize: "14px",
-    color: theme.palette.primary.contrastText,
-    position: "absolute",
-    bottom: "20px",
-  },
-  type: {
-    padding: "3px 10px",
-    background: theme.palette.primary.main,
-    borderRadius: "8px",
-  },
-  hover: {
-    position: "absolute",
-    top: 0,
-    height: "100%",
-    width: "100%",
-    backgroundColor: "rgba(0,0,0,0.8)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  viewAllCard: {
-    height: 430,
-    width: 300,
-    borderRadius: "8px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "transform 0.5s ease",
-    "&:hover": {
-      transform: "translateY(-5px)",
+    media: {
+      height: 220,
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      overflow: "hidden",
+      borderRadius: isMobile ? "8px" : "0px",
     },
-  },
-  viewAllText: {
-    color: theme.palette.primary.contrastText,
-  },
-}));
+    title: {
+      fontSize: "18px",
+      fontWeight: 700,
+      marginBottom: theme.spacing(1),
+      color: theme.palette.text.secondary,
+      display: "-webkit-box",
+      "-webkit-line-clamp": 3,
+      "-webkit-box-orient": "vertical",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+    },
+    issuedBy: {
+      fontSize: "18px",
+      marginBottom: theme.spacing(1),
+      color: theme.palette.primary.main,
+    },
+    footer: {
+      fontSize: "14px",
+      color: theme.palette.text.secondary,
+      position: "absolute",
+      bottom: "20px",
+    },
+    type: {
+      padding: "3px 10px",
+      background: theme.palette.primary.main,
+      borderRadius: "8px",
+    },
+    hover: {
+      position: "absolute",
+      top: 0,
+      height: "100%",
+      width: "100%",
+      backgroundColor: "rgba(0,0,0,0.8)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    viewAllCard: {
+      height: 430,
+      width: 300,
+      borderRadius: "8px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: theme.palette.text.secondary,
+      cursor: "pointer",
+      transition: "transform 0.5s ease",
+      "&:hover": {
+        transform: "translateY(-5px)",
+      },
+    },
+    viewAllText: {
+      color: theme.palette.primary.contrastText,
+    },
+  }));
 
 export default Card;
