@@ -93,7 +93,7 @@ const ProjectCard = ({ project, index }) => {
           </div>
         </div>
         <Typography variant="body2" color="textSecondary" align="justify">
-          {project.extendedOverview}
+          {project.overview}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -160,7 +160,7 @@ const ProjectCard = ({ project, index }) => {
         </div>
         <br />
         <Typography variant="body2" color="textSecondary" align="justify">
-          {project.extendedOverview}
+          {project.overview}
         </Typography>
         <Typography
           variant="subtitle1"

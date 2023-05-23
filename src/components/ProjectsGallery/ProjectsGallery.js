@@ -38,7 +38,7 @@ const ProjectsGallery = (props) => {
               key={selectedId}
               id={selectedId}
               title={getSelected(selectedId).title}
-              overview={getSelected(selectedId).extendedOverview}
+              overview={getSelected(selectedId).overview}
               imageUrl={getSelected(selectedId).imageUrl}
               technologies={getSelected(selectedId).technologies}
               handleClose={() => setSelectedId(null)}
