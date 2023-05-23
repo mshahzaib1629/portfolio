@@ -21,7 +21,7 @@ function ExpandableRow(props) {
   const [openInfo, setOpenInfo] = React.useState(false);
 
   const toggleOpenInfo = () => {
-    if (project.extendedOverview || project.overview) setOpenInfo(!openInfo);
+    if (project.overview) setOpenInfo(!openInfo);
   };
 
   return (
@@ -49,7 +49,7 @@ function ExpandableRow(props) {
         <TableCell>
           <Typography variant="subtitle1" className={classes.tableCell}>
             {project.title} &nbsp;{" "}
-            {(project.extendedOverview || project.overview) && (
+            {project.overview && (
               <InfoOutlinedIcon
                 style={{
                   color: openInfo
@@ -101,9 +101,7 @@ function ExpandableRow(props) {
           <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
-                {project.extendedOverview
-                  ? project.extendedOverview
-                  : project.overview}
+                {project.overview}
               </Typography>
             </Box>
           </Collapse>
@@ -120,7 +118,7 @@ function MobileExpandableRow(props) {
   const [openInfo, setOpenInfo] = React.useState(false);
 
   const toggleOpenInfo = () => {
-    if (project.extendedOverview || project.overview) setOpenInfo(!openInfo);
+    if (project.overview) setOpenInfo(!openInfo);
   };
 
   return (
@@ -177,9 +175,7 @@ function MobileExpandableRow(props) {
           <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
-                {project.extendedOverview
-                  ? project.extendedOverview
-                  : project.overview}
+                {project.overview}
               </Typography>
             </Box>
           </Collapse>

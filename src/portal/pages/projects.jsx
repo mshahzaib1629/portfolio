@@ -74,7 +74,7 @@ function ProjectPage() {
       workedAt: "",
       isFeatured: false,
       overview: "",
-      extendedOverview: "",
+      notes: "",
       year: "",
       technologies: "",
       imageUrl: "",
@@ -494,7 +494,8 @@ function ProjectPage() {
                 label="Overview"
                 multiline
                 fullWidth
-                rows={2}
+                minRows={4}
+                maxRows={6}
                 value={formik.values.overview}
                 onChange={formik.handleChange}
               />
@@ -502,14 +503,14 @@ function ProjectPage() {
             <Grid item md={12}>
               <TextField
                 margin="normal"
-                required={formik.values.isFeatured}
-                id="extendedOverview"
-                name="extendedOverview"
-                label="Extended Overview"
+                id="notes"
+                name="notes"
+                label="Notes"
                 multiline
                 fullWidth
-                rows={4}
-                value={formik.values.extendedOverview}
+                minRows={2}
+                maxRows={6}
+                value={formik.values.notes}
                 onChange={formik.handleChange}
               />
             </Grid>
