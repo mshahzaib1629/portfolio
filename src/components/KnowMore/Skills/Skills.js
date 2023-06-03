@@ -90,8 +90,8 @@ function Skills() {
               <br />
             </Typography>
             <Typography
-              variant="subtitle1"
-              style={{ color: theme.palette.text.secondary }}
+              variant="body2"
+              style={{ color: theme.palette.text.secondary, textAlign: "justify" }}
             >
               {convertArrayToString(skill.data)}
             </Typography>

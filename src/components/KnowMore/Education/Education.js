@@ -76,9 +76,7 @@ function Education() {
             </Typography>
             <Box mb={4}>
               <Typography
-                variant="body1"
-                color="textPrimary"
-                style={{ textAlign: "justify" }}
+                variant="body1" color="textSecondary" align="justify"
               >
                 {edu.project?.description}
               </Typography>

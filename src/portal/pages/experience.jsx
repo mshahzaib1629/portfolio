@@ -54,6 +54,7 @@ function ExperiencePage() {
         isWorkingHere: false,
       },
       overview: "",
+      notes: "",
       links: {
         linkedIn: "",
         websiteUrl: "",
@@ -145,7 +146,7 @@ function ExperiencePage() {
         data["duration"]["endMonth"] = { index: 0 };
         data["duration"]["endYear"] = "";
       }
-      
+
       if (isEditing) {
         await dispatch(editExperienceThunk(data));
       } else {
@@ -388,6 +389,21 @@ function ExperiencePage() {
                 onChange={formik.handleChange}
               />
             </Grid>
+            <Grid item md={12}>
+              <TextField
+                margin="normal"
+                id="notes"
+                name="notes"
+                label="Notes"
+                multiline
+                fullWidth
+                minRows={2}
+                maxRows={6}
+                value={formik.values.notes}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+
             <Grid item md={6}>
               <TextField
                 margin="normal"
