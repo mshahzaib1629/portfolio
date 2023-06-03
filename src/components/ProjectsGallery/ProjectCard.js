@@ -178,11 +178,11 @@ const ProjectCard = ({ project, index }) => {
               <KeyboardArrowUpIcon
                 style={{ fontSize: "1rem", marginLeft: "0.2rem" }}
               />
-            ) :(
+            ) : (
               <KeyboardArrowDownIcon
                 style={{ fontSize: "1rem", marginLeft: "0.2rem" }}
               />
-            ) }
+            )}
           </span>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {project.technologies.map((tech, index) => (
@@ -272,6 +272,7 @@ const useStyles = makeStyles((theme) => ({
   },
   technologies: {
     alignSelf: "flex-end",
+    color: theme.palette.text.secondary,
   },
   icons: {
     display: "flex",
