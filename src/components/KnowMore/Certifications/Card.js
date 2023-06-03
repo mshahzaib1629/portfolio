@@ -142,7 +142,7 @@ const Card = ({
           </Typography>
         </CardContent>
 
-        <motion.div
+        {/* <motion.div
           transition={{ delay: 0.001 }}
           variants={hoverVariants}
           animate={controls}
@@ -174,7 +174,7 @@ const Card = ({
               <ArrowForward />
             </Icon>
           </Box>
-        </motion.div>
+        </motion.div> */}
       </MuiCard>
     </a>
   );
