@@ -66,7 +66,7 @@ This portfolio was orignally crafted by <a href="https://www.linkedin.com/in/meh
       Redefined listing of Projects & Certificates
     </li>
   </ol>
-First version of this project can be found at <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">this link</a>. Current version is also live at <a href="https://mshahzaib1629.com/" target="_blank">mshahzaib1629.com</a>
+First version of this project can be found at <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">this link</a>. Its code is also available at <a href="https://github.com/Programming-School-Pro/Awesome-Portfolio" target="_blank">this repository</a>.
 
 ### Forking this project
 
