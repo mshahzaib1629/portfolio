@@ -2,17 +2,17 @@
 <br />
 <p align="center">
 
-  <h1 align="center">Awesome-Portfolio</h3>
+  <h1 align="center">Portfolio</h3>
 
   <p align="center">
     An Awesome, Modern React Portfolio
     <br />
     <br />
-    <a href="https://awesome-portfolio-sepia.vercel.app/">View Demo</a>
+    <a href="http://mshahzaib1629.com/">View Demo</a>
     ·
-    <a href="https://github.com/Programming-School-Pro/Awesomefolio/issues">Report Bug</a>
+    <a href="https://github.com/mshahzaib1629/portfolio/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Programming-School-Pro/Awesomefolio/issues">Request Feature</a>
+    <a href="https://github.com/mshahzaib1629/portfolio/issues">Request Feature</a>
   </p>
 </p>
 
@@ -66,7 +66,7 @@ This portfolio was orignally crafted by <a href="https://www.linkedin.com/in/meh
       Redefined listing of Projects & Certificates
     </li>
   </ol>
-First version of this project can be found at <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">this link</a>. Current version is also live at <a href="https://mshahzaib1629.com/" target="_blank">mshahzaib1629.com</a>
+First version of this project can be found at <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">this link</a>. Its code is also available at <a href="https://github.com/Programming-School-Pro/Awesome-Portfolio" target="_blank">this repository</a>.
 
 ### Forking this project
 
@@ -97,7 +97,7 @@ We've spent a non-trivial amount of effort building and designing this iteration
 <br />
 <p align="center">
   <p align="center">Portfolio Portal</p>
-  <img src="screenshots/portal.png" alt="portal">
+  <img src="screenshots/portfolio.png" alt="portal">
 </p>
 <p align="center">
   <p align="center">Data in Firebase</p>
@@ -160,7 +160,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-M. Shahzaib Minhas - [linkedIn](https://www.linkedin.com/in/mshahzaib1629/) - mshahzaib1629@gmail.com
+M. Shahzaib Minhas - [linkedIn](https://www.linkedin.com/in/mshahzaib1629/) - mshahzaib1629@gmail.com <br>
 Mehdi Ben Hadj Ali - [linkedIn](https://www.linkedin.com/in/mehdibha/) - mehdibenhadjali@gmail.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
