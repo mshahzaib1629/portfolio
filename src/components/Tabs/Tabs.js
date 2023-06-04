@@ -12,6 +12,7 @@ import {
 import { Language, Facebook, LinkedIn } from "@material-ui/icons";
 import IconBtn from "../../components/IconBtn";
 import { useTranslation } from "react-i18next";
+import ExpandableText from "../ExpandableText/ExpandableText";
 
 const StyledTabs = (props) => {
   const theme = useTheme();
@@ -74,7 +75,7 @@ const StyledTabs = (props) => {
             color="textPrimary"
             style={{ textAlign: "justify" }}
           >
-            {exp.overview}
+            <ExpandableText text={exp.overview} maxLength={350} />
           </Typography>
         </Box>
         <Box>
@@ -140,7 +141,7 @@ const StyledTabs = (props) => {
             color="textPrimary"
             style={{ textAlign: "justify" }}
           >
-            {exp.overview}
+            <ExpandableText text={exp.overview} maxLength={250} />
           </Typography>
         </Box>
         <Box>
