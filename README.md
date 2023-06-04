@@ -82,7 +82,7 @@ We've spent a non-trivial amount of effort building and designing this iteration
 <br />
 <p align="center">
   <p align="center">Redefined Project Section</p>
-  <img src="screenshots/projects.png" alt="Projects Section">
+  <img src="screenshots/projects-home.png" alt="Projects Section">
 </p>
 <br />
 <p align="center">
@@ -97,7 +97,7 @@ We've spent a non-trivial amount of effort building and designing this iteration
 <br />
 <p align="center">
   <p align="center">Portfolio Portal</p>
-  <img src="screenshots/portfolio.png" alt="portal">
+  <img src="screenshots/portal.png" alt="portal">
 </p>
 <p align="center">
   <p align="center">Data in Firebase</p>
