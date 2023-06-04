@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import FeaturedTag from "../../components/FeaturedTag";
+import ExpandableText from "../ExpandableText/ExpandableText";
 
 function ExpandableRow(props) {
   const theme = useTheme();
@@ -101,7 +102,7 @@ function ExpandableRow(props) {
           <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
-                {project.overview}
+                <ExpandableText text={project.overview} maxLength={350} />
               </Typography>
             </Box>
           </Collapse>
@@ -175,7 +176,7 @@ function MobileExpandableRow(props) {
           <Collapse in={openInfo} timeout="auto" unmountOnExit>
             <Box sx={{ marginTop: 2, marginBottom: 2 }}>
               <Typography variant="subtitle1" className={classes.extendedCell}>
-                {project.overview}
+                <ExpandableText text={project.overview} maxLength={250} />
               </Typography>
             </Box>
           </Collapse>

@@ -12,6 +12,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 import Collapse from "@material-ui/core/Collapse";
+import ExpandableText from "../ExpandableText/ExpandableText";
 
 const ProjectCard = ({ project, index }) => {
   const theme = useTheme();
@@ -93,7 +94,7 @@ const ProjectCard = ({ project, index }) => {
           </div>
         </div>
         <Typography variant="body2" color="textSecondary" align="justify">
-          {project.overview}
+          <ExpandableText text={project.overview} maxLength={350} />
         </Typography>
         <Typography
           variant="subtitle1"
@@ -160,7 +161,7 @@ const ProjectCard = ({ project, index }) => {
         </div>
         <br />
         <Typography variant="body2" color="textSecondary" align="justify">
-          {project.overview}
+          <ExpandableText text={project.overview} maxLength={250} />
         </Typography>
         <Typography
           variant="subtitle1"

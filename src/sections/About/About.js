@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProfileThunk } from "../../redux/slices/profileSlice";
 import TryAgain from "../../components/TryAgain";
+import ExpandableText from "../../components/ExpandableText/ExpandableText";
 
 const About = () => {
   const classes = useStyles();
@@ -48,10 +49,13 @@ const About = () => {
       >
         <Box mb={4}>
           <Typography variant="body1" style={{ textAlign: "justify" }}>
-            {profile?.about}
+            {isMobile ? (
+              <ExpandableText text={profile?.about} maxLength={350} />
+            ) : (
+              profile?.about
+            )}
           </Typography>
           <br />
-          {/* <Skills /> */}
         </Box>
       </Grid>
       {!isMobile && (

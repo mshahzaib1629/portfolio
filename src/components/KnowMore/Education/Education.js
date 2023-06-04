@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchEducationThunk } from "../../../redux/slices/educationSlice";
 import TryAgain from "../../TryAgain";
+import ExpandableText from "../../ExpandableText/ExpandableText";
 
 function Education() {
   const theme = useTheme();
@@ -75,10 +76,11 @@ function Education() {
               {edu.project?.title}
             </Typography>
             <Box mb={4}>
-              <Typography
-                variant="body1" color="textSecondary" align="justify"
-              >
-                {edu.project?.description}
+              <Typography variant="body1" color="textSecondary" align="justify">
+                <ExpandableText
+                  text={edu.project?.description}
+                  maxLength={450}
+                />
               </Typography>
             </Box>
           </>
