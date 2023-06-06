@@ -5,7 +5,7 @@
   <h1 align="center">Portfolio</h3>
 
   <p align="center">
-    An Awesome, Modern React Portfolio
+    A Modern, Dynamic React Portfolio
     <br />
     <br />
     <a href="http://mshahzaib1629.com/">View Demo</a>
