@@ -5,7 +5,7 @@
   <h1 align="center">Portfolio</h3>
 
   <p align="center">
-    An Awesome, Modern React Portfolio
+    A Modern, Dynamic React Portfolio
     <br />
     <br />
     <a href="http://mshahzaib1629.com/">View Demo</a>
@@ -136,6 +136,9 @@ If you want to clone the project and make you personal portfolio
    REACT_APP_FIREBASE_MESSAGING_SENDER_ID = ""
    REACT_APP_FIREBASE_APP_ID = ""
    REACT_APP_FIREBASE_MEASUREMENT_ID = ""
+   REACT_APP_EMAILJS_PUBLIC_KEY = ""
+   REACT_APP_EMAILJS_SERVICE_ID = ""
+   REACT_APP_EMAILJS_TEMPLATE_ID = ""
    ```
 
 <!-- CONTRIBUTING -->
