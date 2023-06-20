@@ -242,7 +242,7 @@ function CertificationPage() {
           actionCallback={deleteCertification}
         />
         <div className={classes.pageHead}>
-          <h2>Manage Certificatons</h2>
+          <h2>Manage Certifications</h2>
           <Button
             variant="contained"
             sx={{ mt: 3, mb: 2 }}

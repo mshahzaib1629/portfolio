@@ -2,17 +2,17 @@
 <br />
 <p align="center">
 
-  <h1 align="center">Awesome-Portfolio</h3>
+  <h1 align="center">Portfolio</h3>
 
   <p align="center">
-    An Awesome, Modern React Portfolio
+    A Modern, Dynamic React Portfolio
     <br />
     <br />
-    <a href="https://awesome-portfolio-sepia.vercel.app/">View Demo</a>
+    <a href="http://mshahzaib1629.com/">View Demo</a>
     ·
-    <a href="https://github.com/Programming-School-Pro/Awesomefolio/issues">Report Bug</a>
+    <a href="https://github.com/mshahzaib1629/portfolio/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Programming-School-Pro/Awesomefolio/issues">Request Feature</a>
+    <a href="https://github.com/mshahzaib1629/portfolio/issues">Request Feature</a>
   </p>
 </p>
 
@@ -41,52 +41,78 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-First version of <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">mehdibha.codehub.tn</a>
+This portfolio was orignally crafted by <a href="https://www.linkedin.com/in/mehdibha/">Mehdi Bha</a>. My contributions in this project includes:
+
+<ol>
+    <li>
+      Making this portfolio dynamic
+    </li>
+    <li>
+      Adding Portal to manage dynamic content
+    </li>
+    <li>
+      Adding Education section
+    </li>
+    <li>
+      Adding Certification section
+    </li>
+    <li>
+      Adding Skillset section
+    </li>
+    <li>
+      Redefined listing of Projects & Certificates
+    </li>
+  </ol>
+First version of this project can be found at <a href="https://awesome-portfolio-sepia.vercel.app/" target="_blank">this link</a>. Its code is also available at <a href="https://github.com/Programming-School-Pro/Awesome-Portfolio" target="_blank">this repository</a>.
 
 ### Forking this project
+
 If someone wants to use this code on his own website, the answer is **YES** BUT please with credits !
-I've spent a non-trivial amount of effort building and designing this iteration of my website, and I am proud of it!
+We've spent a non-trivial amount of effort building and designing this iteration of this website, and we're proud of it!
 
 ### Screenshots
 
-<p align="center">
-  <p align="center">Light Mode</p>
-  <img src="screenshots/light.png" alt="Home section">
-</p>
 <p align="center">
   <p align="center">Home Section</p>
   <img src="screenshots/home.png" alt="Home section">
 </p>
 <br />
 <p align="center">
-  <p align="center">About Section</p>
-  <img src="screenshots/about.png" alt="About section">
+  <p align="center">Redefined Project Section</p>
+  <img src="screenshots/projects-home.png" alt="Projects Section">
 </p>
 <br />
 <p align="center">
-  <p align="center">Experience Section</p>
-  <img src="screenshots/experience.png" alt="Experience section">
+  <p align="center">Paginated Projects Listing</p>
+  <img src="screenshots/projects_listing.png" alt="Projects listing">
 </p>
 <br />
 <p align="center">
-  <p align="center">Projects Section</p>
-  <img src="screenshots/projects.png" alt="Projects section">
+  <p align="center">Know More Section</p>
+  <img src="screenshots/know_more.png" alt="Know More section">
 </p>
 <br />
 <p align="center">
-  <p align="center">Contact Section</p>
-  <img src="screenshots/contact.png" alt="Contact section">
+  <p align="center">Portfolio Portal</p>
+  <img src="screenshots/portal.png" alt="portal">
+</p>
+<p align="center">
+  <p align="center">Data in Firebase</p>
+  <img src="screenshots/firebase.png" alt="firebase">
 </p>
 
 ### Built With
 
-* [React JS](https://reactjs.org/)
-* [Material UI](https://material-ui.com/)
-* [Framer Motion](https://www.framer.com/motion/)
+- [React JS](https://reactjs.org/)
+- [Material UI](https://material-ui.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Firebase](https://firebase.google.com/)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 If you want to clone the project and make you personal portfolio
@@ -101,8 +127,22 @@ If you want to clone the project and make you personal portfolio
    ```sh
    npm install
    ```
+3. You may also need to set these Environment Variables
+   ```sh
+   REACT_APP_FIREBASE_API_KEY = ""
+   REACT_APP_FIREBASE_AUTH_DOMAIN = ""
+   REACT_APP_FIREBASE_PROJECT_ID = ""
+   REACT_APP_FIREBASE_STORAGE_BUCKET = ""
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID = ""
+   REACT_APP_FIREBASE_APP_ID = ""
+   REACT_APP_FIREBASE_MEASUREMENT_ID = ""
+   REACT_APP_EMAILJS_PUBLIC_KEY = ""
+   REACT_APP_EMAILJS_SERVICE_ID = ""
+   REACT_APP_EMAILJS_TEMPLATE_ID = ""
+   ```
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -114,21 +154,21 @@ Contributions are what make the open source community such an amazing place to l
 5. Open a Pull Request
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
 <!-- CONTACT -->
+
 ## Contact
 
+M. Shahzaib Minhas - [linkedIn](https://www.linkedin.com/in/mshahzaib1629/) - mshahzaib1629@gmail.com <br>
 Mehdi Ben Hadj Ali - [linkedIn](https://www.linkedin.com/in/mehdibha/) - mehdibenhadjali@gmail.com
-
-Project Link: [https://github.com/Mehdi-BHA/Awesomefolio](https://github.com/Mehdi-BHA/Awesomefolio)
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/Mehdi-BHA/Awesomefolio.svg?style=for-the-badge
 [contributors-url]: https://github.com/Mehdi-BHA/Awesomefolio/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Mehdi-BHA/Awesomefolio.svg?style=for-the-badge
