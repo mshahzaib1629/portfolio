@@ -48,7 +48,7 @@ const AllCertifications = () => {
     // setting dynamic size for PC screens
     if (window.innerWidth > 960) {
       const screenHeight = window.innerHeight;
-      newPageSize = Math.floor(screenHeight * 0.011);
+      newPageSize = Math.floor(screenHeight * 0.010);
     }
     dispatch(changePageSizeAction(newPageSize));
   }
