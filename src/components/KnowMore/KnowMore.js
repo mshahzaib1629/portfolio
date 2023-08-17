@@ -1,6 +1,12 @@
 import React, { Component, useState } from "react";
 import classes from "./KnowMore.module.css";
-import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
+import {
+  Tabs,
+  Tab,
+  makeStyles,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -10,21 +16,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Certifications from "./Certifications/index";
 import Education from "./Education/index";
 import Skills from "./Skills";
-
-const tabs = {
-  Skills: {
-    index: 2,
-    component: <Skills />,
-  },
-  Certifications: {
-    index: 1,
-    component: <Certifications />,
-  },
-  Education: {
-    index: 0,
-    component: <Education />,
-  },
-};
 
 const tabsList = [
   {
@@ -50,8 +41,8 @@ const KnowMore = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const localStyles = useStyles();
 
-  const onTabChange = (tabIndex) => {
-    setSelectedTabIndex(tabIndex);
+  const onTabChange = (event, newValue) => {
+    setSelectedTabIndex(newValue);
   };
 
   const selectedComponent = () => {
@@ -62,29 +53,24 @@ const KnowMore = () => {
   const webView = () => {
     return (
       <>
-        <div className={classes.wrapper}>
-          <ul id={classes.tab}>
-            {tabsList
-              .sort((a, b) => b.index - a.index)
-              .map((tab, index) => {
-                return (
-                  <li key={index}>
-                    <div
-                      className={
-                        selectedTabIndex === tab.index
-                          ? localStyles.selectedTab
-                          : null
-                      }
-                      onClick={() => onTabChange(tab.index)}
-                    >
-                      {tab.title.toUpperCase()}
-                    </div>
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-        <div className={classes.body}>{selectedComponent()}</div>
+        <Tabs
+          orientation={"horizontal"}
+          value={selectedTabIndex}
+          onChange={onTabChange}
+          className={localStyles.tabs}
+          classes={{ indicator: localStyles.indicator }}
+          variant="scrollable"
+          // centered
+        >
+          {tabsList.map((elem) => (
+            <Tab
+              label={elem.title}
+              key={elem.index}
+              className={localStyles.tab}
+            />
+          ))}
+        </Tabs>
+        {selectedComponent()}
       </>
     );
   };
@@ -127,9 +113,17 @@ const KnowMore = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  selectedTab: {
-    "border-bottom-style": "solid",
-    "border-color": theme.palette.primary.main,
+  tabs: {
+    borderBottom: (props) =>
+      !props.isMobile ? "none" : `1px solid ${theme.palette.secondary.main}`,
+    marginBottom: "14px",
+    width: "inherit",
+    maxWidth: "inherit",
+    minWidth: "inherit",
+  },
+  tab: { fontSize: "16px", letterSpacing: "1px" },
+  indicator: {
+    backgroundColor: "red",
   },
 }));
 
