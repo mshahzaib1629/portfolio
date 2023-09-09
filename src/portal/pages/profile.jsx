@@ -50,6 +50,7 @@ function ProfilePage() {
       resumeUrl: "",
       resumeRef: "",
       social: {
+        whatsApp: "",
         email: "",
         linkedIn: "",
         github: "",
@@ -386,10 +387,10 @@ function ProfilePage() {
                 required
                 fullWidth
                 disabled={!isEditable}
-                id="location"
-                label="Location"
-                name="location"
-                value={formik.values.location}
+                id="social-whatsApp"
+                label="WhatsApp Number"
+                name="social.whatsApp"
+                value={formik.values.social?.whatsApp}
                 onChange={formik.handleChange}
               />
             </Grid>
@@ -429,6 +430,19 @@ function ProfilePage() {
                 label="Github"
                 name="social.github"
                 value={formik.values.social?.github}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                disabled={!isEditable}
+                id="location"
+                label="Location"
+                name="location"
+                value={formik.values.location}
                 onChange={formik.handleChange}
               />
             </Grid>
