@@ -41,6 +41,7 @@ function ProfilePage() {
   const formik = useFormik({
     initialValues: {
       name: "",
+      nickname: "",
       headline: "",
       location: "",
       shortIntro: "",
@@ -285,10 +286,10 @@ function ProfilePage() {
                 required
                 disabled={!isEditable}
                 fullWidth
-                id="headline"
-                label="Headline"
-                name="headline"
-                value={formik.values.headline}
+                id="nickname"
+                label="Nickname"
+                name="nickname"
+                value={formik.values.nickname}
                 onChange={formik.handleChange}
               />
             </Grid>
@@ -352,6 +353,19 @@ function ProfilePage() {
                   </div>
                 )}
               </FormControl>
+            </Grid>
+            <Grid item md={12}>
+              <TextField
+                margin="normal"
+                required
+                disabled={!isEditable}
+                fullWidth
+                id="headline"
+                label="Headline"
+                name="headline"
+                value={formik.values.headline}
+                onChange={formik.handleChange}
+              />
             </Grid>
             <Grid item md={12}>
               <TextField
