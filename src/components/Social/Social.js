@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import { motion, useAnimation } from "framer-motion";
-import { LinkedIn, Instagram, GitHub, Email } from "@material-ui/icons";
+import { LinkedIn, GitHub, Email, WhatsApp, } from "@material-ui/icons";
 import IconBtn from "../IconBtn";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import loaderContext from "../../contexts/loaderContext";
@@ -27,6 +27,10 @@ const Social = ({ mobile }) => {
     {
       icon: GitHub,
       link: profile?.social?.github,
+    },
+    {
+      icon: WhatsApp,
+      link: `https://wa.me/${profile?.social?.whatsApp}?text=Hi!%0AI%27m%20`,
     },
     {
       icon: LinkedIn,
