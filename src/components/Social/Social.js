@@ -30,7 +30,7 @@ const Social = ({ mobile }) => {
     },
     {
       icon: WhatsApp,
-      link: `https://wa.me/${profile?.social?.whatsApp}?text=Hi!%0AI%27m%20`,
+      link: `https://wa.me/${profile?.social?.whatsApp}?text=Hi%20${profile?.nickname}!%0AI%27m%20`,
     },
     {
       icon: LinkedIn,
