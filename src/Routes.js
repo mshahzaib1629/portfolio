@@ -1,7 +1,7 @@
-import React, { lazy } from "react";
+import React, { lazy, useEffect } from "react";
 import { useMediaQuery, useTheme } from "@material-ui/core";
-import { Routes, Route } from "react-router-dom";
-
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { GAPageView } from "./utils/googleAnalytics";
 import AllProjects from "./pages/AllProjects";
 import AllCertifications from "./pages/AllCertifications";
 
@@ -14,6 +14,14 @@ const Loader = lazy(() => import("./components/Loader"));
 const AppRoutes = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    GAPageView(location.pathname + location.search);
+    if (!navigator.onLine) navigate("/404");
+  }, [location]);
+
   return (
     <>
       {/* <Loader /> */}

@@ -11,6 +11,7 @@ import {
 import { Link } from "react-scroll";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { GASendEvent } from "../../utils/googleAnalytics";
 
 const MobileMenu = ({ open, onClose, onOpen }) => {
   const classes = useStyles();
@@ -61,6 +62,9 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
               variant="outlined"
               color="primary"
               underline="none"
+              onClick={() => {
+                GASendEvent("ViewedResume");
+              }}
             >
               {t("menu_resume")}
             </Button>

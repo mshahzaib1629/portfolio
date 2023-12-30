@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchFeaturedCertificationThunk } from "../../../redux/slices/certificationSlice";
 import TryAgain from "../../TryAgain";
 import { useNavigate } from "react-router";
+import { GASendEvent } from "../../../utils/googleAnalytics";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function Certifications() {
@@ -80,6 +81,7 @@ function Certifications() {
               <Button
                 className={classes.loadBtn}
                 onClick={() => {
+                  GASendEvent("ViewedAllCertifications");
                   navigate("/certificates");
                 }}
                 variant="outlined"

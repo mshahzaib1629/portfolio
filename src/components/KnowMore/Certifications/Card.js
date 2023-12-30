@@ -14,6 +14,7 @@ import { ArrowForward } from "@material-ui/icons";
 import { motion, useAnimation } from "framer-motion";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useNavigate } from "react-router";
+import { GASendEvent } from "../../../utils/googleAnalytics";
 
 const hoverVariants = {
   hover: {
@@ -66,7 +67,10 @@ const Card = ({
     <MuiCard
       className={classes.viewAllCard}
       elevation={2}
-      onClick={() => navigate("/certificates")}
+      onClick={() => {
+        GASendEvent("ViewedAllCertifications");
+        navigate("/certificates");
+      }}
     >
       <CardContent>
         <Box display="flex" alignItems="center" justifyContent="center">
@@ -211,7 +215,7 @@ const Card = ({
             flexDirection: "column",
             height: "100%",
             justifyContent: "space-between",
-            paddingInline: "5px"
+            paddingInline: "5px",
           }}
         >
           <Typography

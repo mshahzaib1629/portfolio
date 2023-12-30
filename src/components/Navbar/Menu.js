@@ -12,6 +12,7 @@ import { Link, Events } from "react-scroll";
 import LoaderContext from "../../contexts/loaderContext";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { GASendEvent } from "../../utils/googleAnalytics";
 
 const smoothScrollProps = {
   spy: true,
@@ -130,6 +131,9 @@ const Menu = ({ homeIsActive }) => {
           variant="outlined"
           color="primary"
           underline="none"
+          onClick={() => {
+            GASendEvent("ViewedResume");
+          }}
         >
           {t("menu_resume")}
         </Button>

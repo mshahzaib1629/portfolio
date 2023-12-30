@@ -12,7 +12,7 @@ import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { loadFull } from "tsparticles";
-import Particle from "./utils/particles";
+import { initGA } from "./utils/googleAnalytics";
 const Layout = lazy(() => import("./portal/layout"));
 
 function App() {
@@ -40,6 +40,7 @@ function App() {
     // }
     initializeFirebaseSDKs();
     initializeFireAuthListener();
+    initGA();
   }, []);
 
   const renderPage = () => {

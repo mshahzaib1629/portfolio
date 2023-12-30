@@ -14,6 +14,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ProjectCard from "./ProjectCard";
+import { GASendEvent } from "../../utils/googleAnalytics";
 
 const ProjectsGallery = (props) => {
   const classes = useStyles();
@@ -51,6 +52,7 @@ const ProjectsGallery = (props) => {
         <Button
           className={classes.loadBtn}
           onClick={() => {
+            GASendEvent("ViewedAllProjects");
             navigate("/projects");
           }}
           variant="outlined"
