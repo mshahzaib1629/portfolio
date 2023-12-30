@@ -40,7 +40,6 @@ function App() {
     // }
     initializeFirebaseSDKs();
     initializeFireAuthListener();
-    initGA();
   }, []);
 
   const renderPage = () => {

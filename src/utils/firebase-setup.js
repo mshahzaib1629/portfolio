@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import { initGA } from "./googleAnalytics";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,7 +21,7 @@ export let fireAuth;
 export default function initializeFirebaseSDKs() {
   if (firebaseConfig.projectId) {
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    initGA(firebaseConfig.measurementId);
     fireAuth = getAuth(app);
     firestore = getFirestore(app);
     fireStorage = getStorage(app);
