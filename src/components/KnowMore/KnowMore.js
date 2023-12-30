@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import classes from "./KnowMore.module.css";
 import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
@@ -6,7 +6,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import { GASendEvent } from "../../utils/googleAnalytics";
 import Certifications from "./Certifications/index";
 import Education from "./Education/index";
 import Skills from "./Skills";
@@ -49,6 +49,11 @@ const KnowMore = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const localStyles = useStyles();
+
+  useEffect(() => {
+    const target = tabsList.filter((t) => t.index === selectedTabIndex)[0];
+    GASendEvent(`Viewed${target.title.replace(/\s/g, "")}`);
+  }, [selectedTabIndex]);
 
   const onTabChange = (tabIndex) => {
     setSelectedTabIndex(tabIndex);

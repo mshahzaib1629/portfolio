@@ -41,6 +41,7 @@ function ProfilePage() {
   const formik = useFormik({
     initialValues: {
       name: "",
+      nickname: "",
       headline: "",
       location: "",
       shortIntro: "",
@@ -50,6 +51,7 @@ function ProfilePage() {
       resumeUrl: "",
       resumeRef: "",
       social: {
+        whatsApp: "",
         email: "",
         linkedIn: "",
         github: "",
@@ -284,10 +286,10 @@ function ProfilePage() {
                 required
                 disabled={!isEditable}
                 fullWidth
-                id="headline"
-                label="Headline"
-                name="headline"
-                value={formik.values.headline}
+                id="nickname"
+                label="Nickname"
+                name="nickname"
+                value={formik.values.nickname}
                 onChange={formik.handleChange}
               />
             </Grid>
@@ -356,6 +358,19 @@ function ProfilePage() {
               <TextField
                 margin="normal"
                 required
+                disabled={!isEditable}
+                fullWidth
+                id="headline"
+                label="Headline"
+                name="headline"
+                value={formik.values.headline}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={12}>
+              <TextField
+                margin="normal"
+                required
                 fullWidth
                 disabled={!isEditable}
                 id="shortIntro"
@@ -386,10 +401,10 @@ function ProfilePage() {
                 required
                 fullWidth
                 disabled={!isEditable}
-                id="location"
-                label="Location"
-                name="location"
-                value={formik.values.location}
+                id="social-whatsApp"
+                label="WhatsApp Number"
+                name="social.whatsApp"
+                value={formik.values.social?.whatsApp}
                 onChange={formik.handleChange}
               />
             </Grid>
@@ -429,6 +444,19 @@ function ProfilePage() {
                 label="Github"
                 name="social.github"
                 value={formik.values.social?.github}
+                onChange={formik.handleChange}
+              />
+            </Grid>
+            <Grid item md={6}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                disabled={!isEditable}
+                id="location"
+                label="Location"
+                name="location"
+                value={formik.values.location}
                 onChange={formik.handleChange}
               />
             </Grid>
