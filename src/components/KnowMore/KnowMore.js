@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect, useRef } from "react";
 import classes from "./KnowMore.module.css";
 import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import Accordion from "@material-ui/core/Accordion";
@@ -50,10 +50,14 @@ const KnowMore = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const localStyles = useStyles();
 
-  useEffect(() => {
+  const hasMounted = useRef(false);
+
+  if (hasMounted.current) {
     const target = tabsList.filter((t) => t.index === selectedTabIndex)[0];
     GASendEvent(`Viewed${target.title.replace(/\s/g, "")}`);
-  }, [selectedTabIndex]);
+  } else {
+    hasMounted.current = true;
+  }
 
   const onTabChange = (tabIndex) => {
     setSelectedTabIndex(tabIndex);
