@@ -115,19 +115,21 @@ We've spent a non-trivial amount of effort building and designing this iteration
 
 ## Getting Started
 
-If you want to clone the project and make you personal portfolio
+If you want to clone the project and make your personal portfolio, follow these steps to setup the project.
 
 ### Installation
 
-1. Clone the repo
+1. Use Node version 14.21.3
+
+2. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
    ```
-2. Install NPM packages
+3. Install NPM packages
    ```sh
    npm install
    ```
-3. You may also need to set these Environment Variables
+4. You may also need to set these Environment Variables
    ```sh
    REACT_APP_FIREBASE_API_KEY = ""
    REACT_APP_FIREBASE_AUTH_DOMAIN = ""
