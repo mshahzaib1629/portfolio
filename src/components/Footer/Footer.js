@@ -36,7 +36,7 @@ const Footer = () => {
             Mehdi BHA
           </a> */}
         </Typography>
-        <Button
+        {/* <Button
           variant="text"
           style={{ color: "white", }}
           sx={{ ml: 0, mt: 0, mb: 0, mr: 0 }}
@@ -45,7 +45,7 @@ const Footer = () => {
           }}
         >
           Login to Portal
-        </Button>
+        </Button> */}
       </Box>
     </Container>
   );
