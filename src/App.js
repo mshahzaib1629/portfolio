@@ -19,6 +19,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+  const [isFirebaseInitialized, setIsFirebaseInitialized] = useState(false);
   let [isAuthenticated, setIsAuthenticated] = useState(false);
 
   function initializeFireAuthListener() {
@@ -38,7 +39,14 @@ function App() {
     // } else {
     //     setIsDarkMode(false);useHistory
     // }
-    initializeFirebaseSDKs();
+    initializeFirebaseSDKs()
+      .then(() => {
+        initializeFireAuthListener();
+        setIsFirebaseInitialized(true);
+      })
+      .catch((error) => {
+        console.error("Error initializing Firebase:", error);
+      });
     initializeFireAuthListener();
   }, []);
 
@@ -71,7 +79,7 @@ function App() {
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
             <ScrollToTop />
-            {renderPage()}
+            {isFirebaseInitialized ? renderPage(): <div>Please wait...</div>}
           </ThemeProvider>
         </LoaderContext.Provider>
       </ThemeContext.Provider>
