@@ -12,7 +12,9 @@ import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { loadFull } from "tsparticles";
+import { useDispatch } from "react-redux";
 import { initGA } from "./utils/googleAnalytics";
+import { fetchProfileThunk } from "./redux/slices/profileSlice";
 const Layout = lazy(() => import("./portal/layout"));
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
   const location = useLocation();
   const [isFirebaseInitialized, setIsFirebaseInitialized] = useState(false);
   let [isAuthenticated, setIsAuthenticated] = useState(false);
+  const dispatch = useDispatch();
 
   function initializeFireAuthListener() {
     onAuthStateChanged(getAuth(), (user) => {
@@ -33,6 +36,14 @@ function App() {
     });
   }
 
+  async function getProfileData() {
+    try {
+      await dispatch(fetchProfileThunk());
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
   useEffect(() => {
     // if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     setIsDarkMode(true);
@@ -40,14 +51,14 @@ function App() {
     //     setIsDarkMode(false);useHistory
     // }
     initializeFirebaseSDKs()
-      .then(() => {
+      .then(async () => {
         initializeFireAuthListener();
         setIsFirebaseInitialized(true);
+        await getProfileData();
       })
       .catch((error) => {
         console.error("Error initializing Firebase:", error);
       });
-    initializeFireAuthListener();
   }, []);
 
   const renderPage = () => {
