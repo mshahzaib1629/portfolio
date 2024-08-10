@@ -19,12 +19,22 @@ export let fireStorage;
 export let fireAuth;
 
 export default function initializeFirebaseSDKs() {
-  if (firebaseConfig.projectId) {
-    const app = initializeApp(firebaseConfig);
-    initGA(firebaseConfig.measurementId);
-    fireAuth = getAuth(app);
-    firestore = getFirestore(app);
-    fireStorage = getStorage(app);
-    console.log("firebase connected!");
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      if (firebaseConfig.projectId) {
+        const app = initializeApp(firebaseConfig);
+        initGA(firebaseConfig.measurementId);
+        fireAuth = getAuth(app);
+        firestore = getFirestore(app);
+        fireStorage = getStorage(app);
+        console.log("Firebase connected!");
+        resolve(true);
+      } else {
+        throw new Error("Firebase configuration missing!");
+      }
+    } catch (error) {
+      console.error("Firebase initialization error:", error);
+      reject(error);
+    }
+  });
 }
