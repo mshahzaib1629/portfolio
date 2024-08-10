@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-scroll";
 
-const Logo = ({ setHomeIsActive, ...rest }) => {
+const Logo = ({ setHomeIsActive, onClick, ...rest }) => {
     const classes = useStyles();
     return (
         <Link
@@ -10,6 +10,7 @@ const Logo = ({ setHomeIsActive, ...rest }) => {
             smooth
             duration={500}
             offset={-70}
+            onClick={onClick}
             to="home"
             onSetActive={() => setHomeIsActive(true)}
             onSetInactive={() => setHomeIsActive(false)}
