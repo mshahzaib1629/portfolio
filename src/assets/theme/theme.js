@@ -49,6 +49,7 @@ const darkTheme = createTheme({
         text: {
             primary: "#FFF",
             secondary: "rgb(200,200,200)",
+            disabled: "rgb(169, 169, 169)",
         },
         action: {
             disabled: "rgb(70,70,70)",
@@ -75,6 +76,7 @@ const lightTheme = createTheme({
         text: {
             primary: "#000",
             secondary: "rgb(30,30,30)",
+            disabled: "rgb(211, 211, 211)",
         },
         action: {
             disabled: "rgb(70,70,70)",

@@ -12,6 +12,8 @@ import Menu from "./Menu";
 import MobileMenu from "./MobileMenu";
 import HamburgerIcon from "./HamburgerIcon";
 import loaderContext from "../../contexts/loaderContext";
+import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 
 const Navbar = () => {
   const [homeIsActive, setHomeIsActive] = useState(true);
@@ -21,6 +23,8 @@ const Navbar = () => {
   const theme = useTheme();
   const [scroll, setScroll] = useState(false);
   const [mobileNavIsOpen, setMobileNavIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   const classes = useStyles({ scroll, isMobile });
   const handleNav = () => setScroll(window.scrollY > 30);
   window.addEventListener("scroll", handleNav);
@@ -42,6 +46,11 @@ const Navbar = () => {
     });
   }, [controls]);
 
+ const onLogoClick = () => {
+  if (location.pathname != '/')
+    navigate("/")
+ }
+
   return (
     <motion.div animate={controls}>
       <AppBar
@@ -61,7 +70,7 @@ const Navbar = () => {
             damping: 20,
           }}
         >
-          <Logo className={classes.logo} setHomeIsActive={setHomeIsActive} />
+          <Logo className={classes.logo} setHomeIsActive={setHomeIsActive} onClick={onLogoClick} />
           {!isMobile && <Menu homeIsActive={homeIsActive} />}
           {isMobile && (
             <HamburgerIcon

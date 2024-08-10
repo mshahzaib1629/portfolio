@@ -13,6 +13,7 @@ import LoaderContext from "../../contexts/loaderContext";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { GASendEvent } from "../../utils/googleAnalytics";
+import { useLocation } from "react-router-dom";
 
 const smoothScrollProps = {
   spy: true,
@@ -34,6 +35,7 @@ const Menu = ({ homeIsActive }) => {
   const { isLoading } = useContext(LoaderContext);
   const controls = useAnimation();
   const { t } = useTranslation();
+  const location = useLocation();
 
   const { profile } = useSelector((state) => state.profile);
 
@@ -55,6 +57,17 @@ const Menu = ({ homeIsActive }) => {
     }));
   }, [controls]);
 
+  useEffect(()=> {
+    setTimeout(()=>{
+      if (location.pathname == "/projects") 
+        setValue(2);
+      else if (location.pathname == "/")
+        setValue(false);
+      }, 
+      500
+    );
+  }, [location.pathname]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -70,6 +83,13 @@ const Menu = ({ homeIsActive }) => {
       setValue(false);
     }
   }, [homeIsActive]);
+
+  const shouldDisabled = () => {
+    if (location.pathname != "/")
+      return true;  
+    else
+      return false
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -87,6 +107,7 @@ const Menu = ({ homeIsActive }) => {
           animate={controls}
           to="about"
           label={t("menu_about")}
+          disabled={shouldDisabled()}
           onSetActive={() => spyHandleChange(0)}
           onSetInactive={() => spyHandleChange(false)}
         />
@@ -95,6 +116,7 @@ const Menu = ({ homeIsActive }) => {
           animate={controls}
           custom={1}
           to="experience"
+          disabled={shouldDisabled()}
           label={t("menu_experience")}
           onSetActive={() => spyHandleChange(1)}
         />
@@ -103,6 +125,7 @@ const Menu = ({ homeIsActive }) => {
           animate={controls}
           custom={2}
           to="projects"
+          disabled={shouldDisabled()}
           label={t("menu_projects")}
           onSetActive={() => spyHandleChange(2)}
         />
@@ -111,6 +134,7 @@ const Menu = ({ homeIsActive }) => {
           animate={controls}
           custom={3}
           to="know_more"
+          disabled={shouldDisabled()}
           label={t("menu_know_more")}
           onSetActive={() => spyHandleChange(3)}
         />
@@ -119,6 +143,7 @@ const Menu = ({ homeIsActive }) => {
           animate={controls}
           custom={4}
           to="contact"
+          disabled={shouldDisabled()}
           label={t("menu_contact")}
           onSetActive={() => spyHandleChange(4)}
         />
@@ -164,6 +189,9 @@ const StyledTab = withStyles((theme) => ({
     minWidth: 120,
     "&:hover": {
       color: theme.palette.text.primary,
+    },
+    "&.Mui-disabled": {
+      color: theme.palette.text.disabled,
     },
   },
 }))((props) => <Tab disableRipple {...props} />);
