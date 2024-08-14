@@ -25,6 +25,7 @@ import {
   MobileExpandableRow,
 } from "../../components/ExpandableRow/ExpandableRow";
 import { Button } from "@mui/material";
+import { Helmet } from 'react-helmet';
 
 const AllProjects = () => {
   const theme = useTheme();
@@ -197,6 +198,9 @@ const AllProjects = () => {
 
   return (
     <FullPageContainer>
+      <Helmet>
+        <title>Shahzaib Minhas | Projects</title>
+      </Helmet>
       <BackdropLoading isLoading={isLoading} />
       <div
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
