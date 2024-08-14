@@ -17,6 +17,7 @@ import { fetchFeaturedCertificationThunk } from "../../redux/slices/certificatio
 import { fetchSkillSetThunk } from "../../redux/slices/skillSetSlice";
 import TryAgain from "../../components/TryAgain";
 import Typewriter from "typewriter-effect";
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
   const classes = useStyles();
@@ -198,6 +199,9 @@ const Home = () => {
 
   return (
     <HomeContainer id="home">
+      <Helmet>
+        <title>Shahzaib Minhas</title>
+      </Helmet>
       {isLoading ? <p>Loading...</p> : buildContent()}
     </HomeContainer>
   );

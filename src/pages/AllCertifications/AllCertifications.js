@@ -23,6 +23,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@mui/material";
+import { Helmet } from 'react-helmet';
 
 const AllCertifications = () => {
   const theme = useTheme();
@@ -269,6 +270,9 @@ const AllCertifications = () => {
 
   return (
     <FullPageContainer>
+      <Helmet>
+        <title>Shahzaib Minhas | Certificates</title>
+      </Helmet>
       <BackdropLoading isLoading={isLoading} />
       <div
         style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
