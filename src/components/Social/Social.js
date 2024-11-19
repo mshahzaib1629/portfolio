@@ -67,6 +67,13 @@ const Social = ({ mobile }) => {
   } else {
     return (
       <motion.div className={classes.wrapper}>
+        <motion.div
+          animate={controls}
+          custom={4}
+          className={classes.socialIcon}
+        >
+          <DarkModeSwitcher />
+        </motion.div>
         {socialMediaList.map((social, index) => (
           <motion.div
             key={index}
@@ -86,9 +93,6 @@ const Social = ({ mobile }) => {
             </a>
           </motion.div>
         ))}
-        {/* <motion.div animate={controls} custom={4} className={classes.socialIcon}>
-                    <DarkModeSwitcher />
-                </motion.div> */}
       </motion.div>
     );
   }

@@ -43,7 +43,7 @@ const darkTheme = createTheme({
             contrastText: "#FFFFFF",
         },
         secondary: {
-            main: "#2C394B",
+            main: "#373737",
             contrastText: "#FFFFFF",
         },
         text: {
@@ -63,15 +63,15 @@ const darkTheme = createTheme({
 const lightTheme = createTheme({
     palette: {
         background: {
-            default: "#DCE4C9",
-            paper: "#F5F5DC"
+            default: "#F4F5F7",
+            paper: "#e8e8e8"
         },
         primary: {
-            main: "#002663",
+            main: "#0A76DB",
             contrastText: "#ffffff",
         },
         secondary: {
-            main: "#4c516f",
+            main: "#dedede",
             contrastText: "#ffffff",
         },
         text: {
@@ -80,8 +80,8 @@ const lightTheme = createTheme({
             disabled: "#8f8f8f",
         },
         action: {
-            disabled: "#464646",
-            disabledBackground: "#969696",
+            disabled: "#ff4f4f",
+            disabledBackground: "#ff4f4f",
         },
     },
     backgroundSecondary: {

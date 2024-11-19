@@ -45,11 +45,11 @@ function App() {
   }
 
   useEffect(() => {
-    // if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    setIsDarkMode(false);
-    // } else {
-    //     setIsDarkMode(false);useHistory
-    // }
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    setIsDarkMode(true);
+    } else {
+        setIsDarkMode(false);
+    }
     initializeFirebaseSDKs()
       .then(async () => {
         initializeFireAuthListener();

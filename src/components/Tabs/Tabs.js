@@ -217,7 +217,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: (props) => (props.isMobile ? "inherit" : "200px"),
   },
   indicator: {
-    backgroundColor: "red",
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 
