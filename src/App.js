@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     // if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    setIsDarkMode(true);
+    setIsDarkMode(false);
     // } else {
     //     setIsDarkMode(false);useHistory
     // }
@@ -82,12 +82,29 @@ function App() {
   }, []);
 
   const particlesLoaded = useCallback(async (container) => {}, []);
+  
+  const generateCSSVariables = (theme) => {
+    const { palette } = theme;
+    return `
+      --primary-color: ${palette.primary.main};
+      --secondary-color: ${palette.secondary.main};
+      --background-color: ${palette.background.default};
+      --text-color: ${palette.text.primary};
+      --error-color: ${palette.error.main};
+      --warning-color: ${palette.warning.main};
+    `;
+  };
 
   return (
     <Suspense fallback={<div></div>}>
       <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
         <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+          <style>
+          {`:root {
+          ${generateCSSVariables(isDarkMode ? darkTheme : lightTheme)}
+        }`}
+          </style>
             <CssBaseline />
             <ScrollToTop />
             {isFirebaseInitialized ? renderPage(): <div>Please wait...</div>}

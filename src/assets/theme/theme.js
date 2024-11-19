@@ -35,60 +35,61 @@ const baseTheme = {
 const darkTheme = createTheme({
     palette: {
         background: {
-            default: "#1A1A1A ",
-            paper:"#242424"
+            default: "#1A1A1A",
+            paper: "#242424"
         },
         primary: {
-            main: "#bd3b22",
-            contrastText: "#fff",
+            main: "#BD3B22",
+            contrastText: "#FFFFFF",
         },
         secondary: {
             main: "#2C394B",
-            contrastText: "#fff",
+            contrastText: "#FFFFFF",
         },
         text: {
-            primary: "#FFF",
-            secondary: "rgb(200,200,200)",
-            disabled: "rgb(169, 169, 169)",
+            primary: "#FFFFFF",
+            secondary: "#C8C8C8",
+            disabled: "#A9A9A9",
         },
         action: {
-            disabled: "rgb(70,70,70)",
-            disabledBackground: "rgb(150,150,150)",
+            disabled: "#464646",
+            disabledBackground: "#969696",
         },
     },
-    logoColor:"#fff",
+    logoColor: "#FFFFFF",
     ...baseTheme
 });
 
 const lightTheme = createTheme({
     palette: {
         background: {
-            default: "#DEBA9D",
+            default: "#DCE4C9",
+            paper: "#F5F5DC"
         },
         primary: {
-            main: "#9E7777",
-            contrastText: "#000",
+            main: "#002663",
+            contrastText: "#ffffff",
         },
         secondary: {
-            main: "#6F4C5B",
-            contrastText: "rgb(230,230,230)",
+            main: "#4c516f",
+            contrastText: "#ffffff",
         },
         text: {
             primary: "#000",
-            secondary: "rgb(30,30,30)",
-            disabled: "rgb(211, 211, 211)",
+            secondary: "#1e1e1e",
+            disabled: "#8f8f8f",
         },
         action: {
-            disabled: "rgb(70,70,70)",
-            disabledBackground: "rgb(150,150,150)",
+            disabled: "#464646",
+            disabledBackground: "#969696",
         },
     },
     backgroundSecondary: {
-        bg : "#6F4C5B",
-        text: "rgb(230,230,230) "
+        bg : "#4c5f6f",
+        text: "#e6e6e6 "
     },
     logoColor:"#6F4C5B",
-    ...baseTheme
+    ...baseTheme,
 });
 
 export { darkTheme, lightTheme };
