@@ -253,12 +253,13 @@ const useStyles = makeStyles((theme) => ({
     gap: "10px",
   },
   paginationButton: {
-    backgroundColor: "rgb(55, 55, 55) !important",
+    backgroundColor: theme.palette.secondary.main + " !important",
     color: theme.palette.text.secondary + " !important",
     padding: "10px 20px",
 
     "&:hover": {
       backgroundColor: theme.palette.primary.main + " !important",
+      color: theme.palette.primary.contrastText + " !important"
     },
     "&:disabled": {
       opacity: 0.5,

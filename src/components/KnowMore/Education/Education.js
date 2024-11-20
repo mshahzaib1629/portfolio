@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "inherit",
   },
   indicator: {
-    backgroundColor: "red",
+    backgroundColor: theme.palette.primary.main,
   },
 }));
 

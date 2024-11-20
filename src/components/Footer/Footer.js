@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <Container>
       <Divider style={{ backgroundColor: theme.palette.primary.main }} />
-      <Box className={classes.footer}>
+      <Box className={`${classes.footer} ${isMobile ? classes.footer_mobile : ""}`}>
         {isMobile && <Social mobile />}
         <Typography variant="body2" color="initial">
           © {new Date().getFullYear()} Shahzaib Minhas, Inc
@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(6),
+  },
+  footer_mobile: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   cite: {
     textDecoration: "none",
