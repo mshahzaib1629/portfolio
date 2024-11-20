@@ -7,6 +7,7 @@ import DarkModeSwitcher from "../DarkModeSwitcher";
 import loaderContext from "../../contexts/loaderContext";
 import { useSelector } from "react-redux";
 import { GASendEvent } from "../../utils/googleAnalytics";
+import ThemeToggle from "./ThemeToggleButton";
 
 const Social = ({ mobile }) => {
   const classes = useStyles();
@@ -67,13 +68,25 @@ const Social = ({ mobile }) => {
   } else {
     return (
       <motion.div className={classes.wrapper}>
-        <motion.div
+        {/* <motion.div
           animate={controls}
           custom={4}
           className={classes.socialIcon}
         >
           <DarkModeSwitcher />
         </motion.div>
+         */}
+        <motion.div
+          animate={controls}
+          custom={4}
+          className={classes.socialIcon}
+        >
+          <ThemeToggle
+            isDarkMode={false}
+            onToggle={() => console.log("toggle")}
+          />
+        </motion.div>
+
         {socialMediaList.map((social, index) => (
           <motion.div
             key={index}
