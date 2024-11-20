@@ -251,6 +251,7 @@ const useStyles = (isMobile) =>
       borderRadius: "8px",
       overflow: "hidden",
       cursor: "pointer",
+      backgroundColor: theme.palette.background.paper,
       transition: "transform 0.5s ease",
       "&:hover": {
         transform: "translateY(-5px)",
@@ -289,6 +290,7 @@ const useStyles = (isMobile) =>
     type: {
       padding: "3px 10px",
       background: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
       borderRadius: "8px",
     },
     hover: {
@@ -309,6 +311,7 @@ const useStyles = (isMobile) =>
       alignItems: "center",
       justifyContent: "center",
       color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.background.paper,
       cursor: "pointer",
       transition: "transform 0.5s ease",
       "&:hover": {

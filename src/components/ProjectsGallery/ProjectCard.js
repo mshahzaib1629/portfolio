@@ -251,6 +251,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     borderRadius: "8px",
     padding: "30px 30px",
+    backgroundColor: theme.palette.background.paper,
     transition: "transform 0.5s ease",
     "&:hover": {
       // transform: "scale(1.04)",

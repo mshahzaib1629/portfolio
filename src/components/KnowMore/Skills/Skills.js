@@ -38,7 +38,7 @@ function Skills() {
         return (
           <Accordion
             key={skill.id}
-            style={{ marginBottom: "10px" }}
+            style={{ marginBottom: "10px", backgroundColor: theme.palette.background.paper }}
             expanded={index === expandedCardIndex}
             onClick={() => setExpandedCardIndex(index)}
           >
@@ -118,6 +118,7 @@ function Skills() {
 const useStyles = makeStyles((theme) => ({
   body: {
     textAlign: "left",
+
   },
 }));
 

@@ -3,14 +3,12 @@ import { makeStyles } from "@material-ui/core";
 import { motion, useAnimation } from "framer-motion";
 import { LinkedIn, GitHub, Email, WhatsApp } from "@material-ui/icons";
 import IconBtn from "../IconBtn";
-import DarkModeSwitcher from "../DarkModeSwitcher";
-import loaderContext from "../../contexts/loaderContext";
 import { useSelector } from "react-redux";
 import { GASendEvent } from "../../utils/googleAnalytics";
+import ThemeToggle from "../ThemeToggleButton";
 
 const Social = ({ mobile }) => {
   const classes = useStyles();
-  const { isLoading } = useContext(loaderContext);
   const controls = useAnimation();
   const { profile } = useSelector((state) => state.profile);
 
@@ -67,6 +65,22 @@ const Social = ({ mobile }) => {
   } else {
     return (
       <motion.div className={classes.wrapper}>
+        {/* <motion.div
+          animate={controls}
+          custom={4}
+          className={classes.socialIcon}
+        >
+          <DarkModeSwitcher />
+        </motion.div>
+         */}
+        <motion.div
+          animate={controls}
+          custom={4}
+          className={classes.socialIcon}
+        >
+          <ThemeToggle />
+        </motion.div>
+
         {socialMediaList.map((social, index) => (
           <motion.div
             key={index}
@@ -86,9 +100,6 @@ const Social = ({ mobile }) => {
             </a>
           </motion.div>
         ))}
-        {/* <motion.div animate={controls} custom={4} className={classes.socialIcon}>
-                    <DarkModeSwitcher />
-                </motion.div> */}
       </motion.div>
     );
   }

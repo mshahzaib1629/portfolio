@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { GASendEvent } from "../../utils/googleAnalytics";
 import { useLocation } from "react-router";
+import DarkModeSwitcher from "../DarkModeSwitcher";
 
 const MobileMenu = ({ open, onClose, onOpen }) => {
   const classes = useStyles();
@@ -33,10 +34,8 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
   const location = useLocation();
 
   const shouldDisabled = () => {
-    if (location.pathname != "/")
-      return true;  
-    else
-      return false
+    if (location.pathname != "/") return true;
+    else return false;
   };
 
   return (
@@ -51,13 +50,25 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
           <ListItem {...listItemProps} to="about" disabled={shouldDisabled()}>
             {t("menu_about")}
           </ListItem>
-          <ListItem {...listItemProps} to="experience" disabled={shouldDisabled()}>
+          <ListItem
+            {...listItemProps}
+            to="experience"
+            disabled={shouldDisabled()}
+          >
             {t("menu_experience")}
           </ListItem>
-          <ListItem {...listItemProps} to="projects" disabled={shouldDisabled()}>
+          <ListItem
+            {...listItemProps}
+            to="projects"
+            disabled={shouldDisabled()}
+          >
             {t("menu_projects")}
           </ListItem>
-          <ListItem {...listItemProps} to="know_more" disabled={shouldDisabled()}>
+          <ListItem
+            {...listItemProps}
+            to="know_more"
+            disabled={shouldDisabled()}
+          >
             {t("menu_know_more")}
           </ListItem>
           <ListItem {...listItemProps} to="contact" disabled={shouldDisabled()}>
@@ -81,10 +92,9 @@ const MobileMenu = ({ open, onClose, onOpen }) => {
           {/* <ListItem className={classes.btnContainer}>
                         <LangSelector onClose={onClose} />
                     </ListItem> */}
-          {/* <ListItem className={classes.btnContainer}>
-                        <DarkModeSwitcher onClose={onClose} />
-                    </ListItem> */}
-          <Divider />
+          <ListItem className={classes.btnContainer}>
+            <DarkModeSwitcher onClose={onClose} />
+          </ListItem>
         </List>
       </div>
     </Drawer>
@@ -120,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
   },
   active: {
     backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
   },
 }));
 
