@@ -3,15 +3,12 @@ import { makeStyles } from "@material-ui/core";
 import { motion, useAnimation } from "framer-motion";
 import { LinkedIn, GitHub, Email, WhatsApp } from "@material-ui/icons";
 import IconBtn from "../IconBtn";
-import DarkModeSwitcher from "../DarkModeSwitcher";
-import loaderContext from "../../contexts/loaderContext";
 import { useSelector } from "react-redux";
 import { GASendEvent } from "../../utils/googleAnalytics";
 import ThemeToggle from "../ThemeToggleButton";
 
 const Social = ({ mobile }) => {
   const classes = useStyles();
-  const { isLoading } = useContext(loaderContext);
   const controls = useAnimation();
   const { profile } = useSelector((state) => state.profile);
 

@@ -63,6 +63,10 @@ const MessageBox = () => {
                                 id="name"
                                 label={t('contact_full_name')}
                                 name="name"
+                                InputProps={{
+                                    disableUnderline: true,
+                                    style: { borderRadius: 4 }
+                                }}
                             />
                             <TextField
                                 error={Boolean(formik.touched.email && formik.errors.email)}
@@ -77,6 +81,10 @@ const MessageBox = () => {
                                 id="email"
                                 label={t('contact_email')}
                                 name="email"
+                                InputProps={{
+                                    disableUnderline: true,
+                                    style: { borderRadius: 4 }
+                                }}
                             />
                             <TextField
                                 error={Boolean(formik.touched.message && formik.errors.message)}
@@ -93,6 +101,10 @@ const MessageBox = () => {
                                 id="message"
                                 multiline
                                 minRows={5}
+                                InputProps={{
+                                    disableUnderline: true,
+                                    style: { borderRadius: 4 }
+                                }}
                             />
                             <Box display="flex" justifyContent="center" mt={2}>
                                 <Button

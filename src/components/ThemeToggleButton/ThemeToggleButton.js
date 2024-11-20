@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     height: 50,
     padding: 8,
     backgroundColor: "transparent",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
     borderRadius: "50%",
     "&:hover": {
       backgroundColor: "transparent",
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sunIcon: {
     left: 4,
-    color: (props) => (props.isDarkMode ? "#666" : "#ffd700") + " !important",
+    color: (props) => (props.isDarkMode ? "#666" : "#fc8c03") + " !important",
   },
   moonIcon: {
     right: 4,
