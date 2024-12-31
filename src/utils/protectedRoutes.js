@@ -62,8 +62,8 @@ export const protectedRoutes = [
   {
     title: "Export Projects",
     path: "/projects/export",
-    navIcon: FileDownloadIcon,
+    navIcon: null,
     showInDrawer: false,
-    element: null
+    element: <ProjectExport />
   }
 ];
