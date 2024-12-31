@@ -9,24 +9,27 @@ const navStyle = ({ isActive }) => {
   return {
     textDecoration: "none",
     color: isActive ? "red" : "black",
-    background: "#61fb69"
+    background: "#61fb69",
   };
 };
 
 export function mainListItems() {
-  const routeItems = protectedRoutes.map((route) => {
-    const IconComponent = route.navIcon;
-    return (
-      <NavLink to={route.path} key={route.path} style={navStyle}>
-        <ListItemButton >
-          <ListItemIcon>
-            <IconComponent />
-          </ListItemIcon>
-          <ListItemText primary={route.title} />
-        </ListItemButton>
-      </NavLink>
-    );
-  });
+  const routeItems = protectedRoutes
+    .filter((r) => r.showInDrawer == true)
+    .map((route) => {
+      const IconComponent = route.navIcon;
+
+      return (
+        <NavLink to={route.path} key={route.path} style={navStyle}>
+          <ListItemButton>
+            <ListItemIcon>
+              <IconComponent />
+            </ListItemIcon>
+            <ListItemText primary={route.title} />
+          </ListItemButton>
+        </NavLink>
+      );
+    });
 
   return <React.Fragment>{routeItems}</React.Fragment>;
 }

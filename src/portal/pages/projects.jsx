@@ -35,6 +35,7 @@ import {
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 import {
   getYearRange,
@@ -58,6 +59,9 @@ function ProjectPage() {
     pageSize,
     totalProjects,
   } = useSelector((state) => state.project);
+
+  const navigate = useNavigate();
+  
   const [showForm, setShowForm] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
@@ -265,14 +269,27 @@ function ProjectPage() {
         />
         <div className={classes.pageHead}>
           <h2>Manage Projects</h2>
-          <Button
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={isLoading}
-            onClick={createNewForm}
-          >
-            + Add New
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
+              onClick={()=> {
+                navigate("/projects/export");
+              }}
+            >
+              Export
+            </Button>
+            &nbsp;
+            <Button
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
+              onClick={createNewForm}
+            >
+              + Add New
+            </Button>
+          </div>
         </div>
         {isLoading ? (
           <p>Loading...</p>

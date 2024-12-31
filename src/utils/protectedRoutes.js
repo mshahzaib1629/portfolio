@@ -5,6 +5,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import StarsIcon from "@mui/icons-material/Stars";
 import PublicIcon from "@mui/icons-material/Public";
+import ProjectExport from "../portal/pages/projectExport";
 
 const ProfilePage = lazy(() => import("../portal/pages/profile"));
 const EducationPage = lazy(() => import("../portal/pages/education"));
@@ -20,36 +21,49 @@ export const protectedRoutes = [
     title: "Profile",
     path: "/profile",
     navIcon: PersonIcon,
-    element: <ProfilePage />,
+    showInDrawer: true,
+    element: <ProfilePage />
   },
   {
     title: "Education",
     path: "/education",
     navIcon: SchoolIcon,
+    showInDrawer: true,
     element: <EducationPage />,
   },
   {
     title: "Certifications",
     path: "/certifications",
     navIcon: StarsIcon,
+    showInDrawer: true,
     element: <CertificationPage />,
   },
   {
     title: "Work Experience",
     path: "/work-experience",
     navIcon: WorkIcon,
+    showInDrawer: true,
     element: <ExperiencePage />,
   },
   {
     title: "Projects",
     path: "/projects",
     navIcon: TerminalIcon,
+    showInDrawer: true,
     element: <ProjectPage />,
   },
   {
     title: "Skill Set",
     path: "/skill-set",
     navIcon: PublicIcon,
+    showInDrawer: true,
     element: <SkillSetPage />,
   },
+  {
+    title: "Export Projects",
+    path: "/projects/export",
+    navIcon: FileDownloadIcon,
+    showInDrawer: false,
+    element: null
+  }
 ];
