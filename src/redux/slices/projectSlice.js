@@ -29,9 +29,9 @@ const slice = createSlice({
       const { data, cursorIds, page, totalCount } = action.payload;
       state.projectList = [];
       state.projectList = data;
-      state.cursorIds = cursorIds;
+      state.cursorIds = cursorIds ?? null;
 
-      state.page = page;
+      state.page = page ?? null;
       state.totalProjects = totalCount;
       state.isLoading = false;
     },
@@ -115,6 +115,21 @@ export function fetchFeaturedProjectThunk() {
     try {
       response = await ProjectService.getFeaturedProjectList();
       dispatch(getFeaturedProjectListSuccessAction(response));
+    } catch (error) {
+      dispatch(requestFailedAction(error));
+      throw error;
+    }
+  };
+}
+
+export function fetchAllProjectThunk() {
+  return async (dispatch, getState) => {
+    dispatch(requestStartedAction());
+    let response;
+    try {
+      response = await ProjectService.getAllProjectsList();
+      const data = { ...response, page: 0, cursorIds: {} };
+      dispatch(getProjectListSuccessAction(data));
     } catch (error) {
       dispatch(requestFailedAction(error));
       throw error;

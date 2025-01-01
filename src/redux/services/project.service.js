@@ -103,6 +103,41 @@ const getProjectList = async (
   }
 };
 
+const getAllProjectsList = async () => {
+  try {
+    const projectCollectionRef = collection(
+      firestore,
+      K.collections.projects.name
+    );
+
+    const basicConstraints = [
+      orderBy("year", "desc"),
+      orderBy("index", "desc"),
+    ];
+
+    const q = query(projectCollectionRef, ...basicConstraints);
+    
+    const querySnapshot = await getDocs(q);
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      data.push({
+        id: doc.id,
+        index: data.length,
+        ...doc.data(),
+      });
+    });
+
+    const countFromServerRes = await getCountFromServer(
+      query(projectCollectionRef, ...basicConstraints)
+    );
+
+    const { count: totalCount } = countFromServerRes["_data"];
+    return { data, totalCount };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getFeaturedProjectList = async () => {
   try {
     const projectCollectionRef = collection(
@@ -214,6 +249,7 @@ const deleteProject = async (project) => {
 const ProjectService = {
   getFeaturedProjectList,
   getProjectList,
+  getAllProjectsList,
   addNewProject,
   deleteImage,
   updateImage,

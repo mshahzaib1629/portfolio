@@ -6,11 +6,6 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-
 import BackdropLoading from "../../components/BackdropLoading";
 import { Edit, Launch } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
@@ -18,8 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MuiAlert from "@mui/material/Alert";
 
 import {
-  fetchProjectThunk,
-  changePageSizeAction,
+  fetchAllProjectThunk,
 } from "../../redux/slices/projectSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -35,25 +29,47 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function ProjectPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { projectList, isLoading, page, pageSize, totalProjects } = useSelector(
-    (state) => state.project
-  );
+  const { projectList, isLoading } = useSelector((state) => state.project);
   const [isPageLoading, setIsPageLoading] = useState(false);
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [tags, setTags] = useState([]);
 
   const pageSizeOptions = [10, 15, 25];
 
   async function getProjectData() {
     try {
-      await dispatch(fetchProjectThunk());
+      await dispatch(fetchAllProjectThunk());
     } catch (error) {
       console.log("error: ", error);
     }
   }
 
   useEffect(() => {
-    dispatch(changePageSizeAction(pageSizeOptions[0]));
-    if (projectList.length === 0) getProjectData();
+    getProjectData();
   }, []);
+
+  useEffect(() => {
+    filterProjectsByTags(tags);
+  }, [tags, projectList]);
+
+  function filterProjectsByTags(tags) {
+    if (tags.length === 0) {
+      setFilteredProjects(projectList);
+    } else {
+      const filtered = projectList.filter((project) =>
+        tags.every((tag) =>
+          project.technologies.some((tech) =>
+            tech.toLowerCase().includes(tag.toLowerCase())
+          )
+        )
+      );
+      setFilteredProjects(filtered);
+    }
+  }
+
+  function handleTagsChange(event, value) {
+    setTags(value);
+  }
 
   function showProjectListing() {
     return (
@@ -75,13 +91,19 @@ function ProjectPage() {
           options={[]}
           defaultValue={[]}
           freeSolo
+          onChange={handleTagsChange}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === ",") {
+              event.preventDefault();
+              const value = event.target.value.trim();
+              if (value) {
+                setTags((prevTags) => [...prevTags, value]);
+                event.target.value = "";
+              }
+            }
+          }}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="filled"
-              label="Keywords"
-            //   placeholder="Favorites"
-            />
+            <TextField {...params} variant="filled" label="Keywords" />
           )}
         />
         {isLoading ? (
@@ -100,7 +122,7 @@ function ProjectPage() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projectList?.map((project) => (
+                {filteredProjects?.map((project) => (
                   <TableRow key={project.id} id={project.id}>
                     <TableCell style={{ cursor: "pointer" }}>=</TableCell>
                     <TableCell>
@@ -140,53 +162,15 @@ function ProjectPage() {
                 ))}
               </TableBody>
             </Table>
-            <div className={classes.paginationWeb}>
-              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel id="demo-select-small-label">Page Size</InputLabel>
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  value={pageSize}
-                  label="Page Size"
-                  onChange={handlePageSizeChange}
-                >
-                  {pageSizeOptions.map((op) => (
-                    <MenuItem value={op}>{op}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Button
-                onClick={() => handlePageChange("prev")}
-                disabled={page === 0}
-              >
-                Previous
-              </Button>
-              <Button
-                onClick={() => handlePageChange("next")}
-                disabled={(page + 1) * pageSize >= totalProjects}
-              >
-                Next
-              </Button>
-            </div>
           </>
         )}
       </Container>
     );
   }
 
-  function handlePageSizeChange(event) {
-    dispatch(changePageSizeAction(event.target.value));
-    getProjectData();
-  }
-
-  function handlePageChange(pageDirection) {
-    dispatch(fetchProjectThunk(pageDirection));
-  }
-
   return (
     <>
       <BackdropLoading isLoading={isPageLoading} />
-
       {showProjectListing()}
     </>
   );
