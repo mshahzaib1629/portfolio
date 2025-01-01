@@ -11,10 +11,11 @@ import { Edit, Launch } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import MuiAlert from "@mui/material/Alert";
+import { Collapse, IconButton } from "@mui/material";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
-import {
-  fetchAllProjectThunk,
-} from "../../redux/slices/projectSlice";
+import { fetchAllProjectThunk } from "../../redux/slices/projectSlice";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 
@@ -52,15 +53,43 @@ function ProjectPage() {
     filterProjectsByTags(tags);
   }, [tags, projectList]);
 
+  function _exportProjects() {
+    const dataToExport = filteredProjects.map((project) => ({
+      title: project.title,
+      projectType: project.projectType,
+      overview: project.overview,
+      year: project.year,
+      technologies: project.technologies,
+      links: project.links,
+    }));
+
+    const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "projects.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   function filterProjectsByTags(tags) {
     if (tags.length === 0) {
       setFilteredProjects(projectList);
     } else {
       const filtered = projectList.filter((project) =>
-        tags.every((tag) =>
-          project.technologies.some((tech) =>
-            tech.toLowerCase().includes(tag.toLowerCase())
-          )
+        tags.some(
+          (tag) =>
+            project.technologies.some((tech) =>
+              tech.toLowerCase().includes(tag.toLowerCase())
+            ) ||
+            project.overview.toLowerCase().includes(tag.toLowerCase()) ||
+            project.notes?.toLowerCase().includes(tag.toLowerCase()) ||
+            project.projectType?.toLowerCase().includes(tag.toLowerCase()) ||
+            project.title.toLowerCase().includes(tag.toLowerCase()) ||
+            project.workedAt?.toLowerCase().includes(tag.toLowerCase())
         )
       );
       setFilteredProjects(filtered);
@@ -69,6 +98,64 @@ function ProjectPage() {
 
   function handleTagsChange(event, value) {
     setTags(value);
+  }
+
+  function ProjectRow({ project }) {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <>
+        <TableRow key={project.id} id={project.id}>
+          <TableCell style={{ width: "5%" }}>
+            <IconButton
+              aria-label="delete"
+              size="small"
+              onClick={() => {
+                setFilteredProjects((prevProjects) =>
+                  prevProjects.filter((p) => p.id !== project.id)
+                );
+              }}
+            >
+              <RemoveCircleOutlineIcon />
+            </IconButton>
+          </TableCell>
+          <TableCell>
+            {project.title} {project.isFeatured && <FeaturedTag />}
+          </TableCell>
+          <TableCell>{project.workedAt}</TableCell>
+          <TableCell style={{ width: "40%" }}>
+            {convertArrayToString(project.technologies)}
+          </TableCell>
+          <TableCell>{project.year}</TableCell>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+            </IconButton>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <div style={{ margin: "10px 0" }}>
+                <strong>Project Type:</strong> {project.projectType}
+              </div>
+              <div style={{ margin: "10px 0" }}>
+                <strong>Overview</strong> <br />
+                {project.overview}
+              </div>
+              <div style={{ margin: "10px 0" }}>
+                <strong>Notes</strong> <br />
+                {project.notes}
+              </div>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </>
+    );
   }
 
   function showProjectListing() {
@@ -80,7 +167,7 @@ function ProjectPage() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             disabled={isLoading}
-            onClick={() => {}}
+            onClick={_exportProjects}
           >
             Export
           </Button>
@@ -118,47 +205,12 @@ function ProjectPage() {
                   <TableCell style={{ width: "25%" }}>Worked At</TableCell>
                   <TableCell>Technologies</TableCell>
                   <TableCell>Year</TableCell>
-                  <TableCell align="right">Actions</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {filteredProjects?.map((project) => (
-                  <TableRow key={project.id} id={project.id}>
-                    <TableCell style={{ cursor: "pointer" }}>=</TableCell>
-                    <TableCell>
-                      {project.title} {project.isFeatured && <FeaturedTag />}
-                    </TableCell>
-                    <TableCell>{project.workedAt}</TableCell>
-                    <TableCell style={{ width: "40%" }}>
-                      {convertArrayToString(project.technologies)}
-                    </TableCell>
-                    <TableCell>{project.year}</TableCell>
-                    <TableCell align="right">
-                      <Edit
-                        fontSize="small"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {}}
-                      />
-                      {"  "}
-
-                      {project.url ? (
-                        <a
-                          key={project.id}
-                          href={project.url}
-                          style={{ cursor: "pointer" }}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <Launch
-                            fontSize="small"
-                            href={project.url}
-                            target="_blank"
-                            rel="noreferrer"
-                          />
-                        </a>
-                      ) : null}
-                    </TableCell>
-                  </TableRow>
+                  <ProjectRow key={project.id} project={project} />
                 ))}
               </TableBody>
             </Table>
