@@ -98,7 +98,7 @@ function CertificationPage() {
   useEffect(() => {
     resetForm();
     dispatch(changePageSizeAction(pageSizeOptions[0]));
-    if (certificationList.length === 0) getCertificationData();
+    getCertificationData();
   }, []);
 
   const onEdit = (id) => {

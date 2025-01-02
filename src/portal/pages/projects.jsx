@@ -118,7 +118,7 @@ function ProjectPage() {
   useEffect(() => {
     resetForm();
     dispatch(changePageSizeAction(pageSizeOptions[0]));
-    if (projectList.length === 0) getProjectData();
+    getProjectData();
   }, []);
 
   const onEdit = (id) => {
