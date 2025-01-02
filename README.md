@@ -8,7 +8,7 @@
     A Modern, Dynamic React Portfolio
     <br />
     <br />
-    <a href="http://mshahzaib1629.com/">View Demo</a>
+    <a href="http://shahzaibminhas.com/">View Demo</a>
     ·
     <a href="https://github.com/mshahzaib1629/portfolio/issues">Report Bug</a>
     ·
