@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MuiAlert from "@mui/material/Alert";
 import { Collapse, IconButton } from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 import { fetchAllProjectThunk } from "../../redux/slices/projectSlice";
@@ -159,74 +159,82 @@ function ProjectPage() {
     );
   }
 
+  const handlePaste = (event) => {
+    const pasteData = event.clipboardData.getData("text");
+    if (pasteData) {
+      // Split the pasted text by commas and trim whitespace
+      const newTags = pasteData.split(",").map((tag) => tag.trim());
+      
+      // Update the tags state
+      setTags((prevTags) => [...prevTags, ...newTags.filter((tag) => tag)]);
+      event.preventDefault(); // Prevent the default paste behavior
+    }
+  };
+
   function showProjectListing() {
     return (
       <Container>
-      <div className={classes.pageHead}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-        <IconButton
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={() => window.history.back()}
-        >
-          <ArrowBackIosNewIcon />
-        </IconButton>
-        <h2 style={{ marginLeft: "10px" }}>Export Projects</h2>
-        </div>
+        <div className={classes.pageHead}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => window.history.back()}
+            >
+              <ArrowBackIosNewIcon />
+            </IconButton>
+            <h2 style={{ marginLeft: "10px" }}>Export Projects</h2>
+          </div>
 
-        <Button
-        variant="contained"
-        sx={{ mt: 3, mb: 2 }}
-        disabled={isLoading}
-        onClick={_exportProjects}
-        >
-        Download
-        </Button>
-      </div>
-      <Autocomplete
-        multiple
-        id="tags-filled"
-        options={[]}
-        defaultValue={[]}
-        freeSolo
-        onChange={handleTagsChange}
-        onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === ",") {
-          event.preventDefault();
-          const value = event.target.value.trim();
-          if (value) {
-          setTags((prevTags) => [...prevTags, value]);
-          event.target.value = "";
-          }
-        }
-        }}
-        renderInput={(params) => (
-        <TextField {...params} variant="filled" label="Keywords" />
+          <Button
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            disabled={isLoading}
+            onClick={_exportProjects}
+          >
+            Download
+          </Button>
+        </div>
+        <Autocomplete
+          multiple
+          id="tags-filled"
+          options={[]}
+          value={tags}
+          defaultValue={[]}
+          freeSolo
+          onChange={handleTagsChange}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="filled"
+              label="Keywords"
+              onPaste={handlePaste}
+            />
+          )}
+        />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell style={{ width: "30%" }}>Title</TableCell>
+                  <TableCell style={{ width: "25%" }}>Worked At</TableCell>
+                  <TableCell>Technologies</TableCell>
+                  <TableCell>Year</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredProjects?.map((project) => (
+                  <ProjectRow key={project.id} project={project} />
+                ))}
+              </TableBody>
+            </Table>
+          </>
         )}
-      />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-        <Table size="medium">
-          <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell style={{ width: "30%" }}>Title</TableCell>
-            <TableCell style={{ width: "25%" }}>Worked At</TableCell>
-            <TableCell>Technologies</TableCell>
-            <TableCell>Year</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-          </TableHead>
-          <TableBody>
-          {filteredProjects?.map((project) => (
-            <ProjectRow key={project.id} project={project} />
-          ))}
-          </TableBody>
-        </Table>
-        </>
-      )}
       </Container>
     );
   }
@@ -259,3 +267,4 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default ProjectPage;
+
