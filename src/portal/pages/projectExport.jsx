@@ -101,7 +101,21 @@ function ProjectPage() {
     setTags(value);
   }
 
-  function ProjectRow({ project }) {
+  function highlightText(text, tags) {
+    if (!tags.length) return text;
+    const regex = new RegExp(`(${tags.join("|")})`, "gi");
+    return text?.split(regex).map((part, index) =>
+      tags.some((tag) => tag.toLowerCase() === part.toLowerCase()) ? (
+        <span key={index} style={{ backgroundColor: "yellow" }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  }
+
+  function ProjectRow({ project, tags }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -121,11 +135,11 @@ function ProjectPage() {
             </IconButton>
           </TableCell>
           <TableCell>
-            {project.title} {project.isFeatured && <FeaturedTag />}
+            {highlightText(project.title, tags)} {project.isFeatured && <FeaturedTag />}
           </TableCell>
-          <TableCell>{project.workedAt}</TableCell>
+          <TableCell>{highlightText(project.workedAt, tags)}</TableCell>
           <TableCell style={{ width: "40%" }}>
-            {convertArrayToString(project.technologies)}
+            {highlightText(convertArrayToString(project.technologies), tags)}
           </TableCell>
           <TableCell>{project.year}</TableCell>
           <TableCell>
@@ -142,15 +156,15 @@ function ProjectPage() {
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <div style={{ margin: "10px 0" }}>
-                <strong>Project Type:</strong> {project.projectType}
+                <strong>Project Type:</strong> {highlightText(project.projectType, tags)}
               </div>
               <div style={{ margin: "10px 0" }}>
                 <strong>Overview</strong> <br />
-                {project.overview}
+                {highlightText(project.overview, tags)}
               </div>
               <div style={{ margin: "10px 0" }}>
                 <strong>Notes</strong> <br />
-                {project.notes}
+                {highlightText(project.notes, tags)}
               </div>
             </Collapse>
           </TableCell>
@@ -229,7 +243,7 @@ function ProjectPage() {
               </TableHead>
               <TableBody>
                 {filteredProjects?.map((project) => (
-                  <ProjectRow key={project.id} project={project} />
+                  <ProjectRow key={project.id} project={project} tags={tags} />
                 ))}
               </TableBody>
             </Table>
