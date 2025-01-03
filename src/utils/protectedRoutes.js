@@ -5,13 +5,13 @@ import WorkIcon from "@mui/icons-material/Work";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import StarsIcon from "@mui/icons-material/Stars";
 import PublicIcon from "@mui/icons-material/Public";
-import ProjectExport from "../portal/pages/projectExport";
 
 const ProfilePage = lazy(() => import("../portal/pages/profile"));
 const EducationPage = lazy(() => import("../portal/pages/education"));
 const CertificationPage = lazy(() => import("../portal/pages/certifications"));
 const ExperiencePage = lazy(() => import("../portal/pages/experience"));
 const ProjectPage = lazy(() => import("../portal/pages/projects"));
+const ProjectExport = lazy(() => import("../portal/pages/projectExport"));
 const SkillSetPage = lazy(() => import("../portal/pages/skillSet"));
 
 

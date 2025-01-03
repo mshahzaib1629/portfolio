@@ -11,9 +11,7 @@ import LoaderContext from "./contexts/loaderContext";
 import LoginPage from "./portal/pages/login";
 import initializeFirebaseSDKs from "./utils/firebase-setup";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { loadFull } from "tsparticles";
 import { useDispatch } from "react-redux";
-import { initGA } from "./utils/googleAnalytics";
 import { fetchProfileThunk } from "./redux/slices/profileSlice";
 const Layout = lazy(() => import("./portal/layout"));
 
@@ -45,10 +43,13 @@ function App() {
   }
 
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    setIsDarkMode(true);
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setIsDarkMode(true);
     } else {
-        setIsDarkMode(false);
+      setIsDarkMode(false);
     }
     initializeFirebaseSDKs()
       .then(async () => {
@@ -63,26 +64,12 @@ function App() {
 
   const renderPage = () => {
     console.log(location.pathname);
-    let elementPage = (
-      <>
-        {/* <Particle
-          particlesInit={particlesInit}
-          particlesLoaded={particlesLoaded}
-        /> */}
-        <AppRoutes />
-      </>
-    );
+    let elementPage = <AppRoutes />;
     if (isAuthenticated) elementPage = <Layout />;
     else if (location.pathname === "/login") elementPage = <LoginPage />;
     return elementPage;
   };
 
-  const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
-  }, []);
-
-  const particlesLoaded = useCallback(async (container) => {}, []);
-  
   const generateCSSVariables = (theme) => {
     const { palette } = theme;
     return `
@@ -100,14 +87,14 @@ function App() {
       <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
         <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-          <style>
-          {`:root {
+            <style>
+              {`:root {
           ${generateCSSVariables(isDarkMode ? darkTheme : lightTheme)}
         }`}
-          </style>
+            </style>
             <CssBaseline />
             <ScrollToTop />
-            {isFirebaseInitialized ? renderPage(): <div>Please wait...</div>}
+            {isFirebaseInitialized ? renderPage() : <div>Please wait...</div>}
           </ThemeProvider>
         </LoaderContext.Provider>
       </ThemeContext.Provider>
