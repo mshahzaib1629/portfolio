@@ -24,7 +24,7 @@ const Footer = () => {
       <Box className={`${classes.footer} ${isMobile ? classes.footer_mobile : ""}`}>
         {isMobile && <Social mobile />}
         <Typography variant="body2" color="initial">
-          © {new Date().getFullYear()} Shahzaib Minhas, Inc
+          © {new Date().getFullYear()} Shahzaib Minhas
           <br />
           {/* Designed by{" "}
           <a
